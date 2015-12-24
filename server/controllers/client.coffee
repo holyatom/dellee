@@ -6,7 +6,6 @@ router = require('express').Router()
 
 
 AppRouter::run = AdminRouter::run = (app) ->
-  @middleware?()
   @router?()
 
 AppRouter::route = AdminRouter::route = (url) ->

@@ -4,7 +4,7 @@ Model = require('../base/model')
 
 class Session extends Model
   defaults:
-    id: 'static'
+    _id: 'static'
     timestamp: 0
 
   initialize: ->

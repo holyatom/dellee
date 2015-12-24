@@ -14,3 +14,6 @@ module.exports =
     user_exist: 'Пользователь с таким логином уже существует'
     wrong_login_or_password: 'Неверный логин или пароль'
     unknown_user: 'Неизвестный пользователь'
+
+    bad_token: 'Плохой токен'
+    auth_required: 'Не авторизован'

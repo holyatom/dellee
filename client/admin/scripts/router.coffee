@@ -10,6 +10,18 @@ module.exports = class Router extends BaseRouter
     vent.on('user:login', => @routeTo('/admin/dashboard'))
     vent.on('user:logout', => @routeTo('/admin'))
 
+  auth: (ctx, next) =>
+    return @page.redirect('/admin') unless profile.authorized()
+    next()
+
+  notAuth: (ctx, next) =>
+    return @page.redirect('/admin/dashboard') if profile.authorized()
+    next()
+
+  middleware: ->
+    @use('/admin', @notAuth)
+    @use('/admin/dashboard', @auth)
+
   router: ->
     @route('/admin', 'home.index')
     @route('/admin/dashboard', 'dashboard.index')

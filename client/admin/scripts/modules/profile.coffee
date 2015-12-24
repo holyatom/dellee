@@ -9,7 +9,7 @@ class Profile extends Model
   idAttribute: 'username'
 
   defaults:
-    id: 0
+    username: 0
     timestamp: 0
 
   initialize: ->
@@ -21,7 +21,7 @@ class Profile extends Model
       @setTokenHeaders()
 
   setTokenHeaders: ->
-    headers = 'X-Access-Token': @get('token').value
+    headers = 'x-access-admin-token': @get('token').value
     $.ajaxSetup({ headers })
 
   reset: ->

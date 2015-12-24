@@ -38,6 +38,9 @@ class Server
     # Parse application/json.
     @app.use(bodyParser.json(limit: 1024 * 1024))
 
+    # Authenticate admin by JSON Web Token.
+    this.app.use(middlewares.adminJwt)
+
   postRouteMiddleware: ->
     if config.debug
       @app.use(errorhandler(dumpExceptions: true, showStack: true))
