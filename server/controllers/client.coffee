@@ -1,17 +1,26 @@
+_ = require('lodash')
 Controller = require('../base/controller')
+AppRouter = require('app/router')
+AdminRouter = require('admin/router')
+router = require('express').Router()
 
 
-class ClientController extends Controller
-  logPrefix: '[client controller]'
+AppRouter::run = AdminRouter::run = (app) ->
+  @middleware?()
+  @router?()
 
-  renderAppView: (req, res, next) ->
-    res.render('layout_app', layout: false)
+AppRouter::route = AdminRouter::route = (url) ->
+  return if url.indexOf('*') >= 0
 
-  renderAdminView: (req, res, next) ->
-    res.render('layout_admin', layout: false)
+  if _.startsWith(url, '/admin')
+    router.get url, (req, res, next) ->
+      res.render('layout_admin', layout: false)
+  else
+    router.get url, (req, res, next) ->
+      res.render('layout_app', layout: false)
 
-  router: ->
-    @get('/', @renderAppView)
-    @get('/admin', @renderAdminView)
-
-module.exports = new ClientController()
+module.exports =
+  use: (app) ->
+    new AppRouter().run()
+    new AdminRouter().run()
+    app.use(router)

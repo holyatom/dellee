@@ -10,4 +10,10 @@ schema = new mongoose.Schema(
     validate: [v.email()]
 )
 
+schema.methods.toJSON = ->
+  json = @toObject()
+  delete json.__v
+
+  json
+
 module.exports = mongoose.model('Customer', schema)

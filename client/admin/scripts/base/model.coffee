@@ -8,6 +8,7 @@ module.exports = class Model extends Backbone.Model
   apiRoot: config.api_root
   urlPath: null
   $: $.ajax
+  idAttribute: '_id'
 
   resourceUrl: ->
     url = _.result(@, 'urlPath')

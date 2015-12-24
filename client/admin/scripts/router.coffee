@@ -1,13 +1,23 @@
 BaseRouter = require('./base/router')
+vent = require('./modules/vent')
+profile = require('./modules/profile')
 
 
-class Router extends BaseRouter
-  controllers:
-    home: require('./controllers/home')
-    notFound: require('./controllers/not_found')
+module.exports = class Router extends BaseRouter
+  run: ->
+    super
+
+    vent.on('user:login', => @routeTo('/admin/dashboard'))
+    vent.on('user:logout', => @routeTo('/admin'))
 
   router: ->
     @route('/admin', 'home.index')
+    @route('/admin/dashboard', 'dashboard.index')
+
     @route('/admin/*', 'notFound.index')
 
-module.exports = new Router()
+if process.browser
+  Router::controllers =
+    home: require('./controllers/home')
+    dashboard: require('./controllers/dashboard')
+    notFound: require('./controllers/not_found')

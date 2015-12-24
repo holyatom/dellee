@@ -10,6 +10,8 @@ module.exports = class ModelController extends Controller
 
   Model: null
 
+  keyField: '_id'
+
   router: ->
     throw new Error('Actions are not specified') unless @actions
 
@@ -23,18 +25,20 @@ module.exports = class ModelController extends Controller
       handlerUrl = handler.url or ''
       url = "#{baseUrl}#{handlerUrl}"
 
+      handlers.push(@getModelItem) if handlerUrl.indexOf('/:id') >= 0
       handlers.push(handler)
+
       @_handler(method, url, handlers...)
 
 
-  # Get document
+  # Get model
   get: (req, res, next) ->
     @mapDoc?(req, res, next, req.modelItem) or res.json(req.modelItem.toJSON())
 
   ModelController::get.url = '/:id'
 
 
-  # Create document
+  # Create model
   create: (req, res, next) ->
     model = new @Model(req.body)
 
@@ -48,7 +52,7 @@ module.exports = class ModelController extends Controller
   ModelController::create.type = 'post'
 
 
-  # Delete document
+  # Delete model
   delete: (req, res, next) ->
     @Model.remove req.modelItem, (err) =>
       return next(err) if err
@@ -60,7 +64,10 @@ module.exports = class ModelController extends Controller
 
   # Middlewares
   getModelItem: (req, res, next) ->
-    @Model.findOne(id: req.params.id).exec (err, doc) =>
+    filter = {}
+    filter[@keyField] = req.params.id
+
+    @Model.findOne(filter).exec (err, doc) =>
       return next(err) if err
       return @notFound(res) unless doc
 

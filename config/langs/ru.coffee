@@ -8,3 +8,9 @@ module.exports =
     shorter_than_allowed: '%s слишком короткий ввод'
     longer_than_allowed: '%s слишком длинный ввод'
     bad_email: 'Неправельный email адрес'
+    bad_username: 'Зарезервированное слово'
+    bad_enum_value: '%s не входит в список доступных значений'
+
+    user_exist: 'Пользователь с таким логином уже существует'
+    wrong_login_or_password: 'Неверный логин или пароль'
+    unknown_user: 'Неизвестный пользователь'

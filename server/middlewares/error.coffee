@@ -21,12 +21,12 @@ module.exports = (res, error, code = 422) ->
 
   fields = {}
 
-  for key, code of error
-    code = code.message or code
+  for key, value of error
+    value = value.message or value
 
     fields[key] =
-      code: code
-      message: _.capitalize(format(lang.errors[code], key))
+      code: value
+      message: _.capitalize(format(lang.errors[value], key))
 
   res.status(code).json(
     error:

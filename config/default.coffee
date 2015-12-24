@@ -8,3 +8,8 @@ module.exports =
   mongodb:
     host: 'localhost'
     database: 'dellee'
+
+  admin:
+    jwt:
+      expires: 1440
+      secret: 'whatdidyouwanttoseehere'

@@ -1,13 +1,12 @@
 BaseRouter = require('./base/router')
 
 
-class Router extends BaseRouter
-  controllers:
-    home: require('./controllers/home')
-    notFound: require('./controllers/not_found')
-
+module.exports = class Router extends BaseRouter
   router: ->
     @route('/', 'home.index')
     @route('*', 'notFound.index')
 
-module.exports = new Router()
+if process.browser
+  Router::controllers =
+    home: require('./controllers/home')
+    notFound: require('./controllers/not_found')

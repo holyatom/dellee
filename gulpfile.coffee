@@ -31,6 +31,7 @@ APP_VENDOR = [
 ADMIN_VENDOR = [
   'jquery'
   'backbone'
+  'backbone.localstorage'
   'classnames'
   'lodash'
   'page'
@@ -42,6 +43,8 @@ ADMIN_VENDOR = [
 SYMLINKS =
   'config': './config > node_modules'
   'lib': './lib > node_modules'
+  'admin': './client/admin/scripts > node_modules'
+  'app': './client/app/scripts > node_modules'
 
 errorReport = (err) ->
   log(err.message, 'red bold')
