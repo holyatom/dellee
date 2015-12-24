@@ -29,6 +29,8 @@ class AdminAuthController extends ModelController
     value: token
 
   login: (req, res, next) ->
+    return @notFound(res) if req.adminAuthorized
+
     { username, password } = req.body
 
     return @error(res, username: 'wrong_login_or_password') if not username or not password

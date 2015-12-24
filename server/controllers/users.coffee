@@ -5,7 +5,7 @@ class UsersController extends ModelController
   logPrefix: '[users controller]'
   urlPrefix: '/users'
 
-  actions: ['create', 'get']
+  actions: ['create']
 
   Model: require('../models/user')
 
