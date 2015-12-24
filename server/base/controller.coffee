@@ -1,5 +1,6 @@
 _ = require('lodash')
 router = require('express').Router()
+middlewares = require('../middlewares')
 
 
 class Controller
@@ -7,9 +8,9 @@ class Controller
   logPrefix: '[base controller]'
   log: require('lib/logger')
 
-  # middlewares: middlewares
-  # error: middlewares.error
-  # notFound: middlewares.notFound
+  middlewares: middlewares
+  error: middlewares.error
+  notFound: middlewares.notFound
 
   constructor: ->
     @_router = router

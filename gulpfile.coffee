@@ -29,11 +29,13 @@ APP_VENDOR = [
 ]
 
 ADMIN_VENDOR = [
-  'backbone-events-standalone'
+  'jquery'
+  'backbone'
   'classnames'
   'lodash'
   'page'
   'react'
+  'react/lib/ReactLink'
   'react-dom'
 ]
 
@@ -74,7 +76,7 @@ compileJsPackets = (opts) ->
   bundle.bundle()
     .on('error', errorReport)
     .pipe(source(opts.output))
-    # .pipe(streamify(uglify()))
+    .pipe(streamify(uglify()))
     .pipe(gulp.dest(PUBLIC_ASSETS))
 
 compileJsBundle = (opts) ->
