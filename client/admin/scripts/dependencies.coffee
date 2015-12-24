@@ -6,6 +6,8 @@ global.Backbone = require('backbone') # for backbone plugins to work
 global.Backbone.$ = global.$
 global.Backbone.LocalStorage = require('backbone.localstorage')
 
+require('bootstrap')
+
 $.ajaxSetup(
   crossDomain: true
   dataType: 'json'
