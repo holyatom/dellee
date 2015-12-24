@@ -11,23 +11,33 @@ parsePath = require('parse-filepath')
 # onlyExt   - The required files extension as {string}.
 #
 # Returns the object with proprties named like required files as `object`.
-loadDir = (dirname, opts={}) ->
-  opts = _.extend(excludes: ['index'], onlyExt: '.coffee', flat: false, opts)
+loadDir = (dirname, opts = {}) ->
+  defaults =
+    excludes: ['index']
+    onlyExt: '.coffee'
+    flat: false
+    camelCase: false
+
+  _.defaults(opts, defaults)
+
   res = if opts.flat then [] else {}
 
   fs.readdirSync(dirname).forEach((file) ->
     {name, extname} = parsePath(file)
     return if name[0] is '_'
 
+    name = _.camelCase(name) if opts.camelCase
     fullpath = path.join(dirname, file)
+
     if not extname and fs.statSync(fullpath).isDirectory()
-        # Load nested directories recursively.
-        if opts.flat
-          res = res.concat(loadDir(fullpath, opts))
-        else
-          res[name] = loadDir(fullpath, opts)
+      # Load nested directories recursively.
+      if opts.flat
+        res = res.concat(loadDir(fullpath, opts))
+      else
+        res[name] = loadDir(fullpath, opts)
 
     return if (opts.onlyExt and extname isnt opts.onlyExt) or name in opts.excludes
+
     if opts.flat
       res.push(require(fullpath))
     else
@@ -36,4 +46,4 @@ loadDir = (dirname, opts={}) ->
 
   res
 
-module.exports.loadDir = loadDir
+module.exports = { loadDir }

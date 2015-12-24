@@ -1,88 +1,110 @@
-createDomain = require('domain').create
-
-app = require('express')()
-exphbs  = require('express-handlebars')
-config = require('config')
-
 _ = require('lodash')
+config = require('config')
+express = require('express')
+mongoose = require('mongoose')
+domain = require('domain')
+morgan = require('morgan')
+errorhandler = require('errorhandler')
+bodyParser = require('body-parser')
+middlewares = require('./middlewares')
+exphbs = require('express-handlebars')
 
-pkg = require('../package')
-log = require('lib/logger')
 
+class Server
+  log: require('lib/logger')
+  logPrefix: '[server]'
 
-loadTemplateEngine = ->
-  globals = {
-    Date,
-    JSON,
-    Math,
-    RegExp,
+  constructor: ->
+    @app = express()
 
-    decodeURI,
-    decodeURIComponent,
-    encodeURI,
-    encodeURIComponent,
-
-    isFinite,
-    isNaN,
-    parseFloat,
-    parseInt,
-
-    _,
-
-    config
-  }
-
-  app.engine('.hbs', exphbs(
-    extname: '.hbs'
-    defaultLayout: 'layout'
-    layoutsDir: "#{__dirname}/../views"
-    helpers: _.extend({}, require('lib/assets'))
-  ))
-
-  app.set('view engine', '.hbs')
-
-  _.extend(app.locals, globals)
-
-domainify = (req, res, next)->
-  domain = createDomain()
-  domain.add(req)
-  domain.add(res)
-  domain.run(next)
-  domain.on('error', next)
-
-preRouteMiddleware = ->
-  app.use(domainify)
-  app.use(require('morgan')(if config.debug then 'dev' else 'combined'))
-
-  # Intentionally loading in all environments to make local debugging easier
-  app.use(require('serve-favicon')("#{__dirname}/../public/favicon.ico"))
-  app.use(require('serve-static')("#{__dirname}/../public", redirect: false))
-
-postRouteMiddleware = ->
-  app.use(require('errorhandler')(dumpExceptions: true, showStack: true)) if config.debug
-
-module.exports.start = ->
-  # Start listening
-  app.enable('trust proxy') # usually sitting behind nginx
-  app.disable('x-powered-by')
-
-  port = config.server.port
-  app.set('port', port)
-  app.set('views', "#{__dirname}/../views")
-  app.set('json spaces', 2) if config.debug
-
-  loadTemplateEngine()
-
-  preRouteMiddleware()
-  controller.use(app) for key, controller of require('./controllers')
-  postRouteMiddleware()
-
-  appRoot = "http://#{config.server.ip}:#{port}"
-  serverMessage = "Server listening on #{appRoot}"
-
-  if config.server.ip
-    app.listen(port, config.server.ip, ->
-      log("#{serverMessage} (bound to ip: #{config.server.ip})", 'cyan')
+  preRouteMiddleware: ->
+    @app.use((req, res, next) ->
+      _domain = domain.create()
+      _domain.add(req)
+      _domain.add(res)
+      _domain.run(next)
+      _domain.on('error', next)
     )
-  else
-    app.listen(port, -> log("#{serverMessage} (unbound)", 'cyan'))
+
+    @app.use(morgan(if config.debug then 'dev' else 'combined'))
+
+    # Set publis assets.
+    @app.use(require('serve-favicon')("#{__dirname}/../public/favicon.ico"))
+    @app.use(require('serve-static')("#{__dirname}/../public", redirect: false))
+
+    # Set language.
+    @app.use(middlewares.lang)
+
+    # Parse application/json.
+    @app.use(bodyParser.json(limit: 1024 * 1024))
+
+  postRouteMiddleware: ->
+    if config.debug
+      @app.use(errorhandler(dumpExceptions: true, showStack: true))
+    else
+      @app.use((err, req, res) =>
+        @log(err.stack or err, 'red bold')
+        middlewares.serverError(res)
+      )
+
+    @app.use((req, res, next) -> middlewares.notFound(res))
+
+  database: (callback) ->
+    mongoose.connect("mongodb://#{config.mongodb.host}/#{config.mongodb.database}")
+
+    mongoose.connection.on 'error', (err) =>
+      @log("mongodb operation failed: #{err}", 'red bold')
+
+    mongoose.connection.once 'open', =>
+      @log('mongodb was connected', 'green')
+      callback?()
+
+  loadTemplateEngine: ->
+    globals = {
+      Date
+      JSON
+      Math
+      RegExp
+
+      decodeURI
+      decodeURIComponent
+      encodeURI
+      encodeURIComponent
+
+      isFinite
+      isNaN
+      parseFloat
+      parseInt
+
+      _
+
+      config
+    }
+
+    @app.engine('.hbs', exphbs(
+      extname: '.hbs'
+      defaultLayout: 'layout'
+      layoutsDir: "#{__dirname}/../views"
+      helpers: _.extend({}, require('lib/assets'))
+    ))
+
+    @app.set('view engine', '.hbs')
+
+    _.extend(@app.locals, globals)
+
+  start: ->
+    port = config.server.port
+    @app.set('port', port)
+    @app.set('views', "#{__dirname}/../views")
+
+    @loadTemplateEngine()
+
+    @preRouteMiddleware()
+    controller.use(@app) for key, controller of require('./controllers')
+    @postRouteMiddleware()
+
+    @database =>
+      @app.listen config.server.port, config.server.ip, =>
+        @log("server running on #{config.server.ip}:#{config.server.port}", 'green')
+
+module.exports = new Server()

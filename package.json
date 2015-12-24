@@ -45,6 +45,7 @@
   "dependencies": {
     "backbone": "^1.2.3",
     "backbone-events-standalone": "^0.2.7",
+    "body-parser": "^1.14.2",
     "bootstrap": "^3.3.6",
     "bootswatch": "^3.3.6",
     "classnames": "^2.2.0",
@@ -54,6 +55,7 @@
     "express-handlebars": "^2.0.1",
     "jquery": "^2.1.4",
     "lodash": "^3.10.1",
+    "mongoose": "^4.3.4",
     "morgan": "^1.6.1",
     "normalize.css": "^3.0.3",
     "page": "^1.6.4",

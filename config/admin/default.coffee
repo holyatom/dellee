@@ -1,2 +1,2 @@
 module.exports =
-  api_root: '/api-admin'
+  api_root: '/api'

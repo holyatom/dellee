@@ -4,7 +4,7 @@ Footer = require('./components/footer')
 
 
 module.exports = class HomeView extends Form
-  title: -> 'Dellee • Admin panel'
+  title: -> 'Dellee • Админ панель'
 
   render: ->
     <div className="p-home layout">
