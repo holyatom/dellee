@@ -1,0 +1,30 @@
+{
+  "ignore": [
+    ".git",
+    "node_modules/*",
+
+    "client/*",
+    "etc/*",
+    "public/*",
+    "stylesheets/*",
+    "templates/*",
+    "test/*",
+    "vendor/*",
+
+    "*.log"
+  ],
+  "watch": [
+    "server/*",
+
+    "config/*.json",
+    "config/*.coffee",
+
+    "lib/*",
+
+    "*.js",
+    "*.json",
+    "*.coffee"
+  ],
+  "ext": "js json coffee",
+  "verbose": false
+}

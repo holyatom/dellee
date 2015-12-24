@@ -1,0 +1,22 @@
+html,
+body
+  height: 100%
+
+html
+  not-selectable()
+
+body
+  font-family: $main_font_family
+
+input
+  width: 100%
+  box-sizing: border-box
+
+textarea
+  width: 100%
+  box-sizing: border-box
+  resize: vertical
+
+button, textarea, input
+  &:focus
+    outline: none

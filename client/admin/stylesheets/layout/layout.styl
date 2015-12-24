@@ -1,0 +1,30 @@
+#app-node
+  height: 100%
+
+.layout
+  display: flex
+  flex-direction: column
+  align-items: stretch
+  justify-content: center
+  min-height: 100%
+
+  .l-wrapper
+    flex: 1 0 auto
+
+  .l-top,
+  .l-bottom
+    flex: 1 0 40px
+
+.container
+  margin: 0 auto
+  padding: 0 15px
+  max-width: $site_width
+
+.selectable
+  selectable()
+
+.not-selectable
+  not-selectable()
+
+.block
+  display: block

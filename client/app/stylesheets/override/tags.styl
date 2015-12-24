@@ -1,0 +1,38 @@
+html,
+body
+  height: 100%
+
+html
+  not-selectable()
+
+body
+  font-family: $main_font_family
+  font-weight: 300
+
+a
+  color: $main_link_color
+  text-decoration: none
+
+  &:hover
+    text-decoration: underline
+
+input
+  width: 100%
+  box-sizing: border-box
+
+textarea
+  width: 100%
+  box-sizing: border-box
+  resize: vertical
+
+button, textarea, input
+  &:focus
+    outline: none
+
+b,
+strong,
+h1,
+h2,
+h3,
+h4
+  font-weight: 400
