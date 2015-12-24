@@ -1,0 +1,19 @@
+# Generated static stuf
+/public/assets/*
+/public/static/*
+
+# Dependency directory
+/node_modules
+
+# Users Environment Variables
+/.idea/*
+
+# MacOS bullshit
+.DS_Store
+
+# Local config
+config/development.*
+config/client/development.*
+
+# Local folders
+/sandbox

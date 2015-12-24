@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>Dellee</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+    <meta name="title" content="Dellee">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    {{!-- TODO: Add OG tags --}}
+    {{!-- <meta property="og:title" content="Dellee">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="{{config.base_url}}/images/dellee_og_830x830.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="830">
+    <meta property="og:image:height" content="830">
+    <meta property="og:image" content="{{config.base_url}}/images/dellee_og_1200x630.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630"> --}}
+
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+
+    <link rel="stylesheet" href="{{getAsset 'app.css'}}">
+  </head>
+  <body>
+    <div id="app-node"></div>
+    <script>
+      window.app = {
+        config: {{{JSON.stringify config._app}}}
+      };
+    </script>
+    <script src="{{getAsset 'app.vendor.js'}}"></script>
+    <script src="{{getAsset 'app.js'}}"></script>
+  </body>
+</html>
