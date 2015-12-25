@@ -3,10 +3,10 @@ CrudController = require('admin/base/crud_controller')
 
 
 module.exports = class SalesController extends CrudController
-  controllerRoot: '/shop-sales'
+  controllerRoot: '/sales'
 
-  Collection: require('../sales/sales_collection')
-  Model: require('../sales/sale_model')
+  Collection: require('./sales_collection')
+  Model: require('./sale_model')
 
   FormView: require('./sale_form')
-  ListView: require('../sales/sales_list')
+  ListView: require('./sales_list')

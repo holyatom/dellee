@@ -31,6 +31,9 @@ module.exports = class Router extends BaseRouter
   shopAdminRoute: (url, action) ->
     @route(url, @auth, @requireRole('shopadmin', strict: true), action)
 
+  moderatorRoute: (url, action) ->
+    @route(url, @auth, @requireRole('moderator'), action)
+
   router: ->
     @route('/admin', @notAuth, 'home.index')
     @route('/admin/dashboard', @auth, 'dashboard.index')
@@ -47,6 +50,10 @@ module.exports = class Router extends BaseRouter
     @shopAdminRoute('/admin/shop-sales/create', 'shop_sales.create')
     @shopAdminRoute('/admin/shop-sales/:id', 'shop_sales.edit')
 
+    @moderatorRoute('/admin/sales', 'sales.index')
+    @moderatorRoute('/admin/sales/create', 'sales.create')
+    @moderatorRoute('/admin/sales/:id', 'sales.edit')
+
     @route('/admin/*', 'error.notFound')
 
 if process.browser
@@ -57,3 +64,4 @@ if process.browser
     users: require('./sections/users/users_controller')
     shops: require('./sections/shops/shops_controller')
     shop_sales: require('./sections/shop_sales/sales_controller')
+    sales: require('./sections/sales/sales_controller')

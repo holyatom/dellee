@@ -35,6 +35,18 @@ module.exports = class Header extends Component
           }
 
           {
+            if profile.is('moderator')
+              <ul className="nav navbar-nav">
+                <li className="dropdown">
+                  <a href="javascript:void(0);" className="dropdown-toggle" data-toggle="dropdown">Модерация <span className="caret"></span></a>
+                  <ul className="dropdown-menu">
+                    <li><a href="/admin/sales">Акции</a></li>
+                  </ul>
+                </li>
+              </ul>
+          }
+
+          {
             if profile.is('admin')
               <ul className="nav navbar-nav">
                 <li className="dropdown">
