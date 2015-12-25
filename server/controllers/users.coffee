@@ -5,11 +5,11 @@ class UsersController extends ModelController
   logPrefix: '[users controller]'
   urlPrefix: '/users'
 
-  actions: ['create']
-
   Model: require('../models/user')
 
-  keyField: 'username'
+  actions: ['create', 'list', 'get']
+
+  listFields: ['_id', 'username', 'role', 'created']
 
   # Create user
   create: (req, res, next) ->

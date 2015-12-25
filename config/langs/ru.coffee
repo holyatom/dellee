@@ -5,6 +5,7 @@ module.exports =
     not_found: 'Ресурс не найден'
 
     required: 'Обязательное поле'
+    unique: 'Поле должно быть уникальным'
     shorter_than_allowed: '%s слишком короткий ввод'
     longer_than_allowed: '%s слишком длинный ввод'
     bad_email: 'Неправельный email адрес'

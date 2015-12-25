@@ -5,7 +5,7 @@ profile = require('../modules/profile')
 
 
 module.exports = class HomeView extends Form
-  title: -> 'Dellee • Админ панель'
+  title: -> 'Dellee • Вход в Админ панель'
 
   initState: ->
     model: {}

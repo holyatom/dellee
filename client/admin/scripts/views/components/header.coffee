@@ -24,9 +24,9 @@ module.exports = class Header extends Component
         <div className="collapse navbar-collapse" id="navigation">
           <ul className="nav navbar-nav">
             <li className="dropdown">
-              <a href="javascript:void(0);" className="dropdown-toggle" data-toggle="dropdown">Магазин <span className="caret"></span></a>
+              <a href="javascript:void(0);" className="dropdown-toggle" data-toggle="dropdown">Управление <span className="caret"></span></a>
               <ul className="dropdown-menu">
-                <li><a href="/admin/notifications">Оповещения</a></li>
+                <li><a href="/admin/users">Пользователи</a></li>
               </ul>
             </li>
           </ul>
