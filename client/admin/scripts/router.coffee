@@ -26,6 +26,10 @@ module.exports = class Router extends BaseRouter
     @use('/admin/users/create', @auth)
     @use('/admin/users/:id', @auth)
 
+    @use('/admin/shops', @auth)
+    @use('/admin/shops/create', @auth)
+    @use('/admin/shops/:id', @auth)
+
   router: ->
     @route('/admin', 'home.index')
     @route('/admin/dashboard', 'dashboard.index')
@@ -33,6 +37,10 @@ module.exports = class Router extends BaseRouter
     @route('/admin/users', 'users.index')
     @route('/admin/users/create', 'users.create')
     @route('/admin/users/:id', 'users.edit')
+
+    @route('/admin/shops', 'shops.index')
+    @route('/admin/shops/create', 'shops.create')
+    @route('/admin/shops/:id', 'shops.edit')
 
     @route('/admin/*', 'notFound.index')
 
@@ -42,3 +50,4 @@ if process.browser
     dashboard: require('./controllers/dashboard')
     notFound: require('./controllers/not_found')
     users: require('./controllers/users')
+    shops: require('./controllers/shops')
