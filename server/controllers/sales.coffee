@@ -17,7 +17,6 @@ class SalesController extends ModelController
     shop: ['_id', 'name', 'slug']
 
   get: (req, res, next) ->
-    console.log("GET", req.modelItem.shop, req.adminUser.shop)
     if not req.modelItem.shop.equals(req.adminUser.shop)  and req.adminUser.role is 'shopadmin'
       return @notFound(res)
 
