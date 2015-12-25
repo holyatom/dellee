@@ -18,36 +18,24 @@ module.exports = class Router extends BaseRouter
     return @page.redirect('/admin/dashboard') if profile.authorized()
     next()
 
-  middleware: ->
-    @use('/admin', @notAuth)
-    @use('/admin/dashboard', @auth)
-
-    @use('/admin/users', @auth)
-    @use('/admin/users/create', @auth)
-    @use('/admin/users/:id', @auth)
-
-    @use('/admin/shops', @auth)
-    @use('/admin/shops/create', @auth)
-    @use('/admin/shops/:id', @auth)
-
   router: ->
-    @route('/admin', 'home.index')
-    @route('/admin/dashboard', 'dashboard.index')
+    @route('/admin', @notAuth, 'home.index')
+    @route('/admin/dashboard', @auth, 'dashboard.index')
 
-    @route('/admin/users', 'users.index')
-    @route('/admin/users/create', 'users.create')
-    @route('/admin/users/:id', 'users.edit')
+    @route('/admin/users', @auth, 'users.index')
+    @route('/admin/users/create', @auth, 'users.create')
+    @route('/admin/users/:id', @auth, 'users.edit')
 
-    @route('/admin/shops', 'shops.index')
-    @route('/admin/shops/create', 'shops.create')
-    @route('/admin/shops/:id', 'shops.edit')
+    @route('/admin/shops', @auth, 'shops.index')
+    @route('/admin/shops/create', @auth, 'shops.create')
+    @route('/admin/shops/:id', @auth, 'shops.edit')
 
-    @route('/admin/*', 'notFound.index')
+    @route('/admin/*', 'error.notFound')
 
 if process.browser
   Router::controllers =
-    home: require('./controllers/home')
-    dashboard: require('./controllers/dashboard')
-    notFound: require('./controllers/not_found')
-    users: require('./controllers/users')
-    shops: require('./controllers/shops')
+    home: require('./sections/home/home_controller')
+    dashboard: require('./sections/dashboard/dashboard_controller')
+    error: require('./sections/error/error_controller')
+    users: require('./sections/users/users_controller')
+    shops: require('./sections/shops/shops_controller')

@@ -1,4 +1,4 @@
-Collection = require('../base/collection')
+Collection = require('admin/base/collection')
 
 
 module.exports = class UsersCollection extends Collection

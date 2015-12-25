@@ -1,6 +1,6 @@
 React = require('react')
 ReactDOM = require('react-dom')
-ErrorView = require('../views/error')
+ErrorView = require('../sections/error/error_view')
 
 appNode = document.getElementById('app-node')
 titleNode =  document.getElementsByTagName('title')[0]

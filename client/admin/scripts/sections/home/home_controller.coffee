@@ -1,6 +1,6 @@
 React = require('react')
-Controller = require('../base/controller')
-HomeView = require('../views/home')
+Controller = require('admin/base/controller')
+HomeView = require('./home_view')
 
 
 module.exports = class HomeControlller extends Controller

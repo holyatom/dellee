@@ -1,7 +1,7 @@
 React = require('react')
-Form = require('../base/form')
-Footer = require('./components/footer')
-profile = require('../modules/profile')
+Form = require('admin/base/form')
+Footer = require('admin/components/footer')
+profile = require('admin/modules/profile')
 
 
 module.exports = class HomeView extends Form
