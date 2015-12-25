@@ -7,6 +7,8 @@ module.exports = class UserView extends ModelForm
   title: -> if @state.model._id then 'Редактирование пользователя' else 'Создание пользователя'
 
   render: ->
+    { shops } = @props.data
+
     <Layout>
       <header className="page-header">
         <div className="row">
@@ -40,14 +42,29 @@ module.exports = class UserView extends ModelForm
         <div className="form-group">
           <label htmlFor="inputRole" className="col-md-2 control-label">Роль</label>
           <div className="col-md-10">
-            <select valueLink={@stateLink('model.role')} className="form-control" id="inputRole" placeholder="роль">
-              <option value="">Выберите поле</option>
+            <select valueLink={@stateLink('model.role')} className="form-control" id="inputRole">
+              <option value="">Выберите роль</option>
               <option value="admin">Админ</option>
               <option value="moderator">Модератор</option>
-              <option value="shop">Магазин</option>
+              <option value="shopadmin">Администратор магазина</option>
             </select>
           </div>
         </div>
+
+        {
+          if @state.model.role is 'shopadmin'
+            <div className="form-group">
+              <label htmlFor="inputShop" className="col-md-2 control-label">Магазин</label>
+              <div className="col-md-10">
+                <select valueLink={@stateLink('model.shop._id')} className="form-control" id="inputShop">
+                  <option value="">Выберите магазин</option>
+                  {shops.collection.map((shop, index) ->
+                    <option key={index} value={shop._id}>{shop.name}</option>
+                  )}
+                </select>
+              </div>
+            </div>
+        }
 
         <div className="text-right">
           <button className="btn btn-success" type="submit">Сохранить</button>

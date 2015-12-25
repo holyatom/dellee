@@ -19,7 +19,12 @@ schema = Schema(
   role:
     type: String
     required: v.required()
-    enum: v.enum(['admin', 'moderator', 'shop'])
+    enum: v.enum(['admin', 'moderator', 'shopadmin'])
+
+  shop:
+    type: mongoose.Schema.Types.ObjectId
+    ref: 'Shop'
+    set: (val) -> if val._id? then val._id else val
 
   created:
     type: Date

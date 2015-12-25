@@ -20,9 +20,11 @@ module.exports = class ModelController extends Controller
   DEFAULT_ORDER: '_id'
 
   # Overide in child
+  joins: null
   filterableFields: null
   sortableFields: null
   listFields: null
+  listJoins: null
 
   router: ->
     throw new Error('Actions are not specified') unless @actions
@@ -46,7 +48,14 @@ module.exports = class ModelController extends Controller
 
   # Get model
   get: (req, res, next) ->
-    @mapDoc?(req, res, next, req.modelItem) or res.json(req.modelItem.toJSON())
+    if @joins
+      opts = (path: name, select: fields.join(' ') for name, fields of @joins)
+
+      @Model.populate req.modelItem, opts, (err, doc) =>
+        return next(err) if err
+        @mapDoc?(req, res, next, doc) or res.json(doc.toJSON())
+    else
+      @mapDoc?(req, res, next, req.modelItem) or res.json(req.modelItem.toJSON())
 
   ModelController::get.url = '/:id'
 
@@ -60,7 +69,8 @@ module.exports = class ModelController extends Controller
 
       model.save (err, doc) =>
         return next(err) if err
-        @mapDoc?(req, res, next, doc) or res.json(doc.toJSON())
+        req.modelItem = doc
+        @get(req, res, next)
 
   ModelController::create.type = 'post'
 
@@ -88,6 +98,8 @@ module.exports = class ModelController extends Controller
       .skip((opts.page - 1) * opts.perPage)
       .limit(opts.perPage)
       .lean()
+
+    @populateQuery(collectionQuery, @listJoins) if @listJoins
 
     Q.all([
       collectionQuery.exec()
@@ -120,6 +132,10 @@ module.exports = class ModelController extends Controller
 
 
   # Helpers
+  populateQuery: (query, joins) ->
+    for name, fields of joins
+      query.populate(name, fields.join(' '))
+
   getListOptions: (req) ->
     opts =
       page: parseInt(req.query.page, 10) or @DEFAULT_PAGE
