@@ -1,4 +1,5 @@
 _ = require('lodash')
+Q = require('q')
 Controller = require('./controller')
 
 
@@ -12,8 +13,20 @@ module.exports = class ModelController extends Controller
 
   keyField: '_id'
 
+  DEFAULT_PAGE: 1
+  DEFAULT_PERPAGE: 20
+  MAX_PERPAGE: 100
+
+  DEFAULT_ORDER: '_id'
+
+  # Overide in child
+  filterableFields: null
+  sortableFields: null
+  listFields: null
+
   router: ->
     throw new Error('Actions are not specified') unless @actions
+    throw new Error('List fields are not specified') if not @listFields and 'list' in @actions
 
     baseUrl = "#{@apiPrefix}#{@urlPrefix}"
 
@@ -62,6 +75,37 @@ module.exports = class ModelController extends Controller
   ModelController::delete.url = '/:id'
 
 
+  # Collection list
+  list: (req, res, next) ->
+    opts = @getListOptions(req)
+
+    countQuery = @Model.count(opts.filters)
+
+    collectionQuery = @Model
+      .find(opts.filters)
+      .select(opts.select)
+      .sort(opts.order)
+      .skip((opts.page - 1) * opts.perPage)
+      .limit(opts.perPage)
+      .lean()
+
+    Q.all([
+      collectionQuery.exec()
+      countQuery.exec()
+    ])
+    .then ([collection, count]) =>
+      data =
+        collection: collection
+        total: count
+        page: opts.page
+        per_page: opts.perPage
+
+      @mapList?(req, res, data) or res.json(data)
+
+    .fail (err) =>
+      next(err)
+
+
   # Middlewares
   getModelItem: (req, res, next) ->
     filter = {}
@@ -73,3 +117,46 @@ module.exports = class ModelController extends Controller
 
       req.modelItem = doc
       next()
+
+
+  # Helpers
+  getListOptions: (req) ->
+    opts =
+      page: parseInt(req.query.page, 10) or @DEFAULT_PAGE
+      perPage: parseInt(req.query.per_page, 10) or @DEFAULT_PERPAGE
+
+      order: @DEFAULT_ORDER
+      filters: {}
+      select: @listFields.join(' ')
+
+    opts.select += ' -_id' unless '_id' in @listFields
+
+    opts.perPage = Math.min(opts.perPage, @MAX_PERPAGE)
+
+    if req.query.order and @sortableFields
+      opts.order = @getListOrder(req) or opts.order
+
+    if @filterableFields
+      opts.filters = @getListFilters(req)
+
+    opts
+
+  getListOrder: (req) ->
+    { order } = req.query
+    field = if _.startsWith(order, '-') then order.substr(1) else order
+
+    return order if field in @sortableFields
+
+  getListFilters: (req) ->
+    filters = {}
+
+    for key, value of query when _.startsWith(key, '_')
+      field = key.substr(1)
+      [field, operation] = field.split('__') if field.indexOf('__')
+
+      continue unless field in @filterableFields
+
+      if operation is 'contains'
+        value = $regex: value, $options: 'i'
+
+      filters[field] = value

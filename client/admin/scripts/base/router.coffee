@@ -1,9 +1,19 @@
+_ = require('lodash')
 page = require('page')
 vent = require('../modules/vent')
 
 
 module.exports = class Router
   page: page
+
+  defaults:
+    force: false
+
+  contructor: ->
+    @resetOptions()
+
+  resetOptions: ->
+    @options = _.clone(@defaults)
 
   run: ->
     @page('*', @createQuery);
@@ -15,7 +25,8 @@ module.exports = class Router
 
     vent.on('navigate', @routeTo)
 
-  routeTo: (url) =>
+  routeTo: (url, opts) =>
+    _.extend(@options, opts)
     @page(url)
 
   use: (args...) ->
@@ -40,13 +51,14 @@ module.exports = class Router
         @afterRoute(ctx)
 
   beforeRoute: (ctx) ->
-    @ctor?.destroy()
+    @ctor?.destroy(force: @options.force)
     @ctor = null
 
     vent.trigger('route:before', ctx)
 
   afterRoute: (ctx) ->
     vent.trigger('route:after', ctx)
+    @resetOptions()
 
   createQuery: (ctx, next) =>
     ctx.query = {}

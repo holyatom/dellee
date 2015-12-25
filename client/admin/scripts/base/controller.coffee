@@ -10,9 +10,12 @@ module.exports = class Controller
   constructor: ->
     @xhrs = {}
 
-  destroy: ->
+  destroy: (opts = {}) ->
     for key, xhr of @xhrs
-      xhr.abort() if xhr.status isnt 4
+      xhr.abort?() if xhr.status isnt 4
+
+    if opts.force
+      ReactDOM.unmountComponentAtNode(appNode)
 
   renderView: (View, callback) ->
     view = ReactDOM.render(View, appNode, callback)
@@ -20,4 +23,4 @@ module.exports = class Controller
 
   renderErrorView: (xhr, callback) ->
     return if xhr.readyState is 0
-    @renderView(<ErrorView />, callback)
+    @view = @renderView(<ErrorView />, callback)

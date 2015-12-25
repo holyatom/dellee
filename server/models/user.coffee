@@ -1,9 +1,10 @@
 mongoose = require('mongoose')
 v = require('lib/validators')
 bcrypt = require('bcryptjs')
+Schema = require('../base/schema')
 
 
-schema = new mongoose.Schema(
+schema = Schema(
   username:
     type: String
     unique: true
@@ -35,11 +36,10 @@ schema.methods.comparePassword = (password) ->
   bcrypt.compareSync(password, @password)
 
 schema.methods.toJSON = ->
-  json = @toObject()
-  delete json._id
-  delete json.__v
-  delete json.password
+    json = @toObject()
+    delete json.__v
+    delete json.password
 
-  json
+    json
 
 module.exports = mongoose.model('User', schema)

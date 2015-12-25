@@ -22,9 +22,17 @@ module.exports = class Router extends BaseRouter
     @use('/admin', @notAuth)
     @use('/admin/dashboard', @auth)
 
+    @use('/admin/users', @auth)
+    @use('/admin/users/create', @auth)
+    @use('/admin/users/:id', @auth)
+
   router: ->
     @route('/admin', 'home.index')
     @route('/admin/dashboard', 'dashboard.index')
+
+    @route('/admin/users', 'users.index')
+    @route('/admin/users/create', 'users.create')
+    @route('/admin/users/:id', 'users.edit')
 
     @route('/admin/*', 'notFound.index')
 
@@ -33,3 +41,4 @@ if process.browser
     home: require('./controllers/home')
     dashboard: require('./controllers/dashboard')
     notFound: require('./controllers/not_found')
+    users: require('./controllers/users')

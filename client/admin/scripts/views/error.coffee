@@ -1,5 +1,6 @@
 React = require('react')
 Component = require('../base/component')
+Footer = require('./components/footer')
 
 
 module.exports = class ErrorView extends Component
@@ -9,7 +10,7 @@ module.exports = class ErrorView extends Component
     <div className="p-error layout">
       <div className="l-top"></div>
       <div>
-        <div className="container">
+        <div className="container text-center">
           <h1>Error</h1>
         </div>
       </div>

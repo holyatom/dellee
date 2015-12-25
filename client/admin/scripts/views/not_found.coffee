@@ -10,7 +10,7 @@ module.exports = class NotFoundView extends Component
     <div className="p-error layout">
       <div className="l-top"></div>
       <div>
-        <div className="container">
+        <div className="container text-center">
           <h1>Not Found</h1>
         </div>
       </div>
