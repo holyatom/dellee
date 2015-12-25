@@ -32,12 +32,14 @@ module.exports = class Router
   use: (args...) ->
     @page(args...)
 
-  route: (url, action) ->
+  route: (url, middlewares..., action) ->
     [ctrl, method] = action.split('.')
     Controller = @controllers[ctrl]
 
     throw new Error("undefined controller '#{ctrl}'") unless Controller
     throw new Error("undefined method '#{method}' of 'ctrl' controller") unless Controller::[method]
+
+    @page(url, middleware) for middleware in middlewares
 
     @page url, (ctx) =>
       @beforeRoute(ctx)

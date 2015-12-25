@@ -1,6 +1,6 @@
 React = require('react')
-ModelForm = require('../base/model_form')
-Layout = require('./components/layout')
+ModelForm = require('admin/base/model_form')
+Layout = require('admin/components/layout')
 
 
 module.exports = class ShopView extends ModelForm

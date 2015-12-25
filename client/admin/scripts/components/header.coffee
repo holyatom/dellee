@@ -1,6 +1,6 @@
 React = require('react')
-Component = require('../../base/component')
-profile = require('../../modules/profile')
+Component = require('../base/component')
+profile = require('../modules/profile')
 
 
 module.exports = class Header extends Component

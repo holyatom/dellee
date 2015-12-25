@@ -1,6 +1,6 @@
 React = require('react')
-Component = require('../base/component')
-Layout = require('./components/layout')
+Component = require('admin/base/component')
+Layout = require('admin/components/layout')
 
 
 module.exports = class DashboardView extends Component

@@ -1,8 +1,8 @@
 React = require('react')
-Controller = require('../base/controller')
-NotFoundView = require('../views/not_found')
+Controller = require('admin/base/controller')
+NotFoundView = require('./not_found_view')
 
 
 module.exports = class NotFoundConntroller extends Controller
-  index: (ctx, done) ->
+  notFound: (ctx, done) ->
     @renderView(<NotFoundView />, done)

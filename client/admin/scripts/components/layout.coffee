@@ -1,5 +1,5 @@
 React = require('react')
-Component = require('../../base/component')
+Component = require('../base/component')
 Footer = require('./footer')
 Header = require('./header')
 

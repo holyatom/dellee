@@ -1,6 +1,6 @@
 React = require('react')
-Controller = require('../base/controller')
-DashboardView = require('../views/dashboard')
+Controller = require('admin/base/controller')
+DashboardView = require('./dashboard_view')
 
 
 module.exports = class DashboardControlller extends Controller
