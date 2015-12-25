@@ -24,6 +24,10 @@ class Profile extends Model
     headers = 'x-access-admin-token': @get('token').value
     $.ajaxSetup({ headers })
 
+  unsetTokenHeaders: ->
+    headers = 'x-access-admin-token': ''
+    $.ajaxSetup({ headers })
+
   reset: ->
     @destroy()
     @clear(silent: true)
@@ -45,6 +49,7 @@ class Profile extends Model
   logout: =>
     @reset()
     session.reset()
+    @unsetTokenHeaders()
     vent.trigger('user:logout')
 
   authorized: -> !!@id
