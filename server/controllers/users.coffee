@@ -40,6 +40,8 @@ class UsersController extends ModelController
   UsersController::create.type = 'post'
   UsersController::create.adminRoles = ['admin']
 
+  list: -> super
+
   UsersController::list.adminRoles = ['admin']
 
 module.exports = new UsersController()

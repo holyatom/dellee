@@ -41,8 +41,7 @@ class AdminAuthController extends ModelController
 
       if doc and doc.comparePassword(password)
         user = doc.toJSON()
-        user.token = @generateToken(user)
-        res.json(user)
+        res.json(token: @generateToken(user))
       else
         @error(res, username: 'wrong_login_or_password')
 

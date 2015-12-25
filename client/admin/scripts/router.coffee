@@ -18,15 +18,18 @@ module.exports = class Router extends BaseRouter
     return @page.redirect('/admin/dashboard') if profile.authorized()
     next()
 
-  requireRole: (role) ->
+  requireRole: (role, opts) ->
     (ctx, next) =>
-      unless profile.is(role)
+      unless profile.is(role, opts)
         @page.redirect('/admin/dashboard')
       else
         next()
 
   adminRoute: (url, action) ->
     @route(url, @auth, @requireRole('admin'), action)
+
+  shopAdminRoute: (url, action) ->
+    @route(url, @auth, @requireRole('shopadmin', strict: true), action)
 
   router: ->
     @route('/admin', @notAuth, 'home.index')
@@ -40,6 +43,10 @@ module.exports = class Router extends BaseRouter
     @adminRoute('/admin/shops/create', 'shops.create')
     @adminRoute('/admin/shops/:id', 'shops.edit')
 
+    @shopAdminRoute('/admin/shop-sales', 'shop_sales.index')
+    @shopAdminRoute('/admin/shop-sales/create', 'shop_sales.create')
+    @shopAdminRoute('/admin/shop-sales/:id', 'shop_sales.edit')
+
     @route('/admin/*', 'error.notFound')
 
 if process.browser
@@ -49,3 +56,4 @@ if process.browser
     error: require('./sections/error/error_controller')
     users: require('./sections/users/users_controller')
     shops: require('./sections/shops/shops_controller')
+    shop_sales: require('./sections/shop_sales/sales_controller')

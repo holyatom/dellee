@@ -19,7 +19,7 @@ class Profile extends Model
       @set({ _id })
       @fetch()
       @setTokenHeaders()
-      @fetch(ajaxSync: true).fail(@logout)
+      @fetch(ajaxSync: true).then(=> @save()).fail(@logout)
 
   setTokenHeaders: ->
     headers = 'x-access-admin-token': @get('token').value
@@ -36,13 +36,15 @@ class Profile extends Model
     @save()
 
   login: (data) ->
-    dfd = @$(type: 'post', url: "#{@apiRoot}/admin-auth", data: data)
-
-    dfd.then (profile) =>
-      @set({ timestamp: Date.now() }, silent: true)
-      @save(profile)
-      session.set(user_id: @id)
+    dfd = @$(type: 'post', url: "#{@apiRoot}/admin-auth", data: data).then (resp) =>
+      @set(token: resp.token, silent: true)
       @setTokenHeaders()
+
+      @fetch(ajaxSync: true)
+    .then =>
+      @set({ timestamp: Date.now() }, silent: true)
+      @save()
+      session.set(user_id: @id)
       vent.trigger('user:login')
 
     dfd

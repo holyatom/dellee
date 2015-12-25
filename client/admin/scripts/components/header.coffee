@@ -23,6 +23,18 @@ module.exports = class Header extends Component
 
         <div className="collapse navbar-collapse" id="navigation">
           {
+            if profile.is('shopadmin', strict: true)
+              <ul className="nav navbar-nav">
+                <li className="dropdown">
+                  <a href="javascript:void(0);" className="dropdown-toggle" data-toggle="dropdown">Магазин ({ profile.get('shop').name }) <span className="caret"></span></a>
+                  <ul className="dropdown-menu">
+                    <li><a href="/admin/shop-sales">Акции</a></li>
+                  </ul>
+                </li>
+              </ul>
+          }
+
+          {
             if profile.is('admin')
               <ul className="nav navbar-nav">
                 <li className="dropdown">
