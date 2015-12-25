@@ -5,6 +5,9 @@ class UsersController extends ModelController
   logPrefix: '[users controller]'
   urlPrefix: '/users'
 
+  adminAuth: true
+  adminRoles: ['admin']
+
   Model: require('../models/user')
 
   actions: ['create', 'list', 'get']

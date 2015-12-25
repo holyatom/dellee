@@ -32,6 +32,9 @@ module.exports = class ModelController extends Controller
 
     baseUrl = "#{@apiPrefix}#{@urlPrefix}"
 
+    @_router.use(baseUrl, @middlewares.adminAuth) if @adminAuth
+    @_router.use(baseUrl, @middlewares.adminRole(@adminRoles)) if @adminRoles
+
     for action in @actions
       handlers = []
       handler = @[action]
@@ -40,6 +43,8 @@ module.exports = class ModelController extends Controller
       handlerUrl = handler.url or ''
       url = "#{baseUrl}#{handlerUrl}"
 
+      handlers.push(@middlewares.adminAuth) if handler.adminAuth
+      handlers.push(@middlewares.adminRole(handler.adminRoles)) if handler.adminRoles
       handlers.push(@getModelItem) if handlerUrl.indexOf('/:id') >= 0
       handlers.push(handler)
 

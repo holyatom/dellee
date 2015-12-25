@@ -22,15 +22,18 @@ module.exports = class Header extends Component
         </div>
 
         <div className="collapse navbar-collapse" id="navigation">
-          <ul className="nav navbar-nav">
-            <li className="dropdown">
-              <a href="javascript:void(0);" className="dropdown-toggle" data-toggle="dropdown">Управление <span className="caret"></span></a>
-              <ul className="dropdown-menu">
-                <li><a href="/admin/users">Пользователи</a></li>
-                <li><a href="/admin/shops">Магазины</a></li>
+          {
+            if profile.is('admin')
+              <ul className="nav navbar-nav">
+                <li className="dropdown">
+                  <a href="javascript:void(0);" className="dropdown-toggle" data-toggle="dropdown">Управление <span className="caret"></span></a>
+                  <ul className="dropdown-menu">
+                    <li><a href="/admin/users">Пользователи</a></li>
+                    <li><a href="/admin/shops">Магазины</a></li>
+                  </ul>
+                </li>
               </ul>
-            </li>
-          </ul>
+          }
 
           <ul className="nav navbar-nav navbar-right">
             <li className="dropdown">

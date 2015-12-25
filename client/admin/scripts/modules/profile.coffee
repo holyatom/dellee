@@ -54,9 +54,9 @@ class Profile extends Model
 
   authorized: -> !!@id
 
-  is: (role) ->
+  is: (role, opts = {}) ->
     _role = @get('role')
-    _role is role or _role is 'admin'
+    _role is role or (_role is 'admin' and not opts.strict)
 
 if process.browser
   Profile::localStorage = new Backbone.LocalStorage('admin:user')

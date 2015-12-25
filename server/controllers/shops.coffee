@@ -7,6 +7,9 @@ class ShopsController extends ModelController
   logPrefix: '[shops controller]'
   urlPrefix: '/shops'
 
+  adminAuth: true
+  adminRoles: ['admin']
+
   Model: require('../models/shop')
 
   actions: ['create', 'list', 'get']
