@@ -6,19 +6,20 @@ Model = require('../base/model')
 
 
 class Profile extends Model
-  idAttribute: 'username'
+  resourceUrl: '/users/profile'
 
   defaults:
-    username: 0
+    _id: 0
     timestamp: 0
 
   initialize: ->
     return unless process.browser
 
-    if username = session.get('user_username')
-      @set({ username })
+    if _id = session.get('user_id')
+      @set({ _id })
       @fetch()
       @setTokenHeaders()
+      @fetch(ajaxSync: true).fail(@logout)
 
   setTokenHeaders: ->
     headers = 'x-access-admin-token': @get('token').value
@@ -40,7 +41,7 @@ class Profile extends Model
     dfd.then (profile) =>
       @set({ timestamp: Date.now() }, silent: true)
       @save(profile)
-      session.set(user_username: @id)
+      session.set(user_id: @id)
       @setTokenHeaders()
       vent.trigger('user:login')
 

@@ -6,7 +6,6 @@ class UsersController extends ModelController
   urlPrefix: '/users'
 
   adminAuth: true
-  adminRoles: ['admin']
 
   Model: require('../models/user')
 
@@ -15,6 +14,10 @@ class UsersController extends ModelController
   listFields: ['_id', 'username', 'role', 'created']
   joins:
     shop: ['_id', 'name', 'slug']
+
+  getModelItem: (req, res, next) ->
+    req.params.id = req.adminUser._id if req.params.id is 'profile'
+    super
 
   # Create user
   create: (req, res, next) ->
@@ -35,5 +38,8 @@ class UsersController extends ModelController
       super(req, res, next)
 
   UsersController::create.type = 'post'
+  UsersController::create.adminRoles = ['admin']
+
+  UsersController::list.adminRoles = ['admin']
 
 module.exports = new UsersController()
