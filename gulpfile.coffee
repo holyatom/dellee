@@ -29,15 +29,16 @@ APP_VENDOR = [
 ]
 
 ADMIN_VENDOR = [
-  'jquery'
   'backbone'
   'backbone.localstorage'
+  'bootstrap'
   'classnames'
   'lodash'
   'page'
   'react'
   'react/lib/ReactLink'
   'react-dom'
+  'jquery'
 ]
 
 SYMLINKS =

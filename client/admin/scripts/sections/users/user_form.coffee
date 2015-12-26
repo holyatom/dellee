@@ -16,7 +16,7 @@ module.exports = class UserView extends ModelForm
           {
             if @state.model._id
               <div className="col-xs-6 col-md-4 text-right">
-                <button className="btn btn-danger">Удалить</button>
+                <button onClick={@handleDelete} className="btn btn-danger">Удалить</button>
               </div>
           }
         </div>

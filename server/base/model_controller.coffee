@@ -25,10 +25,12 @@ module.exports = class ModelController extends Controller
   sortableFields: null
   listFields: null
   listJoins: null
+  updateFields: null
 
   router: ->
     throw new Error('Actions are not specified') unless @actions
     throw new Error('List fields are not specified') if not @listFields and 'list' in @actions
+    throw new Error('Update fields are not specified') if not @updateFields and 'update' in @actions
 
     baseUrl = "#{@apiPrefix}#{@urlPrefix}"
 
@@ -79,6 +81,21 @@ module.exports = class ModelController extends Controller
 
   ModelController::create.type = 'post'
 
+
+  # Update model
+  update: (req, res, next) ->
+    fields = _.pick(req.body, @updateFields)
+    req.modelItem.set(fields)
+
+    req.modelItem.validate (err) =>
+      return @error(res, err.errors) if err
+
+      req.modelItem.save (err) =>
+        return next(err) if err
+        @get(req, res, next)
+
+  ModelController::update.type = 'put'
+  ModelController::update.url = '/:id'
 
   # Delete model
   delete: (req, res, next) ->

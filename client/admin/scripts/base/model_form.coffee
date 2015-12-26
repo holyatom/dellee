@@ -8,3 +8,7 @@ module.exports = class ModelForm extends Form
   handleSubmit: (event) =>
     event.preventDefault()
     @trigger('save', @state.model)
+
+  handleDelete: =>
+    if confirm('Вы уверены что хотите удалить запись?')
+      @trigger('delete', @state.model)

@@ -41,7 +41,7 @@ module.exports = class CrudController extends Controller
         controllerRoot: "/admin#{@controllerRoot}"
 
       _.extend(data, @extraData('edit'))
-      @renderView(<@FormView onSave={@updateModel} data={data} />, done)
+      @renderView(<@FormView onSave={@updateModel} onDelete={@deleteModel} data={data} />, done)
 
     .fail (xhr) =>
       @renderErrorView(xhr, done)
@@ -58,13 +58,20 @@ module.exports = class CrudController extends Controller
     .fail (xhr) =>
       @renderErrorView(xhr, done)
 
+  deleteModel: (data) =>
+    model = new @Model(data)
+    @xhrs.destroy = model.destroy()
+    @xhrs.destroy.then =>
+      vent.trigger('navigate', "/admin#{@controllerRoot}")
+
   updateModel: (data) =>
     model = new @Model(data)
     @xhrs.save = model.save()
 
   saveModel: (data) =>
     model = new @Model(data)
-    @xhrs.save = model.save().then (newModel) =>
+    @xhrs.save = model.save()
+    @xhrs.save.then (newModel) =>
       vent.trigger('navigate', "/admin#{@controllerRoot}/#{newModel._id}", force: true)
 
   # Override in child

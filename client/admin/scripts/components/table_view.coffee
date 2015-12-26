@@ -7,25 +7,28 @@ module.exports = class TableView extends Component
     { fields, fieldNames, collection, idAttribute } = @props.data.collection
     { controllerRoot } = @props.data
 
-    <table className="table table-hover">
-      <thead>
-        <tr>
-          {fields.map((field, index) ->
-            <th key={index}>{fieldNames[field] or field}</th>
-          )}
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {collection.map((item, index) ->
-          <tr key={index}>
+    if collection.length
+      <table className="table table-hover">
+        <thead>
+          <tr>
             {fields.map((field, index) ->
-              <td key={index}>{item[field]}</td>
+              <th key={index}>{fieldNames[field] or field}</th>
             )}
-            <td className="text-right">
-              <a href={"#{controllerRoot}/#{item[idAttribute]}"}>Изменить</a>
-            </td>
+            <th></th>
           </tr>
-        )}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {collection.map((item, index) ->
+            <tr key={index}>
+              {fields.map((field, index) ->
+                <td key={index}>{item[field]}</td>
+              )}
+              <td className="text-right">
+                <a href={"#{controllerRoot}/#{item[idAttribute]}"}>Изменить</a>
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    else
+      <h4>Записей не найдено</h4>

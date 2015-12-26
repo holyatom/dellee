@@ -1,5 +1,6 @@
 mongoose = require('mongoose')
 v = require('lib/validators')
+setters = require('lib/setters')
 bcrypt = require('bcryptjs')
 Schema = require('../base/schema')
 
@@ -14,7 +15,7 @@ schema = Schema(
   password:
     type: String
     required: v.required()
-    validate: [v.maxLength(20), v.minLength(6), v.alphanumeric()]
+    validate: [v.minLength(6)]
 
   role:
     type: String
@@ -24,17 +25,16 @@ schema = Schema(
   shop:
     type: mongoose.Schema.Types.ObjectId
     ref: 'Shop'
-    set: (val) -> if val._id? then val._id else val
+    set: setters.objectId
 
   created:
     type: Date
-    required: v.required()
 )
 
 schema.pre 'save', (next) ->
-  return next() if not @isModified('password') and not @isNew
+  if @isModified('password') or @isNew
+    @password = bcrypt.hashSync(@password, bcrypt.genSaltSync(10))
 
-  @password = bcrypt.hashSync(@password, bcrypt.genSaltSync(10))
   next()
 
 schema.methods.comparePassword = (password) ->
