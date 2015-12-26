@@ -64,7 +64,6 @@
     "mongoose-unique-validator": "^0.6.2",
     "morgan": "^1.6.1",
     "normalize.css": "^3.0.3",
-    "npm": "^3.5.2",
     "page": "^1.6.4",
     "parse-filepath": "^0.6.3",
     "purecss": "^0.6.0",
