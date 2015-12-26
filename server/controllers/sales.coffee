@@ -1,4 +1,7 @@
+_ = require('lodash')
+async = require('async')
 ModelController = require('../base/model_controller')
+Customer = require('../models/customer')
 sendEmail = require('../tasks/send_email')
 
 
@@ -63,11 +66,31 @@ class SalesController extends ModelController
   SalesController::update.url = '/:id'
 
   send: (sale) ->
-    sendEmail.task(
-      to: 'atomio.ak@gmail.com'
-      subject: 'Test Sale'
-      template: 'sale'
-    )
+    query = Customer
+      .find({})
+      .select('email')
+      .lean()
+
+
+    query.exec (err, collection) =>
+      if err
+        return @log("failed to add task to send \"Sale #{sale._id}: #{sale.title}\"", 'red bold')
+
+      tasks = []
+
+      for customer in collection
+        ((email)->
+          tasks.push ->
+            sendEmail.task(
+              to: email
+              subject: sale.title
+              template: 'sale'
+              context:
+                message: sale.message
+            )
+        )(customer.email)
+
+      async.parallel(tasks)
 
   getListOptions: (req) ->
     opts = super
