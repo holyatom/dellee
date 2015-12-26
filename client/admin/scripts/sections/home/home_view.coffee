@@ -23,7 +23,7 @@ module.exports = class HomeView extends Form
       <div className="l-top"></div>
       <div>
         <div className="container">
-          <h1>Dellee</h1>
+          <h1>Dellee <small>beta</small></h1>
           <h4 className="text-muted">Админ панель</h4>
           <form onSubmit={@handleSubmit}>
             <div className="form-group">

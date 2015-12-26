@@ -13,12 +13,14 @@ module.exports = class Header extends Component
 
         <div className="navbar-header">
           <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigation">
-            <span className="sr-only">Toggle navigation</span>
+            <span className="sr-only"></span>
             <span className="icon-bar"></span>
             <span className="icon-bar"></span>
             <span className="icon-bar"></span>
           </button>
-          <a className="navbar-brand" href="/admin/dashboard">Dellee</a>
+          <a className="navbar-brand" href="/admin/dashboard">
+            Dellee <small className="text-muted">beta</small>
+          </a>
         </div>
 
         <div className="collapse navbar-collapse" id="navigation">
