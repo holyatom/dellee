@@ -67,6 +67,8 @@ module.exports = class CrudController extends Controller
   updateModel: (data) =>
     model = new @Model(data)
     @xhrs.save = model.save()
+    @xhrs.save.then (updatedModel) =>
+      @view.setState(model: updatedModel)
 
   saveModel: (data) =>
     model = new @Model(data)

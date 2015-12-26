@@ -18,8 +18,8 @@ module.exports = class Controller
       ReactDOM.unmountComponentAtNode(appNode)
 
   renderView: (View, callback) ->
-    view = ReactDOM.render(View, appNode, callback)
-    titleNode.innerText = view.title()
+    @view = ReactDOM.render(View, appNode, callback)
+    titleNode.innerText = @view.title()
 
   renderErrorView: (xhr, callback) ->
     return if xhr.readyState is 0
