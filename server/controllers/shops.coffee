@@ -1,6 +1,8 @@
 utils = require('lib/utils')
+Q = require('q')
 ModelController = require('../base/model_controller')
 User = require('../models/user')
+Sale = require('../models/sale')
 
 
 class ShopsController extends ModelController
@@ -31,9 +33,14 @@ class ShopsController extends ModelController
   ShopsController::update.url = '/:id'
 
   delete: (req, res, next) ->
-    User.remove shop: req.modelItem._id, (err) =>
-      return next(err) if err
+    Q.all([
+      User.remove(shop: req.modelItem._id)
+      Sale.remove(shop: req.modelItem._id)
+    ])
+    .then =>
       super(req, res, next)
+    .fail (err) ->
+      next(err)
 
   ShopsController::delete.type = 'delete'
   ShopsController::delete.url = '/:id'
