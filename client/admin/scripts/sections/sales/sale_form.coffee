@@ -26,7 +26,7 @@ module.exports = class SaleView extends Form
           <h3 className="col-xs-6 col-md-8">{@title()}</h3>
         </div>
       </header>
-      <section className="form-horizontal">
+      <section className="c-model_form form-horizontal">
         <div className="form-group">
           <label className="col-sm-3 control-label">Статус</label>
           <div className="col-sm-9">
