@@ -19,3 +19,5 @@ module.exports =
     bad_token: 'Плохой токен'
     auth_required: 'Не авторизован'
     role_required: 'Ресурс недоступен для текущего пользователя'
+
+    invalid_sale_status: 'Невозможно перевести акцию в данный статус'

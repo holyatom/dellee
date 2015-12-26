@@ -10,7 +10,7 @@ schema = Schema(
     required: v.required()
     validate: [v.minLength(2)]
 
-  description:
+  message:
     type: String
     required: v.required()
     validate: [v.minLength(10)]
@@ -29,6 +29,15 @@ schema = Schema(
     type: Date
     required: v.required()
     set: setters.date
+
+  status:
+    type: String
+    required: v.required()
+    enum: v.enum(['pending', 'rejected', 'processed'])
+
+  status_message:
+    type: String
+    text: true
 )
 
 module.exports = mongoose.model('Sale', schema)

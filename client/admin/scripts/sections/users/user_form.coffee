@@ -23,8 +23,8 @@ module.exports = class UserView extends ModelForm
       </header>
       <form className="c-model_form form-horizontal" onSubmit={@handleSubmit}>
         <div className="form-group">
-          <label htmlFor="inputUsername" className="col-md-2 control-label">Логин</label>
-          <div className="col-md-10">
+          <label htmlFor="inputUsername" className="col-md-3 control-label">Логин</label>
+          <div className="col-md-9">
             <input valueLink={@stateLink('model.username')} type="text" className="form-control" id="inputUsername" placeholder="логин" />
           </div>
         </div>
@@ -32,16 +32,16 @@ module.exports = class UserView extends ModelForm
         {
           unless @state.model._id
             <div className="form-group">
-              <label htmlFor="inputPassword" className="col-md-2 control-label">Пароль</label>
-              <div className="col-md-10">
+              <label htmlFor="inputPassword" className="col-md-3 control-label">Пароль</label>
+              <div className="col-md-9">
                 <input valueLink={@stateLink('model.password')} type="password" className="form-control" id="inputPassword" placeholder="пароль" />
               </div>
             </div>
         }
 
         <div className="form-group">
-          <label htmlFor="inputRole" className="col-md-2 control-label">Роль</label>
-          <div className="col-md-10">
+          <label htmlFor="inputRole" className="col-md-3 control-label">Роль</label>
+          <div className="col-md-9">
             <select valueLink={@stateLink('model.role')} className="form-control" id="inputRole">
               <option value="">Выберите роль</option>
               <option value="admin">Админ</option>
@@ -54,8 +54,8 @@ module.exports = class UserView extends ModelForm
         {
           if @state.model.role is 'shopadmin'
             <div className="form-group">
-              <label htmlFor="inputShop" className="col-md-2 control-label">Магазин</label>
-              <div className="col-md-10">
+              <label htmlFor="inputShop" className="col-md-3 control-label">Магазин</label>
+              <div className="col-md-9">
                 <select valueLink={@stateLink('model.shop._id')} className="form-control" id="inputShop">
                   <option value="">Выберите магазин</option>
                   {shops.collection.map((shop, index) ->

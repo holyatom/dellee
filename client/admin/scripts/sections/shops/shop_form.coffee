@@ -21,8 +21,8 @@ module.exports = class ShopView extends ModelForm
       </header>
       <form className="c-model_form form-horizontal" onSubmit={@handleSubmit}>
         <div className="form-group">
-          <label htmlFor="inputName" className="col-md-2 control-label">Название</label>
-          <div className="col-md-10">
+          <label htmlFor="inputName" className="col-md-3 control-label">Название</label>
+          <div className="col-md-9">
             <input valueLink={@stateLink('model.name')} type="text" className="form-control" id="inputName" placeholder="название" />
           </div>
         </div>
