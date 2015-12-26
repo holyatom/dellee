@@ -71,7 +71,6 @@ class SalesController extends ModelController
       .select('email')
       .lean()
 
-
     query.exec (err, collection) =>
       if err
         return @log("failed to add task to send \"Sale #{sale._id}: #{sale.title}\"", 'red bold')
