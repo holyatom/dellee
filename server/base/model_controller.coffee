@@ -84,7 +84,7 @@ module.exports = class ModelController extends Controller
 
   # Update model
   update: (req, res, next) ->
-    fields = _.pick(req.body, @updateFields)
+    fields = @getUpdateFields(req)
     req.modelItem.set(fields)
 
     req.modelItem.validate (err) =>
@@ -157,6 +157,10 @@ module.exports = class ModelController extends Controller
   populateQuery: (query, joins) ->
     for name, fields of joins
       query.populate(name, fields.join(' '))
+
+
+  getUpdateFields: (req) ->
+    _.pick(req.body, @updateFields)
 
   getListOptions: (req) ->
     opts =

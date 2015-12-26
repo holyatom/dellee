@@ -131,8 +131,9 @@ compileCss = (opts) ->
   task = task.pipe(minifyCSS()) if opts.minify
   task = task.pipe(gulp.dest(PUBLIC_ASSETS))
 
-startServer = (opts) ->
+runNodeJs = (opts) ->
   opts = _.extend(
+    file: 'index.js'
     skipWatch: false
     envVariables: {}
   , opts)
@@ -142,7 +143,7 @@ startServer = (opts) ->
 
   command += variables.join(' ') if variables.length
   command += if opts.skipWatch then 'node' else 'nodemon'
-  command += ' index.js'
+  command += " #{opts.file}"
 
   runner = exec(command)
   proxy(runner)
@@ -154,8 +155,11 @@ gulp.task 'symlink', ->
 # DEVELOPMENT
 # ===============================================================
 
+gulp.task 'worker:dev', ->
+  runNodeJs(file: 'worker.js')
+
 gulp.task 'server:dev', ->
-  startServer()
+  runNodeJs()
 
 gulp.task 'js:app', ->
   compileJsBundle(input: './client/app/scripts/index.coffee', output: 'app.js', exclude: APP_VENDOR)
@@ -202,7 +206,7 @@ gulp.task('dev', ['server:dev', 'assets', 'watch'])
 #   compileCss(minify: true)
 
 # gulp.task 'server:prod', ->
-#   startServer(
+#   runNodeJs(
 #     skipWatch: true
 #     envVariables:
 #       NODE_ENV: 'production'

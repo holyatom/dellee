@@ -43,6 +43,7 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
+    "async": "^1.5.0",
     "backbone": "^1.2.3",
     "backbone-events-standalone": "^0.2.7",
     "backbone.localstorage": "^1.1.16",
@@ -55,6 +56,7 @@
     "errorhandler": "^1.4.2",
     "express": "^4.13.3",
     "express-handlebars": "^2.0.1",
+    "install": "^0.4.1",
     "jquery": "^2.1.4",
     "jsonwebtoken": "^5.4.1",
     "lodash": "^3.10.1",
@@ -62,6 +64,7 @@
     "mongoose-unique-validator": "^0.6.2",
     "morgan": "^1.6.1",
     "normalize.css": "^3.0.3",
+    "npm": "^3.5.2",
     "page": "^1.6.4",
     "parse-filepath": "^0.6.3",
     "purecss": "^0.6.0",
