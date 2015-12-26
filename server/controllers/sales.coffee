@@ -1,4 +1,5 @@
 ModelController = require('../base/model_controller')
+sendEmail = require('../tasks/send_email')
 
 
 class SalesController extends ModelController
@@ -46,7 +47,23 @@ class SalesController extends ModelController
       availableStatuses = @STATUSES_MAP[req.modelItem.status] or []
       return @error(res, status: 'invalid_sale_status') unless status in availableStatuses
 
-    super(req, res, next)
+    fields = @getUpdateFields(req)
+    req.modelItem.set(fields)
+
+    req.modelItem.validate (err) =>
+      return @error(res, err.errors) if err
+
+      req.modelItem.save (err) =>
+        return next(err) if err
+
+        if status is 'processed'
+          sendEmail.task(
+            to: 'atomio.ak@gmail.com'
+            template: 'Hello world'
+            subject: 'Test'
+          )
+
+        @get(req, res, next)
 
   SalesController::update.type = 'put'
   SalesController::update.url = '/:id'
