@@ -14,6 +14,12 @@ module.exports =
       expires: 1440
       secret: 'whatdidyouwanttoseehere'
 
+  mail:
+    default_from: 'Dellee <info@dellee.me>'
+    mailgun:
+      key: 'key-e9651b7f70bf011ab5d000e5a01ab8b7'
+      domain: 'sandbox60c1d1eb15aa486c999a81aa410ef821.mailgun.org'
+
   queue:
     chunk_size: 2 # Number of tasks from queue to be processed per iteration.
     timeout: 1000 # Timeout after each iteration in milliseconds.
