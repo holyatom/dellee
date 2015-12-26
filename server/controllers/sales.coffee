@@ -56,17 +56,18 @@ class SalesController extends ModelController
       req.modelItem.save (err) =>
         return next(err) if err
 
-        if status is 'processed'
-          sendEmail.task(
-            to: 'atomio.ak@gmail.com'
-            template: 'Hello world'
-            subject: 'Test'
-          )
-
+        @send(req.modelItem) if status is 'processed'
         @get(req, res, next)
 
   SalesController::update.type = 'put'
   SalesController::update.url = '/:id'
+
+  send: (sale) ->
+    sendEmail.task(
+      to: 'atomio.ak@gmail.com'
+      subject: 'Test Sale'
+      template: 'sale'
+    )
 
   getListOptions: (req) ->
     opts = super
