@@ -46,13 +46,15 @@ module.exports = class Router extends BaseRouter
     @adminRoute('/admin/shops/create', 'shops.create')
     @adminRoute('/admin/shops/:id', 'shops.edit')
 
-    @shopAdminRoute('/admin/shop-sales', 'shop_sales.index')
-    @shopAdminRoute('/admin/shop-sales/create', 'shop_sales.create')
-    @shopAdminRoute('/admin/shop-sales/:id', 'shop_sales.edit')
+    @adminRoute('/admin/customers', 'customers.index')
 
     @moderatorRoute('/admin/sales', 'sales.index')
     @moderatorRoute('/admin/sales/create', 'sales.create')
     @moderatorRoute('/admin/sales/:id', 'sales.edit')
+
+    @shopAdminRoute('/admin/shop-sales', 'shop_sales.index')
+    @shopAdminRoute('/admin/shop-sales/create', 'shop_sales.create')
+    @shopAdminRoute('/admin/shop-sales/:id', 'shop_sales.edit')
 
     @route('/admin/*', 'error.notFound')
 
@@ -65,3 +67,4 @@ if process.browser
     shops: require('./sections/shops/shops_controller')
     shop_sales: require('./sections/shop_sales/sales_controller')
     sales: require('./sections/sales/sales_controller')
+    customers: require('./sections/customers/customers_controller')

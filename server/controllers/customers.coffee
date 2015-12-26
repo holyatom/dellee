@@ -7,6 +7,8 @@ class CustomersController extends ModelController
 
   Model: require('../models/customer')
 
-  actions: ['create']
+  actions: ['create', 'list']
+
+  listFields: ['email']
 
 module.exports = new CustomersController()

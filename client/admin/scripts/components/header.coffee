@@ -56,6 +56,7 @@ module.exports = class Header extends Component
                   <ul className="dropdown-menu">
                     <li><a href="/admin/users">Пользователи</a></li>
                     <li><a href="/admin/shops">Магазины</a></li>
+                    <li><a href="/admin/customers">Клиенты</a></li>
                   </ul>
                 </li>
               </ul>

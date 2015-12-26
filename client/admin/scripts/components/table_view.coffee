@@ -12,20 +12,23 @@ module.exports = class TableView extends Component
         <thead>
           <tr>
             {fields.map((field, index) ->
-              <th key={index}>{fieldNames[field] or field}</th>
+              <th key={index}>{fieldNames?[field] or field}</th>
             )}
-            <th></th>
+            { unless @props.readonly then <th></th> }
           </tr>
         </thead>
         <tbody>
-          {collection.map((item, index) ->
+          {collection.map((item, index) =>
             <tr key={index}>
               {fields.map((field, index) ->
                 <td key={index}>{item[field]}</td>
               )}
-              <td className="text-right">
-                <a href={"#{controllerRoot}/#{item[idAttribute]}"}>Изменить</a>
-              </td>
+              {
+                unless @props.readonly
+                  <td className="text-right">
+                    <a href={"#{controllerRoot}/#{item[idAttribute]}"}>Изменить</a>
+                  </td>
+              }
             </tr>
           )}
         </tbody>
