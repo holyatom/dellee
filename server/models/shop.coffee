@@ -12,7 +12,6 @@ schema = Schema(
   slug:
     type: String
     unique: true
-    required: v.required()
 )
 
 module.exports = mongoose.model('Shop', schema)

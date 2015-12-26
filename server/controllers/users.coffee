@@ -9,39 +9,54 @@ class UsersController extends ModelController
 
   Model: require('../models/user')
 
-  actions: ['create', 'list', 'get']
+  actions: ['create', 'list', 'get', 'delete', 'update']
 
   listFields: ['_id', 'username', 'role', 'created']
+  updateFields: ['username', 'role', 'shop']
   joins:
     shop: ['_id', 'name', 'slug']
 
-  getModelItem: (req, res, next) ->
-    req.params.id = req.adminUser._id if req.params.id is 'profile'
-    super
-
-  # Create user
   create: (req, res, next) ->
-    return @notFound(res) if req.authorized
-
     @Model.findOne(username: req.body.username).exec (err, doc) =>
       return next(err) if err
       return @error(res, 'user_exist', 409) if doc
 
-      isShopAdmin = req.body.role is 'shopadmin'
+      if req.body.role is 'shopadmin'
+        return @error(res, shop: 'required') unless req.body.shop?
+      else
+        delete req.body.shop
 
-      if isShopAdmin and not req.body.shop?
-        return @error(res, shop: 'required')
-
-      delete req.body.shop unless isShopAdmin
       req.body.created = new Date()
-
       super(req, res, next)
 
   UsersController::create.type = 'post'
   UsersController::create.adminRoles = ['admin']
 
+  update: (req, res, next) ->
+    if req.body.role is 'shopadmin'
+      return @error(res, shop: 'required') unless req.body.shop?
+    else
+      delete req.body.shop
+      req.modelItem.shop = null
+
+    super(req, res, next)
+
+  UsersController::update.type = 'put'
+  UsersController::update.url = '/:id'
+  UsersController::update.adminRoles = ['admin']
+
   list: -> super
 
   UsersController::list.adminRoles = ['admin']
+
+  delete: -> super
+
+  UsersController::delete.adminRoles = ['admin']
+  UsersController::delete.type = 'delete'
+  UsersController::delete.url = '/:id'
+
+  getModelItem: (req, res, next) ->
+    req.params.id = req.adminUser._id if req.params.id is 'profile'
+    super(req, res, next)
 
 module.exports = new UsersController()

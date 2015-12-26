@@ -10,9 +10,10 @@ class SalesController extends ModelController
 
   Model: require('../models/sale')
 
-  actions: ['create', 'list', 'get']
+  actions: ['create', 'list', 'get', 'update', 'delete']
 
   listFields: ['_id', 'title', 'start_date', 'end_date']
+  updateFields: ['title', 'start_date', 'end_date', 'description']
   joins:
     shop: ['_id', 'name', 'slug']
 

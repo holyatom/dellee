@@ -1,3 +1,6 @@
+_ = require('lodash')
+
+
 module.exports =
   format: (string, args...) ->
     return '' unless string
@@ -6,4 +9,5 @@ module.exports =
     string
 
   slugify: (string) ->
+    string = _.startCase(string)
     string.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-')

@@ -1,6 +1,7 @@
 mongoose = require('mongoose')
 v = require('lib/validators')
 Schema = require('../base/schema')
+setters = require('lib/setters')
 
 
 schema = Schema(
@@ -17,17 +18,17 @@ schema = Schema(
   shop:
     type: mongoose.Schema.Types.ObjectId
     ref: 'Shop'
-    set: (val) -> if val._id? then val._id else val
+    set: setters.objectId
 
   start_date:
     type: Date
     required: v.required()
-    set: (val) -> new Date(val)
+    set: setters.date
 
   end_date:
     type: Date
     required: v.required()
-    set: (val) -> new Date(val)
+    set: setters.date
 )
 
 module.exports = mongoose.model('Sale', schema)
