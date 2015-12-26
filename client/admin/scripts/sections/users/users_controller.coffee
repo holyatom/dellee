@@ -21,6 +21,6 @@ module.exports = class UsersController extends CrudController
   fetchExtraData: (method) ->
     if method in ['edit', 'create']
       @shopsCollection = new ShopsCollection()
-      @shopsCollection.fetch()
+      @xhrs.shops = @shopsCollection.fetch()
     else
       super

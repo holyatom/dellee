@@ -14,7 +14,9 @@ module.exports = class SalesListView extends Component
       <header className="page-header">
         <div className="row">
           <h3 className="col-xs-6 col-md-8">Акции</h3>
-          <div className="col-xs-6 col-md-4 text-right"></div>
+          <div className="col-xs-6 col-md-4 text-right">
+            <a href={"#{data.controllerRoot}/create"} className="btn btn-success">Добавить</a>
+          </div>
         </div>
       </header>
       <TableView data={@props.data} />

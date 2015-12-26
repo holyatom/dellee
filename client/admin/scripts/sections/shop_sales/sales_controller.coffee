@@ -9,4 +9,4 @@ module.exports = class SalesController extends CrudController
   Model: require('../sales/sale_model')
 
   FormView: require('./sale_form')
-  ListView: require('../sales/sales_list')
+  ListView: require('./sales_list')

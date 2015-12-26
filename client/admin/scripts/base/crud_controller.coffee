@@ -18,9 +18,8 @@ module.exports = class CrudController extends Controller
     collection = new @Collection()
 
     @xhrs.list = collection.fetch()
-    @xhrs.extraData = @fetchExtraData('list')
 
-    $.when(@xhrs.list, @xhrs.extraData).then =>
+    $.when(@xhrs.list, @fetchExtraData('list')).then =>
       data =
         collection: collection.toJSON()
         controllerRoot: "/admin#{@controllerRoot}"
@@ -34,10 +33,9 @@ module.exports = class CrudController extends Controller
   edit: (ctx, done) ->
     model = new @Model(_id: ctx.params.id)
 
-    @xhrs.extraData = @fetchExtraData('edit')
     @xhrs.model = model.fetch()
 
-    $.when(@xhrs.extraData, @xhrs.model).then =>
+    $.when(@fetchExtraData('edit'), @xhrs.model).then =>
       data =
         model: model.toJSON()
         controllerRoot: "/admin#{@controllerRoot}"
@@ -49,7 +47,7 @@ module.exports = class CrudController extends Controller
       @renderErrorView(xhr, done)
 
   create: (ctx, done) ->
-    @xhrs.extraData = @fetchExtraData('create').then =>
+    @fetchExtraData('create').then =>
       data =
         model: {}
         controllerRoot: "/admin#{@controllerRoot}"
