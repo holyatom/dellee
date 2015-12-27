@@ -1,6 +1,7 @@
 _ = require('lodash')
 fs = require('fs')
 Handlebars = require('handlebars')
+config = require('config')
 
 
 cache = {}
@@ -15,6 +16,8 @@ compileTemplate = (name, context = {}) ->
   cache[name](context)
 
 module.exports.render = (template, context) ->
+  context.config = config
+
   body = compileTemplate(template, context)
   body = compileTemplate('layout', body: body)
 

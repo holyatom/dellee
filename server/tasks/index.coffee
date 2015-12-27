@@ -3,6 +3,7 @@ mongoose = require('mongoose')
 dispatchQueue = require('./dispatch_queue')
 log = require('lib/logger').bind(logPrefix: '[tasks]')
 
+
 database = (callback) ->
   mongoose.connect("mongodb://#{config.mongodb.host}/#{config.mongodb.database}")
 

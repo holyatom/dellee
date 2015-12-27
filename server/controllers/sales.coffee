@@ -67,7 +67,7 @@ class SalesController extends ModelController
 
   send: (sale) ->
     query = Customer
-      .find({})
+      .find(email_verified: true)
       .select('email')
       .lean()
 
