@@ -47,6 +47,7 @@ module.exports = class Router extends BaseRouter
     @adminRoute('/admin/shops/:id', 'shops.edit')
 
     @adminRoute('/admin/customers', 'customers.index')
+    @adminRoute('/admin/customers/:id', 'customers.edit')
 
     @moderatorRoute('/admin/sales', 'sales.index')
     @moderatorRoute('/admin/sales/create', 'sales.create')

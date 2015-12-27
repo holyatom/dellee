@@ -1,4 +1,5 @@
 ModelController = require('../base/model_controller')
+Verification = require('../models/verification')
 
 
 class CustomersController extends ModelController
@@ -7,8 +8,14 @@ class CustomersController extends ModelController
 
   Model: require('../models/customer')
 
-  actions: ['create', 'list']
+  actions: ['create', 'list', 'get', 'delete']
 
-  listFields: ['email']
+  listFields: ['_id', 'email']
+
+  delete: -> super
+
+  CustomersController::delete.adminRoles = ['admin']
+  CustomersController::delete.type = 'delete'
+  CustomersController::delete.url = '/:id'
 
 module.exports = new CustomersController()

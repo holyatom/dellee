@@ -17,5 +17,5 @@ module.exports = class CustomersListView extends Component
           <div className="col-xs-6 col-md-4 text-right"></div>
         </div>
       </header>
-      <TableView data={@props.data} readonly />
+      <TableView data={@props.data} />
     </Layout>
