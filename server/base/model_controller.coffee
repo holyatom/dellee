@@ -158,7 +158,6 @@ module.exports = class ModelController extends Controller
     for name, fields of joins
       query.populate(name, fields.join(' '))
 
-
   getUpdateFields: (req) ->
     _.pick(req.body, @updateFields)
 

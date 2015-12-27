@@ -9,6 +9,8 @@ module.exports = class Model extends Backbone.Model
   urlPath: null
   $: $.ajax
 
+  idAttribute: '_id'
+
   resourceUrl: ->
     url = _.result(@, 'urlPath')
     url += "/#{@id}" if @id
