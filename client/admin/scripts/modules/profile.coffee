@@ -36,7 +36,7 @@ class Profile extends Model
     @save()
 
   login: (data) ->
-    dfd = @$(type: 'post', url: "#{@apiRoot}/admin-auth", data: data).then (resp) =>
+    dfd = @$(type: 'post', url: "#{@apiRoot}/auth", data: data).then (resp) =>
       @set(token: resp.token, silent: true)
       @setTokenHeaders()
 

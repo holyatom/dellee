@@ -1,12 +1,12 @@
-ModelController = require('../base/model_controller')
-Customer = require('../models/customer')
+ModelController = require('server/base/model_controller')
+Customer = require('server/models/customer')
 
 
 class VerificationsController extends ModelController
   logPrefix: '[verification controller]'
   urlPrefix: '/verifications'
 
-  Model: require('../models/verification')
+  Model: require('server/models/verification')
 
   actions: ['get']
 

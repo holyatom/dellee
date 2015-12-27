@@ -1,18 +1,18 @@
 _ = require('lodash')
 async = require('async')
-ModelController = require('../base/model_controller')
-Customer = require('../models/customer')
-sendEmail = require('../tasks/send_email')
+AdminController = require('server/base/admin_controller')
+Customer = require('server/models/customer')
+sendEmail = require('server/tasks/send_email')
 
 
-class SalesController extends ModelController
-  logPrefix: '[sales controller]'
+class SalesController extends AdminController
+  logPrefix: '[admin sales controller]'
   urlPrefix: '/sales'
 
-  adminAuth: true
-  adminRoles: ['admin', 'shopadmin', 'moderator']
+  auth: true
+  roles: ['admin', 'shopadmin', 'moderator']
 
-  Model: require('../models/sale')
+  Model: require('server/models/sale')
 
   actions: ['create', 'list', 'get', 'update', 'delete']
 

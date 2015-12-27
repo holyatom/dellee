@@ -1,15 +1,15 @@
-ModelController = require('../base/model_controller')
+AdminController = require('server/base/admin_controller')
 jwt = require('jsonwebtoken')
 config = require('config')
 
 
-class AdminAuthController extends ModelController
+class AdminAuthController extends AdminController
   logPrefix: '[admin auth controller]'
-  urlPrefix: '/admin-auth'
+  urlPrefix: '/auth'
 
   actions: ['login']
 
-  Model: require('../models/user')
+  Model: require('server/models/user')
 
   generateToken: (user) ->
     expires = new Date();

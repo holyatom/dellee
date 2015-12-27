@@ -1,18 +1,18 @@
 utils = require('lib/utils')
 Q = require('q')
-ModelController = require('../base/model_controller')
-User = require('../models/user')
-Sale = require('../models/sale')
+AdminController = require('server/base/admin_controller')
+User = require('server/models/user')
+Sale = require('server/models/sale')
 
 
-class ShopsController extends ModelController
-  logPrefix: '[shops controller]'
+class ShopsController extends AdminController
+  logPrefix: '[admin shops controller]'
   urlPrefix: '/shops'
 
-  adminAuth: true
-  adminRoles: ['admin']
+  auth: true
+  roles: ['admin']
 
-  Model: require('../models/shop')
+  Model: require('server/models/shop')
 
   actions: ['create', 'list', 'get', 'delete', 'update']
 

@@ -44,6 +44,7 @@ ADMIN_VENDOR = [
 SYMLINKS =
   'config': './config > node_modules'
   'lib': './lib > node_modules'
+  'server': './server > node_modules'
   'admin': './client/admin/scripts > node_modules'
   'app': './client/app/scripts > node_modules'
 

@@ -1,17 +1,15 @@
-ModelController = require('../base/model_controller')
-Verification = require('../models/verification')
-sendEmail = require('../tasks/send_email')
+ModelController = require('server/base/model_controller')
+Verification = require('server/models/verification')
+sendEmail = require('server/tasks/send_email')
 
 
 class CustomersController extends ModelController
   logPrefix: '[customers controller]'
   urlPrefix: '/customers'
 
-  Model: require('../models/customer')
+  Model: require('server/models/customer')
 
-  actions: ['create', 'list', 'get', 'delete']
-
-  listFields: ['_id', 'email']
+  actions: ['create']
 
   create: (req, res, next) ->
     model = new @Model(req.body)
@@ -41,14 +39,8 @@ class CustomersController extends ModelController
 
           sendEmail.task data, (err) =>
             return next(err) if err
-            @get(req, res, next)
+            res.json(sucess: true)
 
   CustomersController::create.type = 'post'
-
-  delete: -> super
-
-  CustomersController::delete.adminRoles = ['admin']
-  CustomersController::delete.type = 'delete'
-  CustomersController::delete.url = '/:id'
 
 module.exports = new CustomersController()

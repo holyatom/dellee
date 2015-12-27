@@ -1,13 +1,13 @@
-ModelController = require('../base/model_controller')
+AdminController = require('server/base/admin_controller')
 
 
-class UsersController extends ModelController
-  logPrefix: '[users controller]'
+class UsersController extends AdminController
+  logPrefix: '[admin users controller]'
   urlPrefix: '/users'
 
-  adminAuth: true
+  auth: true
 
-  Model: require('../models/user')
+  Model: require('server/models/user')
 
   actions: ['create', 'list', 'get', 'delete', 'update']
 
@@ -30,7 +30,7 @@ class UsersController extends ModelController
       super(req, res, next)
 
   UsersController::create.type = 'post'
-  UsersController::create.adminRoles = ['admin']
+  UsersController::create.roles = ['admin']
 
   update: (req, res, next) ->
     if req.body.role is 'shopadmin'
@@ -43,15 +43,15 @@ class UsersController extends ModelController
 
   UsersController::update.type = 'put'
   UsersController::update.url = '/:id'
-  UsersController::update.adminRoles = ['admin']
+  UsersController::update.roles = ['admin']
 
   list: -> super
 
-  UsersController::list.adminRoles = ['admin']
+  UsersController::list.roles = ['admin']
 
   delete: -> super
 
-  UsersController::delete.adminRoles = ['admin']
+  UsersController::delete.roles = ['admin']
   UsersController::delete.type = 'delete'
   UsersController::delete.url = '/:id'
 
