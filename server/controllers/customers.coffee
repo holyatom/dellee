@@ -1,4 +1,3 @@
-Q = require('q')
 ModelController = require('../base/model_controller')
 Verification = require('../models/verification')
 sendEmail = require('../tasks/send_email')
