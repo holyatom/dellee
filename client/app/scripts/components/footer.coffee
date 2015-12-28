@@ -1,5 +1,5 @@
 React = require('react')
-Component = require('../../base/component')
+Component = require('../base/component')
 
 
 module.exports = class Footer extends Component

@@ -1,13 +1,13 @@
 React = require('react')
-Component = require('../base/component')
-Footer = require('./components/footer')
+Component = require('app/base/component')
+Footer = require('app/components/footer')
 
 
 module.exports = class NotFoundView extends Component
   title: -> 'Not Found'
 
   render: ->
-    <div className="p-error layout">
+    <div className="layout">
       <div className="l-top"></div>
       <div>
         <div className="container">

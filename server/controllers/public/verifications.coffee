@@ -1,8 +1,8 @@
-ModelController = require('server/base/model_controller')
+PublicController = require('server/base/public_controller')
 Customer = require('server/models/customer')
 
 
-class VerificationsController extends ModelController
+class VerificationsController extends PublicController
   logPrefix: '[verification controller]'
   urlPrefix: '/verifications'
 

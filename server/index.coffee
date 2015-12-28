@@ -41,6 +41,9 @@ class Server
     # Authenticate admin by JSON Web Token.
     this.app.use(middlewares.adminJwt)
 
+    # Authenticate by JSON Web Token.
+    this.app.use(middlewares.jwt)
+
   postRouteMiddleware: ->
     if config.debug
       @app.use(errorhandler(dumpExceptions: true, showStack: true))

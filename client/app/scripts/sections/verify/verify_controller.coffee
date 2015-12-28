@@ -1,7 +1,7 @@
 React = require('react')
-Controller = require('../base/controller')
-VerifyView = require('../views/verify')
-VerificationModel = require('../models/verification')
+Controller = require('app/base/controller')
+VerifyView = require('./verify_view')
+VerificationModel = require('./verification_model')
 
 
 module.exports = class VerifyControlller extends Controller

@@ -1,15 +1,21 @@
-ModelController = require('server/base/model_controller')
+PublicController = require('server/base/public_controller')
 Verification = require('server/models/verification')
 sendEmail = require('server/tasks/send_email')
 
 
-class CustomersController extends ModelController
+class CustomersController extends PublicController
   logPrefix: '[customers controller]'
   urlPrefix: '/customers'
 
   Model: require('server/models/customer')
 
-  actions: ['create']
+  actions: ['create', 'get']
+
+  get: (req, res, next) ->
+    res.json(req.user)
+
+  CustomersController::get.url = '/profile'
+  CustomersController::get.auth = true
 
   create: (req, res, next) ->
     model = new @Model(req.body)

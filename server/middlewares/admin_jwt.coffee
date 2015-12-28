@@ -11,7 +11,7 @@ module.exports = (req, res, next) ->
   jwt.verify token, config.admin.jwt.secret, (err, decoded) ->
     return error(res, 'bad_token', 401) if err or not decoded
 
-    User.findOne username: decoded.sub, (err, doc) =>
+    User.findOne _id: decoded.sub, (err, doc) =>
       return next() if err or not doc
 
       req.decodedAdminJwt = decoded

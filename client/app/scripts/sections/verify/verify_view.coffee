@@ -1,6 +1,6 @@
 React = require('react')
-Component = require('../base/component')
-Footer = require('./components/footer')
+Component = require('app/base/component')
+Footer = require('app/components/footer')
 
 
 module.exports = class VerifyView extends Component
