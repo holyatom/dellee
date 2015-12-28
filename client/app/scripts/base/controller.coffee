@@ -23,4 +23,4 @@ module.exports = class Controller
 
   renderErrorView: (xhr, callback) ->
     return if xhr.readyState is 0
-    @view = @renderView(<ErrorView />, callback)
+    @renderView(<ErrorView />, callback)
