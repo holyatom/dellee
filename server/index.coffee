@@ -106,7 +106,7 @@ class Server
     @loadTemplateEngine()
 
     @preRouteMiddleware()
-    controller.use(@app) for key, controller of require('./controllers')
+    controller.use(@app) for controller in require('./controllers')
     @postRouteMiddleware()
 
     @database =>
