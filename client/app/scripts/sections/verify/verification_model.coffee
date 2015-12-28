@@ -1,4 +1,4 @@
-Model = require('../base/model')
+Model = require('app/base/model')
 
 
 module.exports = class VerificationModel extends Model

@@ -18,14 +18,15 @@ log = require('lib/logger').bind(logPrefix: 'gulp')
 PUBLIC_ASSETS = './public/assets'
 
 APP_VENDOR = [
-  'jquery'
   'backbone'
+  'backbone.localstorage'
   'classnames'
   'lodash'
   'page'
   'react'
   'react/lib/ReactLink'
   'react-dom'
+  'jquery'
 ]
 
 ADMIN_VENDOR = [

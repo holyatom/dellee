@@ -10,7 +10,7 @@ module.exports = class Form extends Component
     @setState(@state)
 
   _linkValue: (keyPath) ->
-    _.get(keyPath)
+    _.get(@state, keyPath)
 
   lockForm: ->
     @setState(isLocked: true)

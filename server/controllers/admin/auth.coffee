@@ -14,7 +14,7 @@ class AdminAuthController extends AdminController
   generateToken: (user) ->
     expires = new Date();
     claims =
-      sub: user.username
+      sub: user._id
       iss: 'https://dellee.me'
       role: user.role
 

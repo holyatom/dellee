@@ -14,6 +14,11 @@ module.exports =
       expires: 1440
       secret: 'whatdidyouwanttoseehere'
 
+  public:
+    jwt:
+      expires: 1440
+      secret: 'ourlittlesecret'
+
   mail:
     default_from: 'Dellee <info@dellee.me>'
     mailgun:
