@@ -3,7 +3,7 @@ EMAIL_REGEXP = /^[a-zA-Z0-9_.+\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-.]+$/
 BAD_USERNAMES = require('./bad_usernames')
 
 module.exports =
-  badUsername: ->
+  username: ->
     message: 'bad_username'
     validator: (val) -> not BAD_USERNAMES[val]
 

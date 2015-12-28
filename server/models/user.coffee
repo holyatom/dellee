@@ -10,7 +10,7 @@ schema = Schema(
     type: String
     unique: true
     required: v.required()
-    validate: [v.maxLength(20), v.minLength(3), v.badUsername(), v.alphanumeric()]
+    validate: [v.maxLength(20), v.minLength(3), v.username(), v.alphanumeric()]
 
   password:
     type: String
