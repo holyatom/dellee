@@ -3,7 +3,7 @@ Customer = require('server/models/customer')
 
 
 class VerificationsController extends PublicController
-  logPrefix: '[verification controller]'
+  logPrefix: '[verifications controller]'
   urlPrefix: '/verifications'
 
   Model: require('server/models/verification')

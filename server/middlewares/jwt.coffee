@@ -16,5 +16,5 @@ module.exports = (req, res, next) ->
 
       req.decodedJwt = decoded
       req.authorized = true
-      req.user = doc.toJSON()
+      req.user = doc
       next()
