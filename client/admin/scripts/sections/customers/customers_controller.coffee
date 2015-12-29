@@ -1,4 +1,4 @@
-React =require('react')
+React = require('react')
 CrudController = require('admin/base/crud_controller')
 
 
