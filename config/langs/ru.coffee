@@ -21,3 +21,6 @@ module.exports =
     role_required: 'Ресурс недоступен для текущего пользователя'
 
     invalid_sale_status: 'Невозможно перевести акцию в данный статус'
+
+    alwready_following: 'Пользователь уже подписан'
+    not_following: 'Пользователь не подписан'

@@ -2,6 +2,7 @@ _ = require('lodash')
 async = require('async')
 AdminController = require('server/base/admin_controller')
 Customer = require('server/models/customer')
+Subscription = require('server/models/subscription')
 sendEmail = require('server/tasks/send_email')
 
 
@@ -66,30 +67,35 @@ class SalesController extends AdminController
   SalesController::update.url = '/:id'
 
   send: (sale) ->
-    query = Customer
-      .find(email_verified: true)
-      .select('email')
-      .lean()
-
-    query.exec (err, collection) =>
+    Customer.find(email_verified: true).lean().exec (err, verifiedCustomers) =>
       if err
-        return @log("failed to add task to send \"Sale #{sale._id}: #{sale.title}\"", 'red bold')
+        return @log("failed to find verified customers")
 
-      tasks = []
+      query = Subscription
+        .find(shop: sale.shop, customer: $in: _.pluck(verifiedCustomers, '_id'))
+        .populate('customer')
+        .lean()
 
-      for customer in collection
-        ((email)->
-          tasks.push ->
-            sendEmail.task(
-              to: email
-              subject: sale.title
-              template: 'sale'
-              context:
-                message: sale.message
-            )
-        )(customer.email)
+      query.exec (err, collection) =>
+        if err
+          return @log("failed to add task to send \"Sale #{sale._id}: #{sale.title}\"", 'red bold')
 
-      async.parallel(tasks)
+        tasks = []
+
+        for subscription in collection
+          tasks.push(@createSendEmailTask(sale, subscription.customer))
+
+        async.parallel(tasks)
+
+  createSendEmailTask: (sale, customer) ->
+    ->
+      sendEmail.task(
+        to: customer.email
+        subject: sale.title
+        template: 'sale'
+        context:
+          message: sale.message
+      )
 
   getListOptions: (req) ->
     opts = super

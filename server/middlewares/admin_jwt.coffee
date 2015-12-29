@@ -16,5 +16,5 @@ module.exports = (req, res, next) ->
 
       req.decodedAdminJwt = decoded
       req.adminAuthorized = true
-      req.adminUser = doc.toJSON()
+      req.adminUser = doc
       next()

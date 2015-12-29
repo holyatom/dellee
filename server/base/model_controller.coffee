@@ -97,7 +97,7 @@ module.exports = class ModelController extends Controller
 
   # Delete model
   delete: (req, res, next) ->
-    @Model.remove req.modelItem, (err) =>
+    @Model.remove _id: req.modelItem._id, (err) =>
       return next(err) if err
       res.json(success: true)
 
@@ -132,7 +132,7 @@ module.exports = class ModelController extends Controller
         page: opts.page
         per_page: opts.perPage
 
-      @mapList?(req, res, data) or res.json(data)
+      @mapList?(req, res, next, data) or res.json(data)
 
     .fail (err) =>
       next(err)
