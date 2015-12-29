@@ -1,2 +1,1 @@
-# dellee
-sales delivery
+# Dellee
