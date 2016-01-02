@@ -1,6 +1,6 @@
 React = require('react')
 Component = require('app/base/component')
-Footer = require('app/components/footer')
+{ Footer } = require('app/components')
 
 
 module.exports = class NotFoundView extends Component

@@ -4,7 +4,7 @@ global._ = require('lodash') # for backbone plugins to work
 
 global.Backbone = require('backbone') # for backbone plugins to work
 global.Backbone.$ = global.$
-global.Backbone.LocalStorage = require('backbone.localstorage')
+# global.Backbone.LocalStorage = require('backbone.localstorage') # TODO: uncomment when auth is ready
 
 $.ajaxSetup(
   crossDomain: true
