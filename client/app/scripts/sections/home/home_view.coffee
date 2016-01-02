@@ -9,11 +9,13 @@ module.exports = class HomeView extends Form
   initState: ->
     model: {}
     success: false
+    error: false
 
   handleSubmit: (event) =>
+    return if @state.isLocked
+
     event.preventDefault()
-    console.warn('SAVE', @state.model)
-    @setState(success: true)
+    @trigger('save', @state.model)
 
   render: ->
     <div className="layout p-home">
@@ -72,8 +74,14 @@ module.exports = class HomeView extends Form
                   <div className="ui-form_group">
                     <input valueLink={@stateLink('model.email')} type="text" className="ui-form_control" placeholder="email" />
                   </div>
+
+                  {
+                    if @state.error
+                      <div className="ui-help_block ui-help_block_error">{ @state.error }</div>
+                  }
+
                   <div className="ui-form_buttons">
-                    <button type="submit" className="ui-btn ui-btn_block ui-btn_primary">Подписаться</button>
+                    <button type="submit" className="ui-btn ui-btn_block ui-btn_primary" disabled={@state.isLocked}>Подписаться</button>
                   </div>
                 </div>
 
