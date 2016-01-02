@@ -8,7 +8,7 @@ module.exports =
     unique: 'Поле должно быть уникальным'
     shorter_than_allowed: '%s слишком короткий ввод'
     longer_than_allowed: '%s слишком длинный ввод'
-    bad_email: 'Неправельный email адрес'
+    bad_email: 'Неправельный e-mail адрес'
     bad_username: 'Зарезервированное слово'
     bad_enum_value: '%s не входит в список доступных значений'
 
