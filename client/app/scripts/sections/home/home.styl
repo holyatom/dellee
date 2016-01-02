@@ -1,0 +1,171 @@
+.p-home
+  .p-h-top
+    padding-top: 30px
+    text-align: center
+
+    .ui-logo
+      width: 108px
+      height: @width
+
+    h2
+      margin: 35px 0 0
+      color: #4d4d4d
+      font-size: 24px
+
+    h3
+      margin: 16px 0 0
+      color: #8c8c8c
+      font-size: 16px
+
+    @media $tablet
+      padding-top: 42px
+
+      .ui-logo
+        width: 150px
+        height: @width
+
+      h2
+        margin: 40px 0 0
+        font-size: 30px
+
+      h3
+        font-size: 18px
+
+  .p-h-benefits
+    margin-top: 55px
+
+    h2
+      margin: 0
+      text-align: center
+      color: #333
+      font-size: 27px
+
+    @media $tablet
+      margin-top: 90px
+
+      h2
+        font-size: 36px
+
+  .p-h-benefits_list
+    clearfix()
+
+    list-style: none
+    padding: 0
+    margin: 0
+
+    li
+      box-sizing: border-box
+
+      margin: 50px 0 0
+
+      text-align: center
+      color: #5a5a5a
+      font-size: 15px
+      font-weight: 300
+
+      figure
+        margin: 0 auto
+
+        width: 100px
+        height: @width
+
+        border: 1px solid #e5e5e5
+        border-radius: 50%
+
+        font-size: 40px
+        text-align: center
+        line-height: @height
+        color: #4078c0
+
+        // custom positioning of icons
+        .icon-check_form
+          margin-left: 8px
+
+      h3
+        margin: 18px 0 0
+        color: #333
+        font-size: 22px
+
+      p
+        margin: 18px 0
+
+      @media $tablet
+        float: left
+        padding: 0 32px
+        width: 50%
+
+  .p-h-signup
+    margin-top: 38px
+
+    h2
+      margin: 0
+      text-align: center
+      color: #333
+      font-size: 27px
+
+    form
+      margin: 40px auto
+      max-width: 370px
+
+    .ui-panel
+      position: relative
+      overflow: hidden
+      margin-top: 24px
+
+      h3
+        margin: 5px 0 20px
+
+        text-align: center
+        color: #4078c0
+        font-size: 18px
+
+    .p-h-success_signup
+      absolute: top -100% left
+      width: 100%
+      height: 100%
+
+      background: #fafafa
+      opacity: 0
+
+      transition: opacity 200ms ease
+
+      .p-h-ss-body
+        absolute: top 50% left
+        width: 100%
+
+        text-align: center
+        color: #333
+        font-size: 15px
+
+        transform: translateY(-50%)
+
+      .ui-iconbox-success
+        opacity: 0
+        transform: translateY(10px)
+        transition: transform 200ms ease-out 100ms, opacity 200ms ease 100ms
+
+      p
+        opacity: 0
+        transform: translateY(10px)
+        transition: transform 200ms ease-out 200ms, opacity 200ms ease 200ms
+
+    &.success
+      .p-h-success_signup
+        top: 0
+        opacity: 1
+
+      .ui-iconbox-success,
+      p
+        opacity: 1
+        transform: translateY(0)
+
+    @media $tablet
+      margin-top: 70px
+
+      h2
+        font-size: 36px
+
+      .ui-panel
+        h3
+          margin: 17px 0 32px
+          font-size: 24px
