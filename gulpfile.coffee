@@ -19,6 +19,7 @@ unzip = require('unzip')
 needle = require('needle')
 open = require('open')
 fontello = require('lib/fontello')
+watch = require('gulp-watch')
 
 
 PUBLIC_DIR = './public'
@@ -74,10 +75,16 @@ proxy = (runner, callback) ->
   )
 
 errorReport = (err) ->
-  console.log(err.message or err)
+  log(err.message or err, 'red bold')
 
 dropTmpFolder = ->
   fs.removeSync(TMP_FOLDER)
+
+watchTask = (taskName) ->
+  (event) ->
+    log("#{_.last(event.path.split('/'))} changed", 'cyan')
+    gulp.start(taskName)
+
 
 # ===============================================================
 # HELPERS
@@ -281,11 +288,11 @@ gulp.task 'css:admin', ->
 gulp.task('css', ['css:app', 'css:admin'])
 
 gulp.task 'watch', ->
-  gulp.watch('./client/app/stylesheets/**/*.styl', ['css:app'])
-  gulp.watch('./client/app/scripts/**/*.coffee', ['js:app'])
+  watch(['./client/app/stylesheets/**/*.styl', './client/app/scripts/**/*.styl'], watchTask('css:app'))
+  watch('./client/app/scripts/**/*.coffee', watchTask('js:app'))
 
-  gulp.watch('./client/admin/stylesheets/**/*.styl', ['css:admin'])
-  gulp.watch('./client/admin/scripts/**/*.coffee', ['js:admin'])
+  watch('./client/admin/stylesheets/**/*.styl', watchTask('css:admin'))
+  watch('./client/admin/scripts/**/*.coffee',  watchTask('js:admin'))
 
 gulp.task('assets', ['js', 'css'])
 gulp.task('dev', ['server:dev', 'assets', 'watch'])

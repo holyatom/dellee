@@ -1,0 +1,33 @@
+.ui-alert
+  $icon_size = 30px
+
+  margin-top: ($icon_size / 2)
+  position: relative
+  padding: 25px 15px 20px
+
+  border: 1px solid
+  border-radius: 3px
+
+  font-size: 15px
+  font-weight: 300
+
+  .ui-a-icon
+    box-sizing: border-box
+
+    height: $icon_size
+    width: @height
+
+    absolute: top left 50%
+    top: -(@height / 2)
+    margin-left: -(@width / 2)
+
+    text-align: center
+    line-height: @height
+
+    background: #fff
+    border: 1px solid
+    border-radius: 50%
+    box-shadow: 0 0 0 2px #fff
+
+  &.ui-alert_info
+    color: #4078c0
