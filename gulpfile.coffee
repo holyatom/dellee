@@ -12,14 +12,27 @@ aliasify = require('aliasify')
 source = require('vinyl-source-stream')
 symlink = require('gulp-symlink')
 { exec } = require('child_process')
-log = require('lib/logger').bind(logPrefix: 'gulp')
+log = require('lib/logger').bind(logPrefix: '[gulp]')
+fs = require('fs-extra')
+glob = require('glob')
+unzip = require('unzip')
+needle = require('needle')
+open = require('open')
+fontello = require('lib/fontello')
 
 
-PUBLIC_ASSETS = './public/assets'
+PUBLIC_DIR = './public'
+PUBLIC_ASSETS = "#{PUBLIC_DIR}/assets"
+FONTS_DIR = "#{PUBLIC_DIR}/fonts"
+
+TMP_FOLDER = './.tmp'
+SOURCE_FOLDER = './.source'
+
+APP_LOCATION = "#{__dirname}/client/app"
 
 APP_VENDOR = [
   'backbone'
-  'backbone.localstorage'
+  # 'backbone.localstorage'
   'classnames'
   'lodash'
   'page'
@@ -49,14 +62,6 @@ SYMLINKS =
   'admin': './client/admin/scripts > node_modules'
   'app': './client/app/scripts > node_modules'
 
-errorReport = (err) ->
-  log(err.message, 'red bold')
-
-createSymlink = (key, path) ->
-  [src, target] = path.split('>')
-  gulp
-    .src(src.trim())
-    .pipe(symlink("#{target.trim()}/#{key}", force: true))
 
 proxy = (runner, callback) ->
   runner.stdout.pipe(process.stdout, end: false)
@@ -67,6 +72,82 @@ proxy = (runner, callback) ->
     else
       process.exit(status)
   )
+
+errorReport = (err) ->
+  console.log(err.message or err)
+
+dropTmpFolder = ->
+  fs.removeSync(TMP_FOLDER)
+
+# ===============================================================
+# HELPERS
+# ===============================================================
+
+createSymlink = (key, path) ->
+  [src, target] = path.split('>')
+  gulp
+    .src(src.trim())
+    .pipe(symlink("#{target.trim()}/#{key}", force: true))
+
+replaceFontello = (zipFile, done) ->
+  [folderName] = _.last(zipFile.split('/')).split('.')
+
+  SOURCE = "#{TMP_FOLDER}/#{folderName}"
+  FONT_LOCATION = "#{FONTS_DIR}/fontello"
+
+  unless fs.ensureDirSync(FONT_LOCATION)
+    fs.mkdirsSync(FONT_LOCATION)
+
+  log('Extract new zip file...', 'cyan')
+
+  fs.createReadStream(zipFile).pipe(unzip.Extract(path: TMP_FOLDER)).on 'close', ->
+    log('Replacing files...', 'cyan')
+
+    fs.copySync("#{SOURCE}/font", "#{FONT_LOCATION}", clobber: true)
+    fs.copySync("#{SOURCE}/css/fontello-codes.css", "#{APP_LOCATION}/stylesheets/vendor/fontello_codes.css")
+    dropTmpFolder()
+    done?()
+
+installFontello = ->
+  log('Extract old zip file...', 'cyan')
+
+  glob "#{SOURCE_FOLDER}/fontello-*.zip", (err, [oldZip]) ->
+    [folderName] = _.last(oldZip.split('/')).split('.')
+
+    fs.createReadStream(oldZip).pipe(unzip.Extract(path: TMP_FOLDER)).on 'close', ->
+      config = "#{TMP_FOLDER}/#{folderName}/config.json"
+
+      log('Getting session url...', 'cyan')
+
+      fontello.apiRequest { config }, (sessionUrl) ->
+        open(sessionUrl)
+        dropTmpFolder()
+
+        log('Press "ENTER" to start download (save session in browser before downloading)', 'green')
+
+        process.stdin.setRawMode(true)
+        process.stdin.resume()
+        process.stdin.on 'data', ([keyCode]) ->
+          return unless keyCode is 13
+
+          log('Download new zip file...', 'cyan')
+
+          stream = needle.get "#{sessionUrl}/get", (err, res, body) ->
+            # Getting file name
+            regexp = /filename=(.*)/gi
+            [full, filename] = regexp.exec(res.headers['content-disposition'])
+
+            newZip = "#{SOURCE_FOLDER}/#{filename}"
+
+            fs.writeFile(newZip, body, ->
+              fs.removeSync(oldZip)
+              replaceFontello(newZip, -> process.exit())
+            )
+
+
+# ===============================================================
+# COMPILERS
+# ===============================================================
 
 compileJsPackets = (opts) ->
   opts = _.extend(
@@ -114,12 +195,13 @@ compileCss = (opts) ->
     minify: false
     input: ''
     output: ''
+    paths: []
   , opts)
 
   task = gulp
     .src(opts.input)
     .pipe(stylus(
-      'paths': ["#{__dirname}/node_modules"]
+      'paths': ["#{__dirname}/node_modules"].concat(opts.paths)
       'include css': true
       'use': [nib()]
       'urlfunc': 'embedurl'
@@ -150,8 +232,17 @@ runNodeJs = (opts) ->
   runner = exec(command)
   proxy(runner)
 
+
+# ===============================================================
+# TASKS
+# ===============================================================
+
 gulp.task 'symlink', ->
   createSymlink(key, path) for key, path of SYMLINKS
+
+gulp.task 'fontello', ->
+  installFontello()
+
 
 # ===============================================================
 # DEVELOPMENT
@@ -178,7 +269,11 @@ gulp.task 'js:admin_vendor', ->
 gulp.task('js', ['js:app', 'js:app_vendor', 'js:admin', 'js:admin_vendor'])
 
 gulp.task 'css:app', ->
-  compileCss(input: './client/app/stylesheets/index.styl', output: 'app.css')
+  compileCss(
+    input: './client/app/stylesheets/index.styl'
+    output: 'app.css'
+    paths: ["#{APP_LOCATION}/scripts"]
+  )
 
 gulp.task 'css:admin', ->
   compileCss(input: './client/admin/stylesheets/index.styl', output: 'admin.css')
@@ -194,6 +289,7 @@ gulp.task 'watch', ->
 
 gulp.task('assets', ['js', 'css'])
 gulp.task('dev', ['server:dev', 'assets', 'watch'])
+
 
 # ===============================================================
 # PRODUCTION

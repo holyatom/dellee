@@ -1,5 +1,5 @@
 React = require('react')
-Component = require('../base/component')
+Component = require('app/base/component')
 
 
 module.exports = class Footer extends Component
@@ -7,7 +7,7 @@ module.exports = class Footer extends Component
     <div>
       <div className="container">
         <footer className="c-footer">
-          © 2015 Delle.
+          © {(new Date()).getFullYear()} Delle.
         </footer>
       </div>
     </div>

@@ -1,6 +1,6 @@
 React = require('react')
 Form = require('app/base/form')
-Footer = require('app/components/footer')
+{ Footer } = require('app/components')
 
 
 module.exports = class LoginView extends Form
