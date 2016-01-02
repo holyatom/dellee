@@ -49,6 +49,8 @@ module.exports = class Router extends BaseRouter
     @adminRoute('/admin/customers', 'customers.index')
     @adminRoute('/admin/customers/:id', 'customers.edit')
 
+    @adminRoute('/admin/subscribers', 'subscribers.index')
+
     @moderatorRoute('/admin/sales', 'sales.index')
     @moderatorRoute('/admin/sales/create', 'sales.create')
     @moderatorRoute('/admin/sales/:id', 'sales.edit')
@@ -69,3 +71,4 @@ if process.browser
     shop_sales: require('./sections/shop_sales/sales_controller')
     sales: require('./sections/sales/sales_controller')
     customers: require('./sections/customers/customers_controller')
+    subscribers: require('./sections/subscribers/subscribers_controller')

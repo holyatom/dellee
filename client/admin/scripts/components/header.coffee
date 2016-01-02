@@ -57,6 +57,7 @@ module.exports = class Header extends Component
                     <li><a href="/admin/users">Пользователи</a></li>
                     <li><a href="/admin/shops">Магазины</a></li>
                     <li><a href="/admin/customers">Клиенты</a></li>
+                    <li><a href="/admin/subscribers">Подписчики</a></li>
                   </ul>
                 </li>
               </ul>
