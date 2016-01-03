@@ -20,7 +20,8 @@ STYLES =
 
 stylize = (string, styles)->
   styles = styles.split(' ')
-  "#{STYLES[style][0]}#{string}#{STYLES[style][1]}" for style in styles
+  string = "#{STYLES[style][0]}#{string}#{STYLES[style][1]}" for style in styles
+  string
 
 # Public: Apply styles to message and log it by `console.log`.
 #
