@@ -96,7 +96,12 @@ class Server
     @loadTemplateEngine()
 
     @preRouteMiddleware()
-    controller.use(@app) for controller in require('./controllers')
+
+    unless config.env is 'production'
+      controller.use(@app) for controller in require('./controllers')
+    else
+      @app.get('*', (req, res, next) -> res.render('layout_locked', layout: false))
+
     @postRouteMiddleware()
 
     database =>
