@@ -1,13 +1,13 @@
 _ = require('lodash')
 config = require('config')
 express = require('express')
-mongoose = require('mongoose')
 domain = require('domain')
 morgan = require('morgan')
 errorhandler = require('errorhandler')
 bodyParser = require('body-parser')
 middlewares = require('./middlewares')
 exphbs = require('express-handlebars')
+database = require('lib/database')
 
 
 class Server
@@ -55,16 +55,6 @@ class Server
 
     @app.use((req, res, next) -> middlewares.notFound(res))
 
-  database: (callback) ->
-    mongoose.connect("mongodb://#{config.mongodb.host}/#{config.mongodb.database}")
-
-    mongoose.connection.on 'error', (err) =>
-      @log("mongodb operation failed: #{err}", 'red bold')
-
-    mongoose.connection.once 'open', =>
-      @log('mongodb was connected', 'green')
-      callback?()
-
   loadTemplateEngine: ->
     globals = {
       Date
@@ -109,7 +99,7 @@ class Server
     controller.use(@app) for controller in require('./controllers')
     @postRouteMiddleware()
 
-    @database =>
+    database =>
       @app.listen config.server.port, config.server.ip, =>
         @log("server running on #{config.server.ip}:#{config.server.port}", 'green')
 
