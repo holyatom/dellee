@@ -18,5 +18,7 @@ database(function () {
     } else {
       log('admin created', 'green');
     }
+
+    process.exit();
   });
 });

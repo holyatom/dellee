@@ -30,6 +30,7 @@ TMP_FOLDER = './.tmp'
 SOURCE_FOLDER = './.source'
 
 APP_LOCATION = "#{__dirname}/client/app"
+ADMIN_LOCATION = "#{__dirname}/client/admin"
 
 APP_VENDOR = [
   'backbone'
@@ -230,10 +231,10 @@ runNodeJs = (opts) ->
   , opts)
 
   command = ''
-  variables = ("#{key}=#{value}" for key, value of opts.variables)
+  variables = ("#{key}=#{value}" for key, value of opts.envVariables)
 
   command += variables.join(' ') if variables.length
-  command += if opts.skipWatch then 'node' else 'nodemon'
+  command += if opts.skipWatch then ' node' else ' nodemon'
   command += " #{opts.file}"
 
   runner = exec(command)
@@ -252,6 +253,15 @@ gulp.task 'fontello', ->
 
 
 # ===============================================================
+# SCRIPTS
+# ===============================================================
+
+gulp.task 'script:create_admin:dev', -> runNodeJs(file: 'scripts/create_admin.js', skipWatch: true)
+gulp.task 'script:create_admin:staging', -> runNodeJs(file: 'scripts/create_admin.js', skipWatch: true, envVariables: { NODE_ENV: 'staging' })
+gulp.task 'script:create_admin:prod', -> runNodeJs(file: 'scripts/create_admin.js', skipWatch: true, envVariables: { NODE_ENV: 'production' })
+
+
+# ===============================================================
 # DEVELOPMENT
 # ===============================================================
 
@@ -262,13 +272,13 @@ gulp.task 'server:dev', ->
   runNodeJs()
 
 gulp.task 'js:app', ->
-  compileJsBundle(input: './client/app/scripts/index.coffee', output: 'app.js', exclude: APP_VENDOR)
+  compileJsBundle(input: "#{APP_LOCATION}/scripts/index.coffee", output: 'app.js', exclude: APP_VENDOR)
 
 gulp.task 'js:app_vendor', ->
   compileJsPackets(packets: APP_VENDOR, output: 'app.vendor.js')
 
 gulp.task 'js:admin', ->
-  compileJsBundle(input: './client/admin/scripts/index.coffee', output: 'admin.js', exclude: ADMIN_VENDOR)
+  compileJsBundle(input: "#{ADMIN_LOCATION}/scripts/index.coffee", output: 'admin.js', exclude: ADMIN_VENDOR)
 
 gulp.task 'js:admin_vendor', ->
   compileJsPackets(packets: ADMIN_VENDOR, output: 'admin.vendor.js')
@@ -277,13 +287,13 @@ gulp.task('js', ['js:app', 'js:app_vendor', 'js:admin', 'js:admin_vendor'])
 
 gulp.task 'css:app', ->
   compileCss(
-    input: './client/app/stylesheets/index.styl'
+    input: "#{APP_LOCATION}/stylesheets/index.styl"
     output: 'app.css'
     paths: ["#{APP_LOCATION}/scripts"]
   )
 
 gulp.task 'css:admin', ->
-  compileCss(input: './client/admin/stylesheets/index.styl', output: 'admin.css')
+  compileCss(input: "#{ADMIN_LOCATION}/stylesheets/index.styl", output: 'admin.css')
 
 gulp.task('css', ['css:app', 'css:admin'])
 
@@ -299,23 +309,47 @@ gulp.task('dev', ['server:dev', 'assets', 'watch'])
 
 
 # ===============================================================
+# STAGING
+# ===============================================================
+
+gulp.task 'worker:staging', ->
+  runNodeJs(file: 'worker.js', envVariables: { NODE_ENV: 'staging' }, skipWatch: true)
+
+gulp.task 'server:staging', ->
+  runNodeJs(envVariables: { NODE_ENV: 'staging' }, skipWatch: true)
+
+gulp.task 'js:app:min', ->
+  compileJsBundle(input: "#{APP_LOCATION}/scripts/index.coffee", output: 'app.js', exclude: APP_VENDOR, minify: true)
+
+gulp.task 'js:admin:min', ->
+  compileJsBundle(input: "#{ADMIN_LOCATION}/scripts/index.coffee", output: 'admin.js', exclude: ADMIN_VENDOR, minify: true)
+
+gulp.task('js:min', ['js:app:min', 'js:app_vendor', 'js:admin:min', 'js:admin_vendor'])
+
+gulp.task 'css:app:min', ->
+  compileCss(
+    input: "#{APP_LOCATION}/stylesheets/index.styl"
+    output: 'app.css'
+    paths: ["#{APP_LOCATION}/scripts"]
+    minify: true
+  )
+
+gulp.task 'css:admin:min', ->
+  compileCss(input: "#{ADMIN_LOCATION}/stylesheets/index.styl", output: 'admin.css', minify: true)
+
+gulp.task('css:min', ['css:app:min', 'css:admin:min'])
+
+gulp.task('assets:min', ['js:min', 'css:min'])
+gulp.task('staging', ['server:staging', 'assets:min'])
+
+# ===============================================================
 # PRODUCTION
 # ===============================================================
 
-# gulp.task 'js:app:min', ->
-#   compileAppJs(minify: true)
+gulp.task 'worker:prod', ->
+  runNodeJs(file: 'worker.js', envVariables: { NODE_ENV: 'production' }, skipWatch: true)
 
-# gulp.task('js:min', ['js:vendor', 'js:app:min'])
+gulp.task 'server:prod', ->
+  runNodeJs(envVariables: { NODE_ENV: 'production' }, skipWatch: true)
 
-# gulp.task 'css:min', ->
-#   compileCss(minify: true)
-
-# gulp.task 'server:prod', ->
-#   runNodeJs(
-#     skipWatch: true
-#     envVariables:
-#       NODE_ENV: 'production'
-#   )
-
-# gulp.task('assets:min', ['js:min', 'css:min'])
-# gulp.task('prod', ['server:prod', 'assets:min'])
+gulp.task('prod', ['server:prod', 'assets:min'])
