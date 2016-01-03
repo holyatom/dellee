@@ -18,7 +18,7 @@ glob = require('glob')
 unzip = require('unzip')
 needle = require('needle')
 open = require('open')
-fontello = require('lib/fontello')
+fontello = require('./lib/fontello')
 watch = require('gulp-watch')
 
 
