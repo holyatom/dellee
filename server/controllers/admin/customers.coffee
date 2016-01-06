@@ -10,8 +10,9 @@ class CustomersController extends AdminController
   auth: true
   roles: ['admin']
 
-  actions: ['list', 'get', 'delete']
+  actions: ['list', 'get', 'update', 'delete', 'create']
 
-  listFields: ['_id', 'email']
+  listFields: ['_id', 'email', 'email_verified']
+  updateFields: ['email_verified']
 
 module.exports = new CustomersController()
