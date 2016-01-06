@@ -1,3 +1,4 @@
+vent = require('app/modules/vent')
 React = require('react')
 Form = require('app/base/form')
 { Footer } = require('app/components')
@@ -10,6 +11,9 @@ module.exports = class HomeView extends Form
     model: {}
     success: false
     error: false
+
+  share: (type) ->
+    vent.trigger("share:#{type}")
 
   handleSubmit: (event) =>
     return if @state.isLocked
@@ -25,6 +29,8 @@ module.exports = class HomeView extends Form
             <h1 className="ui-logo">Dellee<span className="ui-l-beta_label"></span></h1>
             <h2>Первый Мессенджер Акций</h2>
             <h3>узнавай первым о скидках и акциях в любимых магазинах</h3>
+            <div className="p-h-t-divider"></div>
+            <a href="/" className="ui-btn ui-btn_default">о проекте</a>
           </section>
           <section className="p-h-benefits">
             <h2>Наши преимущества</h2>
@@ -59,15 +65,15 @@ module.exports = class HomeView extends Form
               </li>
             </ul>
           </section>
-          <section className={@cx('p-h-signup', success: @state.success)}>
+          <section className="p-h-signup">
             <h2>Ранний доступ</h2>
-            <form onSubmit={@handleSubmit}>
-              <div className="ui-alert ui-alert_info">
-                <span className="ui-a-icon">
-                  <i className="icon-info"></i>
-                </span>
-                Приложение находится на стадии разработки, но вы можете оставить нам свой e-mail адрес и мы уведомим вас о запуске
-              </div>
+            <div className="ui-alert ui-alert_info">
+              <span className="ui-a-icon">
+                <i className="icon-info"></i>
+              </span>
+              Приложение находится на стадии разработки, но вы можете оставить нам свой e-mail адрес и мы уведомим вас о запуске
+            </div>
+            <form className={@cx('p-h-s-form', success: @state.success)} onSubmit={@handleSubmit}>
               <div className="ui-panel">
                 <div className="ui-p-body">
                   <h3>Заполните форму</h3>
@@ -97,6 +103,13 @@ module.exports = class HomeView extends Form
                 </div>
               </div>
             </form>
+            <div className="p-h-share">
+              Расскажи о <strong>Dellee</strong> своим друзьям
+              <span className="p-h-s-links">
+                <span className="ui-iconbox-circle ui-iconbox-circle_vk" onClick={@share.bind(@, 'vk')}><i className="icon-vk"></i></span>
+                <span className="ui-iconbox-circle ui-iconbox-circle_twitter" onClick={@share.bind(@, 'twitter')}><i className="icon-twitter"></i></span>
+              </span>
+            </div>
           </section>
         </div>
       </div>

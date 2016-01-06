@@ -19,7 +19,7 @@ module.exports = class Router extends BaseRouter
   #   next()
 
   router: ->
-    @route('/', @notAuth, 'home.index')
+    @route('/', 'home.index')
 
     # @route('/login', @notAuth, 'login.index')
     # @route('/subscriptions', @auth, 'subscriptions.index')

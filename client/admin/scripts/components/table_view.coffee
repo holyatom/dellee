@@ -8,30 +8,32 @@ module.exports = class TableView extends Component
     { controllerRoot } = @props.data
 
     if collection.length
-      <table className="table table-hover">
-        <thead>
-          <tr>
-            {fields.map((field, index) ->
-              <th key={index}>{fieldNames?[field] or field}</th>
-            )}
-            { unless @props.readonly then <th></th> }
-          </tr>
-        </thead>
-        <tbody>
-          {collection.map((item, index) =>
-            <tr key={index}>
+      <div className="table-responsive">
+        <table className="table table-hover">
+          <thead>
+            <tr>
               {fields.map((field, index) ->
-                <td key={index}>{item[field]}</td>
+                <th key={index}>{fieldNames?[field] or field}</th>
               )}
-              {
-                unless @props.readonly
-                  <td className="text-right">
-                    <a href={"#{controllerRoot}/#{item[idAttribute]}"}>Изменить</a>
-                  </td>
-              }
+              { unless @props.readonly then <th></th> }
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {collection.map((item, index) =>
+              <tr key={index}>
+                {fields.map((field, index) ->
+                  <td key={index}>{item[field]}</td>
+                )}
+                {
+                  unless @props.readonly
+                    <td className="text-right">
+                      <a href={"#{controllerRoot}/#{item[idAttribute]}"}>Изменить</a>
+                    </td>
+                }
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     else
       <h4>Записей не найдено</h4>

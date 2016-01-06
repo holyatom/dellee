@@ -1,4 +1,8 @@
 .ui-btn
+  display: inline-block
+  box-sizing: border-box;
+
+  padding: 8px 10px
   height: 36px
 
   font-size: 14px
@@ -18,3 +22,10 @@
 
     background: #e8b47a
     background-image: linear-gradient(#ecbb84, #e8b47a, #e3ad71)
+
+  &.ui-btn_default
+    color: #666
+    border-color: #e5e5e5
+
+  &:hover
+    text-decoration: none

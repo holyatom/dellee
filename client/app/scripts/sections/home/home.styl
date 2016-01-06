@@ -17,6 +17,15 @@
       color: #8c8c8c
       font-size: 16px
 
+    .p-h-t-divider
+      margin: 30px auto
+      height: 3px
+      width: 100px
+      background: #e8e8e8
+
+    .ui-btn
+      width: 180px
+
     @media $tablet
       padding-top: 42px
 
@@ -41,7 +50,7 @@
       font-size: 27px
 
     @media $tablet
-      margin-top: 90px
+      margin-top: 80px
 
       h2
         font-size: 36px
@@ -95,17 +104,14 @@
         width: 50%
 
   .p-h-signup
-    margin-top: 38px
+    margin: 38px auto
+    max-width: 400px
 
     h2
-      margin: 0
+      margin: 0 0 40px
       text-align: center
       color: #333
       font-size: 27px
-
-    form
-      margin: 40px auto
-      max-width: 370px
 
     .ui-panel
       position: relative
@@ -149,15 +155,16 @@
         transform: translateY(10px)
         transition: transform 200ms ease-out 200ms, opacity 200ms ease 200ms
 
-    &.success
-      .p-h-success_signup
-        top: 0
-        opacity: 1
+    .p-h-s-form
+      &.success
+        .p-h-success_signup
+          top: 0
+          opacity: 1
 
-      .ui-iconbox-success,
-      p
-        opacity: 1
-        transform: translateY(0)
+        .ui-iconbox-success,
+        p
+          opacity: 1
+          transform: translateY(0)
 
     @media $tablet
       margin-top: 70px
@@ -169,3 +176,62 @@
         h3
           margin: 17px 0 32px
           font-size: 24px
+
+    .p-h-share
+      $background_color = #fafafa
+      $border_color = #e7e7e7
+
+      position: relative
+
+      margin-top: 24px
+      padding: 15px
+      text-align: center
+
+      color: #333
+      font-size: 15px
+
+      border: 1px solid $border_color
+      border-radius: 3px
+
+      background: $background_color
+      box-shadow: 0 2px 5px rgba(0, 0, 0, .06)
+
+      &:before
+        absolute: bottom -16px left 50%
+        margin-left: -4px
+        content: ''
+
+        border: 8px solid transparent
+        border-top-color: $border_color
+
+      &:after
+        absolute: bottom -14px left 50%
+        margin-left: -3px
+        content: ''
+
+        border: 7px solid transparent
+        border-top-color: $background_color
+
+      strong
+        color: #d79b57
+        font-weight: 400
+
+      .p-h-s-links
+        display: block
+        margin: 15px 0 0
+        text-align: center
+
+        .ui-iconbox-circle
+          margin: 0 8px
+          cursor: pointer
+
+      @media $tablet
+        text-align: left
+
+        .p-h-s-links
+          display: inline-block
+          margin: 0
+          margin-left: 10px
+
+          .ui-iconbox-circle
+            margin: 0 5px
