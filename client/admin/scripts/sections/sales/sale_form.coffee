@@ -1,6 +1,7 @@
 React = require('react')
 Form = require('admin/base/form')
 Layout = require('admin/components/layout')
+formatters = require('lib/formatters')
 
 
 module.exports = class SaleView extends Form
@@ -30,7 +31,7 @@ module.exports = class SaleView extends Form
         <div className="form-group">
           <label className="col-sm-3 control-label">Статус</label>
           <div className="col-sm-9">
-            <p className="form-control-static">{ @state.model.status }</p>
+            <p className="form-control-static" dangerouslySetInnerHTML={{ __html: formatters.saleStatus(@state.model.status) }}></p>
           </div>
         </div>
 
@@ -44,14 +45,14 @@ module.exports = class SaleView extends Form
         <div className="form-group">
           <label className="col-sm-3 control-label">Дата запуска</label>
           <div className="col-sm-9">
-            <p className="form-control-static">{ @state.model.start_date }</p>
+            <p className="form-control-static">{ formatters.date(@state.model.start_date) }</p>
           </div>
         </div>
 
         <div className="form-group">
           <label className="col-sm-3 control-label">Дата окончания</label>
           <div className="col-sm-9">
-            <p className="form-control-static">{ @state.model.end_date }</p>
+            <p className="form-control-static">{ formatters.date(@state.model.end_date) }</p>
           </div>
         </div>
 

@@ -20,8 +20,8 @@ module.exports = class Collection extends Backbone.Collection
     perPage: 20
 
   initialize: ->
-    @initParams()
     super
+    @pagination = _.clone(@paginationDefaults)
 
   url: ->
     url = _.result(@, 'baseUrl')
@@ -34,19 +34,19 @@ module.exports = class Collection extends Backbone.Collection
 
   parse: (resp)->
     @pagination.total = resp.total
-    @pagination.totalPage = Math.ceil(@pagination.total / @pagination.per_page)
+    @pagination.totalPage = Math.ceil(@pagination.total / @pagination.perPage)
 
     resp.collection
 
   toJSON: ->
-    { collection: super(), @pagination, @fields, @fieldNames, @idAttribute }
+    { collection: super(), canPaginate: @canPaginate(), @pagination, @fields, @fieldNames, @fieldFormats, @idAttribute }
 
   reset: ->
     super
     @initParams()
 
-  getQueryParams: ->
-    qs = location.getParams()
+  getQueryParams: (ctx) ->
+    qs = ctx.query
     pagination = {}
 
     if qs.page and page = parseInt(qs.page, 10)
@@ -58,7 +58,10 @@ module.exports = class Collection extends Backbone.Collection
     # return
     { pagination }
 
-  initParams: ->
-    { @pagination } = @getQueryParams()
+  initParams: (ctx) ->
+    { @pagination } = @getQueryParams(ctx)
 
     _.defaults(@pagination, @paginationDefaults)
+
+  canPaginate: ->
+    @pagination.totalPage not in [0, 1]

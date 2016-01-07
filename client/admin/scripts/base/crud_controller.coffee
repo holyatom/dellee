@@ -16,6 +16,7 @@ module.exports = class CrudController extends Controller
 
   index: (ctx, done) ->
     collection = new @Collection()
+    collection.initParams(ctx)
 
     @xhrs.list = collection.fetch()
 

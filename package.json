@@ -67,6 +67,7 @@
     "jquery": "^2.1.4",
     "jsonwebtoken": "^5.4.1",
     "lodash": "^3.10.1",
+    "moment": "^2.11.0",
     "mongoose": "^4.3.4",
     "mongoose-unique-validator": "^0.6.2",
     "morgan": "^1.6.1",

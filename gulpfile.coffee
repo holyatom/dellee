@@ -55,6 +55,8 @@ ADMIN_VENDOR = [
   'react/lib/ReactLink'
   'react-dom'
   'jquery'
+  'moment'
+  'moment/locale/ru'
 ]
 
 SYMLINKS =
