@@ -45,7 +45,7 @@ module.exports = class Collection extends Backbone.Collection
     super
     @initParams()
 
-  getQueryParams: (ctx) ->
+  getQueryParams: ->
     qs = location.getParams()
     pagination = {}
 
@@ -58,8 +58,8 @@ module.exports = class Collection extends Backbone.Collection
     # return
     { pagination }
 
-  initParams: (ctx) ->
-    { @pagination } = @getQueryParams(ctx)
+  initParams: ->
+    { @pagination } = @getQueryParams()
 
     _.defaults(@pagination, @paginationDefaults)
 
