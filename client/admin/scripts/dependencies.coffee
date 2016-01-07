@@ -6,6 +6,10 @@ global.Backbone = require('backbone') # for backbone plugins to work
 global.Backbone.$ = global.$
 global.Backbone.LocalStorage = require('backbone.localstorage')
 
+require('moment/locale/ru')
+moment = require('moment')
+moment.locale('ru')
+
 require('bootstrap')
 
 $.ajaxSetup(

@@ -1,6 +1,7 @@
 React = require('react')
 ModelForm = require('admin/base/model_form')
 Layout = require('admin/components/layout')
+formatters = require('lib/formatters')
 
 
 module.exports = class SaleView extends ModelForm
@@ -34,7 +35,7 @@ module.exports = class SaleView extends ModelForm
             <div className="form-group">
               <label className="col-sm-3 control-label">Статус</label>
               <div className="col-sm-9">
-                <p className="form-control-static">{ @state.model.status }</p>
+                <p className="form-control-static" dangerouslySetInnerHTML={{ __html: formatters.saleStatus(@state.model.status) }}></p>
               </div>
             </div>
         }

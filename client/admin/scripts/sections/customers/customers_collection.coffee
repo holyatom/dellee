@@ -1,4 +1,5 @@
 Collection = require('admin/base/collection')
+formatters = require('lib/formatters')
 
 
 module.exports = class CustomersCollection extends Collection
@@ -8,3 +9,6 @@ module.exports = class CustomersCollection extends Collection
   fieldNames:
     email: 'E-mail'
     email_verified: 'E-mail подвержден'
+
+  fieldFormats:
+    email_verified: formatters.boolean
