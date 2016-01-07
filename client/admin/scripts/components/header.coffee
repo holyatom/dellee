@@ -19,7 +19,7 @@ module.exports = class Header extends Component
             <span className="icon-bar"></span>
           </button>
           <a className="navbar-brand" href="/admin/dashboard">
-            Dellee <small className="text-muted">beta</small>
+            Dellee beta
           </a>
         </div>
 

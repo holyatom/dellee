@@ -7,7 +7,7 @@ module.exports = class Footer extends Component
     <div>
       <div className="container">
         <footer className="c-footer">
-          © {new Date().getFullYear()} Delle <small className="text-muted">beta</small> • Админ панель.
+          © {new Date().getFullYear()} Delle beta • Админ панель.
         </footer>
       </div>
     </div>
