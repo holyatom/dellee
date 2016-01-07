@@ -21,7 +21,7 @@ module.exports = class Collection extends Backbone.Collection
 
   initialize: ->
     super
-    @pagination = _.clone(@paginationDefaults)
+    @initParams()
 
   url: ->
     url = _.result(@, 'baseUrl')
@@ -46,7 +46,7 @@ module.exports = class Collection extends Backbone.Collection
     @initParams()
 
   getQueryParams: (ctx) ->
-    qs = ctx.query
+    qs = location.getParams()
     pagination = {}
 
     if qs.page and page = parseInt(qs.page, 10)
