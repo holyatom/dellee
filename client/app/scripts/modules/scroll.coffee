@@ -30,7 +30,9 @@ class Scroll
     else
       @$win.scrollTop(options.pos)
 
-  afterRoute: (ctx) ->
+  afterRoute: (ctx, props) ->
+    return unless props.initialized
+
     if ctx.hash
       @scroll(target: "##{ctx.hash}", animate: false)
     else
