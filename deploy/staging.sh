@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 npm install
 gulp assets:min
-NODE_ENV=staging pm2 start --name "server:staging" ./index.js
-NODE_ENV=staging pm2 start --name "worker:staging" ./worker.js
+NODE_ENV=staging pm2 reload server:staging
+NODE_ENV=staging pm2 reload worker:staging
