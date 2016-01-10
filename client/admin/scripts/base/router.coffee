@@ -10,6 +10,7 @@ module.exports = class Router
     force: false
 
   contructor: ->
+    @initialized = false
     @resetOptions()
 
   resetOptions: ->
@@ -57,8 +58,9 @@ module.exports = class Router
     vent.trigger('route:before', ctx)
 
   afterRoute: (ctx) ->
-    vent.trigger('route:after', ctx)
+    vent.trigger('route:after', ctx, { @initialized })
     @resetOptions()
+    @initialized = true
 
   createQuery: (ctx, next) =>
     ctx.query = {}
