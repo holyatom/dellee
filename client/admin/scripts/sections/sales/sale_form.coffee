@@ -1,6 +1,6 @@
 React = require('react')
 Form = require('admin/base/form')
-Layout = require('admin/components/layout')
+{ Layout, FormStatus } = require('admin/components')
 formatters = require('lib/formatters')
 
 
@@ -12,11 +12,15 @@ module.exports = class SaleView extends Form
 
   handleReject: (event) =>
     event.preventDefault()
+    return if @state.isLocked
+
     @state.model.status = 'rejected'
     @trigger('save', @state.model)
 
   handleProcess: (event) =>
     event.preventDefault()
+    return if @state.isLocked
+
     @state.model.status = 'processed'
     @trigger('save', @state.model)
 
@@ -32,6 +36,13 @@ module.exports = class SaleView extends Form
           <label className="col-sm-3 control-label">Статус</label>
           <div className="col-sm-9">
             <p className="form-control-static" dangerouslySetInnerHTML={{ __html: formatters.saleStatus(@state.model.status) }}></p>
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label className="col-sm-3 control-label">Магазин</label>
+          <div className="col-sm-9">
+            <p className="form-control-static">{ @state.model.shop.name }</p>
           </div>
         </div>
 
@@ -63,6 +74,8 @@ module.exports = class SaleView extends Form
           </div>
         </div>
 
+        <FormStatus {...@state} />
+
         {
           if @state.model.status is 'pending'
             <div className="panel panel-success">
@@ -72,7 +85,7 @@ module.exports = class SaleView extends Form
               <div className="panel-body">
                 <form className="form-horizontal" onSubmit={@handleProcess}>
                   <div className="text-right">
-                    <button className="btn btn-success" type="submit">Отправить</button>
+                    <button className="btn btn-success" type="submit" disabled={@state.isLocked}>Отправить</button>
                   </div>
                 </form>
               </div>
@@ -93,7 +106,7 @@ module.exports = class SaleView extends Form
                     </div>
                   </div>
                   <div className="text-right">
-                    <button className="btn btn-danger" type="submit">Отправить</button>
+                    <button className="btn btn-danger" type="submit" disabled={@state.isLocked}>Отправить</button>
                   </div>
                 </form>
               </div>

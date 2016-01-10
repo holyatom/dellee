@@ -1,7 +1,7 @@
 React = require('react')
 Form = require('admin/base/form')
-Footer = require('admin/components/footer')
 profile = require('admin/modules/profile')
+{ Footer, FormStatus } = require('admin/components')
 
 
 module.exports = class HomeView extends Form
@@ -16,7 +16,9 @@ module.exports = class HomeView extends Form
     @lockForm()
 
     dfd = profile.login(@state.model)
-    dfd.fail => @unlockForm()
+    dfd.fail (xhr) =>
+      @showErrorMessage(xhr)
+      @unlockForm()
 
   render: ->
     <div className="p-home layout">
@@ -32,7 +34,8 @@ module.exports = class HomeView extends Form
             <div className="form-group">
               <input valueLink={@stateLink('model.password')} type="password" className="form-control" placeholder="пароль" />
             </div>
-            <button className="btn btn-primary btn-block">Вход</button>
+            <FormStatus {...@state} />
+            <button className="btn btn-primary btn-block" disabled={@state.isLocked}>Вход</button>
           </form>
         </div>
       </div>

@@ -1,7 +1,6 @@
 React = require('react')
 Component = require('admin/base/component')
-Layout = require('admin/components/layout')
-TableView = require('admin/components/table_view')
+{ TableView, Layout } = require('admin/components')
 
 
 module.exports = class SalesListView extends Component

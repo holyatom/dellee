@@ -1,6 +1,5 @@
 React = require('react')
-ModelForm = require('admin/base/model_form')
-Layout = require('admin/components/layout')
+{ Layout, ModelForm, FormStatus } = require('admin/components')
 formatters = require('lib/formatters')
 
 
@@ -8,6 +7,8 @@ module.exports = class SaleView extends ModelForm
   title: -> if @state.model._id then 'Редактирование акции' else 'Создание акции'
 
   handleSubmit: ->
+    return if @state.isLocked
+
     if @state.model.status is 'rejected'
       @state.model.status = 'pending'
       @state.model.status_message = ''
@@ -15,7 +16,7 @@ module.exports = class SaleView extends ModelForm
     super
 
   render: ->
-    disableForm = @state.model.status is 'processed'
+    disableForm = @state.model.status in ['processed', 'pending']
 
     <Layout>
       <header className="page-header">
@@ -68,10 +69,12 @@ module.exports = class SaleView extends ModelForm
           </div>
         </div>
 
+        <FormStatus {...@state} />
+
         {
-          if @state.model.status is 'pending' or not @state.model._id
+          unless @state.model._id
             <div className="text-right">
-              <button className="btn btn-success" type="submit">Сохранить</button>
+              <button className="btn btn-success" type="submit" disabled={@state.isLocked}>Сохранить</button>
             </div>
         }
 
@@ -92,7 +95,7 @@ module.exports = class SaleView extends ModelForm
                   </div>
                 </div>
                 <div className="text-right">
-                  <button className="btn btn-danger" type="submit">Отправить заново</button>
+                  <button className="btn btn-danger" type="submit" disabled={@state.isLocked}>Отправить заново</button>
                 </div>
               </form>
             </div>
