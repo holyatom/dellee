@@ -1,6 +1,6 @@
 _ = require('lodash')
 React = require('react')
-Component = require('../base/component')
+Component = require('admin/base/component')
 
 
 module.exports = class TableView extends Component

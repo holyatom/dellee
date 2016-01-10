@@ -60,21 +60,37 @@ module.exports = class CrudController extends Controller
 
   deleteModel: (data) =>
     model = new @Model(data)
+
+    @view.lockForm()
     @xhrs.destroy = model.destroy()
     @xhrs.destroy.then =>
       vent.trigger('navigate', "/admin#{@controllerRoot}")
+    .always =>
+      @view.unlockForm()
 
   updateModel: (data) =>
     model = new @Model(data)
+
+    @view.lockForm()
     @xhrs.save = model.save()
     @xhrs.save.then (updatedModel) =>
       @view.setState(model: updatedModel)
+      @view.showSuccessMessage()
+    .fail (xhr) =>
+      @view.showErrorMessage(xhr)
+    .always =>
+      @view.unlockForm()
 
   saveModel: (data) =>
     model = new @Model(data)
+
+    @view.lockForm()
     @xhrs.save = model.save()
     @xhrs.save.then (newModel) =>
       vent.trigger('navigate', "/admin#{@controllerRoot}/#{newModel._id}", force: true)
+    .fail (xhr) =>
+      @view.showErrorMessage(xhr)
+      @view.unlockForm()
 
   # Override in child
   extraData: (method) -> {}

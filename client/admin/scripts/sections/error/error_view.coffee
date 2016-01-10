@@ -1,6 +1,6 @@
 React = require('react')
 Component = require('admin/base/component')
-Footer = require('admin/components/footer')
+{ Footer } = require('admin/components')
 
 
 module.exports = class ErrorView extends Component

@@ -1,6 +1,5 @@
 React = require('react')
-ModelForm = require('admin/base/model_form')
-Layout = require('admin/components/layout')
+{ ModelForm, Layout, FormStatus } = require('admin/components')
 
 
 module.exports = class ShopView extends ModelForm
@@ -27,8 +26,10 @@ module.exports = class ShopView extends ModelForm
           </div>
         </div>
 
+        <FormStatus {...@state} />
+
         <div className="text-right">
-          <button className="btn btn-success" type="submit">Сохранить</button>
+          <button className="btn btn-success" type="submit" disabled={@state.isLocked}>Сохранить</button>
         </div>
       </form>
     </Layout>

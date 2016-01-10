@@ -295,7 +295,11 @@ gulp.task 'css:app', ->
   )
 
 gulp.task 'css:admin', ->
-  compileCss(input: "#{ADMIN_LOCATION}/stylesheets/index.styl", output: 'admin.css')
+  compileCss(
+    input: "#{ADMIN_LOCATION}/stylesheets/index.styl"
+    output: 'admin.css'
+    paths: ["#{ADMIN_LOCATION}/scripts"]
+  )
 
 gulp.task('css', ['css:app', 'css:admin'])
 
@@ -337,7 +341,12 @@ gulp.task 'css:app:min', ->
   )
 
 gulp.task 'css:admin:min', ->
-  compileCss(input: "#{ADMIN_LOCATION}/stylesheets/index.styl", output: 'admin.css', minify: true)
+  compileCss(
+    input: "#{ADMIN_LOCATION}/stylesheets/index.styl"
+    output: 'admin.css'
+    paths: ["#{ADMIN_LOCATION}/scripts"]
+    minify: true
+  )
 
 gulp.task('css:min', ['css:app:min', 'css:admin:min'])
 

@@ -1,6 +1,5 @@
 React = require('react')
-ModelForm = require('admin/base/model_form')
-Layout = require('admin/components/layout')
+{ ModelForm, Layout, FormStatus } = require('admin/components')
 
 
 module.exports = class UserView extends ModelForm
@@ -66,8 +65,10 @@ module.exports = class UserView extends ModelForm
             </div>
         }
 
+        <FormStatus {...@state} />
+
         <div className="text-right">
-          <button className="btn btn-success" type="submit">Сохранить</button>
+          <button className="btn btn-success" type="submit" disabled={@state.isLocked}>Сохранить</button>
         </div>
       </form>
     </Layout>

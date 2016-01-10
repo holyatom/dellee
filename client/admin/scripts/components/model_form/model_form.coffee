@@ -1,4 +1,4 @@
-Form = require('./form')
+Form = require('admin/base/form')
 
 
 module.exports = class ModelForm extends Form
@@ -7,8 +7,12 @@ module.exports = class ModelForm extends Form
 
   handleSubmit: (event) =>
     event.preventDefault()
+    return if @state.isLocked
+
     @trigger('save', @state.model)
 
   handleDelete: =>
+    return if @state.isLocked
+
     if confirm('Вы уверены что хотите удалить запись?')
       @trigger('delete', @state.model)

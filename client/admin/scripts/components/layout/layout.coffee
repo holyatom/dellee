@@ -1,7 +1,7 @@
 React = require('react')
-Component = require('../base/component')
-Footer = require('./footer')
-Header = require('./header')
+Component = require('admin/base/component')
+Footer = require('../footer/footer')
+Header = require('../header/header')
 
 
 module.exports = class Layout extends Component
