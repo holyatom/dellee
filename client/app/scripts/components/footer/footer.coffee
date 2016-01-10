@@ -8,9 +8,9 @@ module.exports = class Footer extends Component
       <div className="container">
         <footer className="c-footer">
           <nav className="c-f-links">
-            <a href="">контакты</a>
-            <a href="">о проекте</a>
-            <a href="">правила</a>
+            <a href="/contacts">контакты</a>
+            <a href="/about">о проекте</a>
+            <a href="/terms">правила</a>
           </nav>
           <div className="c-f-copyright">© {(new Date()).getFullYear()} Delle beta.</div>
         </footer>

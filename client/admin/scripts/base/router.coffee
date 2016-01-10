@@ -29,9 +29,6 @@ module.exports = class Router
     _.extend(@options, opts)
     @page(url)
 
-  use: (args...) ->
-    @page(args...)
-
   route: (url, middlewares..., action) ->
     [ctrl, method] = action.split('.')
     Controller = @controllers[ctrl]

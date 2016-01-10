@@ -29,9 +29,6 @@ module.exports = class Router
     _.extend(@options, opts)
     @page(url)
 
-  use: (args...) ->
-    @page(args...)
-
   route: (url, middlewares..., action) ->
     [ctrl, method] = action.split('.')
     Controller = @controllers[ctrl]
@@ -46,11 +43,12 @@ module.exports = class Router
 
       @ctor = new Controller()
 
-      if @ctor[method].length > 1
-        @ctor[method](ctx, => @afterRoute(ctx))
-      else
-        @ctor[method](ctx)
-        @afterRoute(ctx)
+      process.nextTick =>
+        if @ctor[method].length > 1
+          @ctor[method](ctx, => @afterRoute(ctx))
+        else
+          @ctor[method](ctx)
+          @afterRoute(ctx)
 
   beforeRoute: (ctx) ->
     @ctor?.destroy(force: @options.force)

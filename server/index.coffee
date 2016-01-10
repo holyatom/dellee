@@ -48,12 +48,12 @@ class Server
     if config.debug
       @app.use(errorhandler(dumpExceptions: true, showStack: true))
     else
-      @app.use((err, req, res) =>
+      @app.use((err, req, res, next) =>
         @log(err.stack or err, 'red bold')
-        middlewares.serverError(res)
+        middlewares.serverError(req, res)
       )
 
-    @app.use((req, res, next) -> middlewares.notFound(res))
+    @app.use((req, res, next) -> middlewares.notFound(req, res))
 
   loadTemplateEngine: ->
     globals = {

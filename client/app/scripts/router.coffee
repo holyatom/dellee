@@ -20,6 +20,9 @@ module.exports = class Router extends BaseRouter
 
   router: ->
     @route('/', 'home.index')
+    @route('/about', 'content.about')
+    @route('/terms', 'content.terms')
+    @route('/contacts', 'content.contacts')
 
     # @route('/login', @notAuth, 'login.index')
     # @route('/subscriptions', @auth, 'subscriptions.index')
@@ -31,6 +34,7 @@ if process.browser
   Router::controllers =
     error: require('./sections/error/error_controller')
     home: require('./sections/home/home_controller')
+    content: require('./sections/content/content_controller')
 
 
     # verify: require('./sections/verify/verify_controller')

@@ -1,4 +1,3 @@
-vent = require('app/modules/vent')
 React = require('react')
 Form = require('app/base/form')
 { Footer } = require('app/components')
@@ -12,9 +11,6 @@ module.exports = class HomeView extends Form
     success: false
     error: false
 
-  share: (type) ->
-    vent.trigger("share:#{type}")
-
   handleSubmit: (event) =>
     return if @state.isLocked
 
@@ -26,11 +22,13 @@ module.exports = class HomeView extends Form
       <div className="l-wrapper">
         <div className="container">
           <section className="p-h-top">
-            <h1 className="ui-logo">Dellee<span className="ui-l-beta_label"></span></h1>
+            <a href="/">
+              <h1 className="ui-logo">Dellee<span className="ui-l-beta_label"></span></h1>
+            </a>
             <h2>Первый Мессенджер Акций</h2>
             <h3>узнавай первым о скидках и акциях в любимых магазинах</h3>
             <div className="p-h-t-divider"></div>
-            <a href="/" className="ui-btn ui-btn_default">о проекте</a>
+            <a href="/about" className="ui-btn ui-btn_default">о проекте</a>
           </section>
           <section className="p-h-benefits">
             <h2>Наши преимущества</h2>
@@ -65,7 +63,7 @@ module.exports = class HomeView extends Form
               </li>
             </ul>
           </section>
-          <section className="p-h-signup">
+          <section id="early-access" className="p-h-signup">
             <h2>Ранний доступ</h2>
             <div className="ui-alert ui-alert_info">
               <span className="ui-a-icon">
@@ -106,8 +104,8 @@ module.exports = class HomeView extends Form
             <div className="p-h-share">
               Расскажи о <strong>Dellee</strong> своим друзьям
               <span className="p-h-s-links">
-                <span className="ui-iconbox-circle ui-iconbox-circle_vk" onClick={@share.bind(@, 'vk')}><i className="icon-vk"></i></span>
-                <span className="ui-iconbox-circle ui-iconbox-circle_twitter" onClick={@share.bind(@, 'twitter')}><i className="icon-twitter"></i></span>
+                <span className="ui-iconbox-circle ui-iconbox-circle_vk" onClick={=> @trigger('share', 'vk')}><i className="icon-vk"></i></span>
+                <span className="ui-iconbox-circle ui-iconbox-circle_twitter" onClick={=> @trigger('share', 'twitter')}><i className="icon-twitter"></i></span>
               </span>
             </div>
           </section>

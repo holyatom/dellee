@@ -1,0 +1,64 @@
+.c-content
+  .c-c-top
+    position: relative
+    height: 420px
+
+    background: url(urlify('/images/head_cover.jpg')) no-repeat center center
+    background-size: cover
+
+    @media $tablet
+      background-image: url(urlify('/images/head_cover_desktop.jpg'))
+
+  .c-c-header
+    padding-top: 25px
+    clearfix()
+
+    .c-c-h-brand
+      text-align: center
+
+      .ui-logo
+        width: 42px
+        height: @width
+
+      @media $tablet
+        float: left
+
+    .c-c-h-nav
+      margin-left: 55px
+      display: none
+
+      a
+        cursor: pointer
+
+        display: inline-block
+        padding: 10px
+
+        color: #fff
+        opacity: .6
+
+        &:hover
+          opacity: 1
+          text-decoration: none
+
+      @media $tablet
+        display: block
+
+    .c-c-h-nav-right
+      absolute: top 50% left 50%
+      transform: translateY(-50%) translateX(-50%)
+
+      .ui-btn
+        margin-top: 3px
+        padding-left: 20px
+        padding-right: @padding-left
+
+        color: #fff
+
+      @media $tablet
+        float: right
+
+        relative: top auto left auto
+        transform: none
+
+  .c-c-body
+    padding-top: 20px

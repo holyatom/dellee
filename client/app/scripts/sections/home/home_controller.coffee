@@ -2,11 +2,15 @@ React = require('react')
 Controller = require('app/base/controller')
 HomeView = require('./home_view')
 SubscriberModel = require('./subscriber_model')
+vent = require('app/modules/vent')
 
 
 module.exports = class HomeControlller extends Controller
   index: (ctx, done) ->
-    @renderView(<HomeView onSave={@saveModel} />, done)
+    @renderView(<HomeView onSave={@saveModel} onShare={@share} />, done)
+
+  share: (type) =>
+    vent.trigger("share:#{type}")
 
   saveModel: (data) =>
     model = new SubscriberModel(data)
