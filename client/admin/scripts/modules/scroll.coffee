@@ -10,11 +10,22 @@ class Scroll
     duration: 200
     target: null
 
+  _preventDefault: (event) ->
+    event.preventDefault()
+
+  _afterRoute: (ctx, props) ->
+    return unless props.initialized
+
+    if ctx.hash
+      @scroll(target: "##{ctx.hash}", animate: false)
+    else
+      @scroll(animate: false)
+
   constructor: ->
     @$win = $(global)
     @$scrollable = $('html, body')
 
-    vent.on('route:after', @afterRoute, @)
+    vent.on('route:after', @_afterRoute, @)
 
   scroll: (options) ->
     return @$win.scrollTop() unless options
@@ -30,12 +41,12 @@ class Scroll
     else
       @$win.scrollTop(options.pos)
 
-  afterRoute: (ctx, props) ->
-    return unless props.initialized
+  lock: ->
+    @$scrollable.on('touchmove', @_preventDefault)
+    @$scrollable.addClass('locked_scroll')
 
-    if ctx.hash
-      @scroll(target: "##{ctx.hash}", animate: false)
-    else
-      @scroll(animate: false)
+  unlock: =>
+    @$scrollable.off('touchmove', @_preventDefault)
+    @$scrollable.removeClass('locked_scroll')
 
 module.exports = new Scroll()

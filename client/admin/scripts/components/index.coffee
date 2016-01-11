@@ -5,3 +5,5 @@ module.exports =
   ModelForm: require('./model_form/model_form')
   TableView: require('./table_view/table_view')
   FormStatus: require('./form_status/form_status')
+  Modal: require('./modal/modal')
+  Loading: require('./loading/loading')
