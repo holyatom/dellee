@@ -1,11 +1,23 @@
+$ = require('jquery')
+vent = require('admin/modules/vent')
 React = require('react')
 Component = require('admin/base/component')
 profile = require('admin/modules/profile')
 
 
 module.exports = class Header extends Component
+  beforeRoute: =>
+    @$nav.removeClass('in')
+
   logout: ->
     profile.logout()
+
+  componentDidMount: ->
+    @$nav = $(@refs.navigation)
+    vent.on('route:before', @beforeRoute)
+
+  componentWillUnmount: ->
+    vent.off('route:before', @beforeRoute)
 
   render: ->
     <nav className="c-header navbar navbar-default navbar-fixed-top">
@@ -23,7 +35,7 @@ module.exports = class Header extends Component
           </a>
         </div>
 
-        <div className="collapse navbar-collapse" id="navigation">
+        <div ref="navigation" className="collapse navbar-collapse" id="navigation">
           {
             if profile.is('shopadmin', strict: true)
               <ul className="nav navbar-nav">

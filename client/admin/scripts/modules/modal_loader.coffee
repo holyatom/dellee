@@ -3,7 +3,7 @@ vent = require('./vent')
 { Modal, Loading } = require('admin/components')
 
 
-DELAY = 100
+DELAY = 150
 tid = null
 
 vent.on 'route:before', ->
