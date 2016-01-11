@@ -1,2 +1,2 @@
 module.exports =
-  host: 'dellee.me'
+  host: 'staging.dellee.me'
