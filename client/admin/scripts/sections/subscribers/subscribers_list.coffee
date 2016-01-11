@@ -10,6 +10,10 @@ module.exports = class SubscribersView extends Component
     { data } = @props
 
     <Layout>
+      <ul className="breadcrumb">
+        <li><a href="/admin">Главная</a></li>
+        <li className="active">Подписчики</li>
+      </ul>
       <header className="page-header">
         <div className="row">
           <h3 className="col-xs-6 col-md-8">Подписчики на старт проекта</h3>

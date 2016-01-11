@@ -8,6 +8,9 @@ module.exports = class DashboardView extends Component
 
   render: ->
     <Layout>
+      <ul className="breadcrumb">
+        <li className="active">Главная</li>
+      </ul>
       <div className="page-header">
         <h3>Добро пожаловать</h3>
       </div>

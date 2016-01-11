@@ -7,6 +7,11 @@ module.exports = class ShopView extends ModelForm
 
   render: ->
     <Layout>
+      <ul className="breadcrumb">
+        <li><a href="/admin">Главная</a></li>
+        <li><a href={@props.data.controllerRoot}>Магазины</a></li>
+        <li className="active">{_.trunc(@state.model._id, 10)}</li>
+      </ul>
       <header className="page-header">
         <div className="row">
           <h3 className="col-xs-6 col-md-8">{@title()}</h3>

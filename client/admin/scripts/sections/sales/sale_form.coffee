@@ -1,3 +1,4 @@
+_ = require('lodash')
 React = require('react')
 Form = require('admin/base/form')
 { Layout, FormStatus } = require('admin/components')
@@ -26,6 +27,11 @@ module.exports = class SaleView extends Form
 
   render: ->
     <Layout>
+      <ul className="breadcrumb">
+        <li><a href="/admin">Главная</a></li>
+        <li><a href={@props.data.controllerRoot}>Акции</a></li>
+        <li className="active">{_.trunc(@state.model._id, 10)}</li>
+      </ul>
       <header className="page-header">
         <div className="row">
           <h3 className="col-xs-6 col-md-8">{@title()}</h3>
@@ -42,7 +48,7 @@ module.exports = class SaleView extends Form
         <div className="form-group">
           <label className="col-sm-3 control-label">Магазин</label>
           <div className="col-sm-9">
-            <p className="form-control-static">{ @state.model.shop.name }</p>
+            <p className="form-control-static">{ @state.model.shop?.name }</p>
           </div>
         </div>
 

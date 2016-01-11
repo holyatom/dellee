@@ -9,6 +9,11 @@ module.exports = class UserView extends ModelForm
     { shops } = @props.data
 
     <Layout>
+      <ul className="breadcrumb">
+        <li><a href="/admin">Главная</a></li>
+        <li><a href={@props.data.controllerRoot}>Пользователи</a></li>
+        <li className="active">{_.trunc(@state.model._id, 10)}</li>
+      </ul>
       <header className="page-header">
         <div className="row">
           <h3 className="col-xs-6 col-md-8">{@title()}</h3>
