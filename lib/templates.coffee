@@ -19,6 +19,6 @@ module.exports.render = (template, context) ->
   context.config = config
 
   body = compileTemplate(template, context)
-  body = compileTemplate('layout', body: body)
+  body = compileTemplate('layout', body: body, config: config)
 
   body
