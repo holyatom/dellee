@@ -76,7 +76,7 @@ module.exports = class HomeView extends Form
                 <div className="ui-p-body">
                   <h3>Заполните форму</h3>
                   <div className="ui-form_group">
-                    <input valueLink={@stateLink('model.email')} type="text" className="ui-form_control" placeholder="email" />
+                    <input valueLink={@stateLink('model.email')} type="text" name="email" className="ui-form_control" placeholder="email" />
                   </div>
 
                   {
