@@ -27,7 +27,7 @@ module.exports = class HomeView extends Form
         <div className="container">
           <div className="text-center">
             <h1 className="ui-logo">Dellee<span className="ui-l-beta_label"></span></h1>
-            <h4 className="text-muted">Админ панель</h4>
+            <h4>Админ панель</h4>
           </div>
           <form onSubmit={@handleSubmit}>
             <div className="form-group">
