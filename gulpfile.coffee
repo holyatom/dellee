@@ -307,7 +307,7 @@ gulp.task 'watch', ->
   watch(['./client/app/stylesheets/**/*.styl', './client/app/scripts/**/*.styl'], watchTask('css:app'))
   watch('./client/app/scripts/**/*.coffee', watchTask('js:app'))
 
-  watch('./client/admin/stylesheets/**/*.styl', watchTask('css:admin'))
+  watch(['./client/admin/stylesheets/**/*.styl', './client/admin/scripts/**/*.styl'], watchTask('css:admin'))
   watch('./client/admin/scripts/**/*.coffee',  watchTask('js:admin'))
 
 gulp.task('assets', ['js', 'css'])
