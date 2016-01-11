@@ -10,7 +10,7 @@
         <td></td>
         <td>
           <h1 align="center" style="font-family:Helvetica,Arial,sans-serif; font-size:24px; color:#4d4d4d; font-weight:200; margin:0; padding:0;">
-            Добро пожаловать!!!
+            Приветствуем!!!
           </h1>
 
           <br />
@@ -24,7 +24,13 @@
           <br />
 
           <div align="left" style="font-family:Helvetica,Arial,sans-serif; font-size:15px; color:#5a5a5a; margin:0; padding:0;">
-            Здравствуйте, был создан аккаунт с e-mail адресом: <strong>{{email}}</strong>. Перейдите по ссылке ниже чтобы подтвердить, что он принадлежит вам.
+            Здравствуйте! Ваш e-mial адрес: <strong>{{email}}</strong> был успешно подписан на запуска проекта Dellee.
+          </div>
+
+          <br />
+
+          <div align="left" style="font-family:Helvetica,Arial,sans-serif; font-size:15px; color:#5a5a5a; margin:0; padding:0;">
+            Не забудьте рассказать о Dellee своим друзьям!
           </div>
 
           <br /><br />
@@ -33,13 +39,13 @@
             <table style="table-layout:fixed;" cellpadding="0" cellspacing="0" border="0">
               <tr>
                 <td>
-                  <a href="{{config.base_url}}/verify/{{verificationId}}" style="text-decoration:none;">
+                  <a href="{{config.base_url}}" style="text-decoration:none;">
                     <table style="background:#f8b86f; border-radius:3px;" cellpadding="0" cellspacing="0" border="0">
                       <tr height="12px"></tr>
                       <tr>
                         <td width="20px"></td>
                         <td style="font-family:Helvetica,Arial,sans-serif; font-size:14px; color:#ffffff; text-align:center">
-                          подтвердить e-mail адрес
+                          посетить сайт
                         </td>
                         <td width="20px"></td>
                       </tr>
@@ -50,6 +56,43 @@
               </tr>
             </table>
           </div>
+        </td>
+        <td></td>
+      </tr>
+      <tr height="30px"></tr>
+    </table>
+  </td>
+</tr>
+
+<tr height="2px">
+</tr>
+
+<tr>
+  <td bgcolor="#ffffff">
+    <table style="table-layout:fixed;" width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr height="30px">
+        <td width="20px"></td>
+        <td></td>
+        <td width="20px"></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td align="center">
+          <table style="table-layout:fixed;" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td>
+                <a href="http://vk.com/share.php?url={{config.base_url}}">
+                  <img src="{{config.base_url}}/images/mail/vk_share.png" height="13px" alt="вк поделиться" />
+                </a>
+              </td>
+              <td width="20px"></td>
+              <td>
+                <a href="https://twitter.com/intent/tweet?url={{config.base_url}}">
+                  <img src="{{config.base_url}}/images/mail/twitter_share.png" height="17px" alt="твиттер поделиться" />
+                </a>
+              </td>
+            </tr>
+          </table>
         </td>
         <td></td>
       </tr>

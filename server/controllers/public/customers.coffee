@@ -42,6 +42,7 @@ class CustomersController extends PublicController
             template: 'email_verification'
             context:
               verificationId: verificationDoc._id
+              email: req.modelItem.email
 
           sendEmail.task data, (err) =>
             return next(err) if err
