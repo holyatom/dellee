@@ -25,8 +25,10 @@ module.exports = class HomeView extends Form
       <div className="l-top"></div>
       <div>
         <div className="container">
-          <h1>Dellee <small>beta</small></h1>
-          <h4 className="text-muted">Админ панель</h4>
+          <div className="text-center">
+            <h1 className="ui-logo">Dellee<span className="ui-l-beta_label"></span></h1>
+            <h4 className="text-muted">Админ панель</h4>
+          </div>
           <form onSubmit={@handleSubmit}>
             <div className="form-group">
               <input valueLink={@stateLink('model.username')} type="text" className="form-control" placeholder="логин" />

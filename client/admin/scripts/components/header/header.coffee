@@ -31,7 +31,7 @@ module.exports = class Header extends Component
             <span className="icon-bar"></span>
           </button>
           <a className="navbar-brand" href="/admin/dashboard">
-            Dellee beta
+            <h1 className="ui-logo">Dellee<span className="ui-l-beta_label"></span></h1>
           </a>
         </div>
 
