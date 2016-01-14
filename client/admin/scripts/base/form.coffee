@@ -37,6 +37,5 @@ module.exports = class Form extends Component
     @setState(success: false, error: { message })
     @forceUpdate()
 
-
   stateLink: (keyPath) ->
     new ReactLink(@_linkValue(keyPath), @_linkStateChange.bind(@, keyPath))

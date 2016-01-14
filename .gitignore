@@ -2,6 +2,9 @@
 /public/assets/*
 /public/static/*
 
+# Data
+/cdn/*
+
 # Dependency directory
 /node_modules
 

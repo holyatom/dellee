@@ -5,6 +5,9 @@ React = require('react')
 module.exports = class ShopView extends ModelForm
   title: -> if @state.model._id then 'Редактирование магазина' else 'Создание магазина'
 
+  componentDidMount: ->
+    @refs.uploader.setFiles([@state.model.logo]) if @state.model.logo
+
   render: ->
     <Layout>
       <ul className="breadcrumb">
@@ -34,7 +37,7 @@ module.exports = class ShopView extends ModelForm
         <div className="form-group">
           <label className="col-md-3 control-label">Лого</label>
           <div className="col-md-9">
-            <FileUploader />
+            <FileUploader ref="uploader" onChange={@saveModel} accept="image/*" valueLink={@stateLink('model.logo_url')} section="images/shops" />
           </div>
         </div>
 

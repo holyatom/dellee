@@ -8,11 +8,13 @@ module.exports = class ModelForm extends Form
   handleSubmit: (event) =>
     event.preventDefault()
     return if @state.isLocked
-
-    @trigger('save', @state.model)
+    @saveModel()
 
   handleDelete: =>
     return if @state.isLocked
 
     if confirm('Вы уверены что хотите удалить запись?')
       @trigger('delete', @state.model)
+
+  saveModel: =>
+    @trigger('save', @state.model)

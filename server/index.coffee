@@ -31,6 +31,7 @@ class Server
     # Set publis assets.
     @app.use(require('serve-favicon')("#{__dirname}/../public/favicon.ico"))
     @app.use(require('serve-static')("#{__dirname}/../public", redirect: false))
+    @app.use(require('serve-static')("#{__dirname}/../cdn", redirect: false))
 
     # Set language.
     @app.use(middlewares.lang)

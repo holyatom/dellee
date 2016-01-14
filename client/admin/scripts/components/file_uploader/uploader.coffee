@@ -6,8 +6,14 @@ config = require('config')
 
 defaultOptions =
   # FIXME: change to dellee endpoint - "#{config.api_root}/upload"
-  url: 'https://api.cloudinary.com/v1_1/atomiomi/image/upload'
+  url: "#{config.api_root}/files"
   paramName: 'file'
+
+  dictMaxFilesExceeded: 'Загружено макс. файлов'
+  dictInvalidFileType: 'Неверный тип'
+  dictFileTooBig: 'Макс. размер'
+  dictResponseError: 'Ошибка сервера'
+  dictCancelUploadConfirmation: 'Вы уверены что хотите удалить файл?'
 
   # headers:
   #   'Cache-Control': '' # remove cache control header
@@ -15,6 +21,7 @@ defaultOptions =
 
 
 module.exports = class Uploader extends Dropzone
+  @url: defaultOptions.url
   defaultOptions: _.defaultsDeep(defaultOptions, Dropzone::defaultOptions)
 
   constructor: ->
@@ -27,10 +34,6 @@ module.exports = class Uploader extends Dropzone
     @on('error', @handleError)
     @on('success', @handleSuccess)
 
-    # FIXME: Remove when endpoint is ready
-    @on 'sending', (file, xhr, formData) ->
-      formData.append('upload_preset', 'kriwxybd')
-
   handleAdd: (file) =>
     file.$el = $(file.previewElement)
 
@@ -38,7 +41,7 @@ module.exports = class Uploader extends Dropzone
     @options.maxFiles += 1 if file.existing and @options.maxFiles?
     @$el.removeClass('dz-max-files-reached')
 
-  handleError: (file) =>
+  handleError: (file, err) =>
     file.$el.removeClass('dz-processing')
 
   handleSuccess: (file, resp) =>
