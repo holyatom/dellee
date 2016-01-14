@@ -7,3 +7,4 @@ module.exports =
   FormStatus: require('./form_status/form_status')
   Modal: require('./modal/modal')
   Loading: require('./loading/loading')
+  FileUploader: require('./file_uploader/file_uploader')

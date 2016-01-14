@@ -57,6 +57,7 @@ ADMIN_VENDOR = [
   'jquery'
   'moment'
   'moment/locale/ru'
+  'dropzone'
 ]
 
 SYMLINKS =

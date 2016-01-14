@@ -1,5 +1,5 @@
 React = require('react')
-{ ModelForm, Layout, FormStatus } = require('admin/components')
+{ ModelForm, Layout, FormStatus, FileUploader } = require('admin/components')
 
 
 module.exports = class ShopView extends ModelForm
@@ -28,6 +28,13 @@ module.exports = class ShopView extends ModelForm
           <label htmlFor="inputName" className="col-md-3 control-label">Название</label>
           <div className="col-md-9">
             <input valueLink={@stateLink('model.name')} type="text" className="form-control" id="inputName" placeholder="название" />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label className="col-md-3 control-label">Лого</label>
+          <div className="col-md-9">
+            <FileUploader />
           </div>
         </div>
 
