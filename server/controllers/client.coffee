@@ -9,9 +9,7 @@ class ClientController extends Controller
   router: ->
     AppRouter::route = AdminRouter::route = (url) =>
       return if url.indexOf('*') >= 0
-
-      @get url, (req, res, next) ->
-        @middlewares.clientRender(req, res)
+      @get(url, @middlewares.clientRender)
 
     (new AppRouter()).router()
     (new AdminRouter()).router()

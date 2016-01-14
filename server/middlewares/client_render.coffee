@@ -19,4 +19,4 @@ module.exports = (req, res) ->
     html = ReactDOMServer.renderToString(View())
     title = ViewClass::title()
 
-  res.render(template, layout: false, body: html)
+  res.render(template, layout: false, body: html, title: title)
