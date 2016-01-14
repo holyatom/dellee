@@ -42,7 +42,7 @@ module.exports = class Header extends Component
           </nav>
         </div>
         <div className="c-h-actions">
-          <a className="ui-btn ui-btn_default" href="/#early-access">ранний доступ</a>
+          <a className="ui-btn ui-btn_primary" href="/#early-access">ранний доступ</a>
         </div>
       </div>
     </div>
