@@ -25,40 +25,31 @@ module.exports = class Router extends BaseRouter
       else
         next()
 
-  adminRoute: (url, action) ->
-    @route(url, @auth, @requireRole('admin'), action)
-
-  shopAdminRoute: (url, action) ->
-    @route(url, @auth, @requireRole('shopadmin', strict: true), action)
-
-  moderatorRoute: (url, action) ->
-    @route(url, @auth, @requireRole('moderator'), action)
-
   router: ->
     @route('/admin', @notAuth, 'home.index')
     @route('/admin/dashboard', @auth, 'dashboard.index')
 
-    @adminRoute('/admin/users', 'users.index')
-    @adminRoute('/admin/users/create', 'users.create')
-    @adminRoute('/admin/users/:id', 'users.edit')
+    @route('/admin/users', @requireRole('admin'), 'users.index')
+    @route('/admin/users/create', @requireRole('admin'), 'users.create')
+    @route('/admin/users/:id', @requireRole('admin'), 'users.edit')
 
-    @adminRoute('/admin/shops', 'shops.index')
-    @adminRoute('/admin/shops/create', 'shops.create')
-    @adminRoute('/admin/shops/:id', 'shops.edit')
+    @route('/admin/shops', @requireRole('admin'), 'shops.index')
+    @route('/admin/shops/create', @requireRole('admin'), 'shops.create')
+    @route('/admin/shops/:id', @requireRole('shopadmin'), 'shops.edit')
 
-    @adminRoute('/admin/customers', 'customers.index')
-    @adminRoute('/admin/customers/create', 'customers.create')
-    @adminRoute('/admin/customers/:id', 'customers.edit')
+    @route('/admin/customers', @requireRole('admin'), 'customers.index')
+    @route('/admin/customers/create', @requireRole('admin'), 'customers.create')
+    @route('/admin/customers/:id', @requireRole('admin'), 'customers.edit')
 
-    @adminRoute('/admin/subscribers', 'subscribers.index')
+    @route('/admin/subscribers', @requireRole('admin'), 'subscribers.index')
 
-    @moderatorRoute('/admin/sales', 'sales.index')
-    @moderatorRoute('/admin/sales/create', 'sales.create')
-    @moderatorRoute('/admin/sales/:id', 'sales.edit')
+    @route('/admin/sales', @requireRole('moderator'), 'sales.index')
+    @route('/admin/sales/create', @requireRole('moderator'), 'sales.create')
+    @route('/admin/sales/:id', @requireRole('moderator'), 'sales.edit')
 
-    @shopAdminRoute('/admin/shop-sales', 'shop_sales.index')
-    @shopAdminRoute('/admin/shop-sales/create', 'shop_sales.create')
-    @shopAdminRoute('/admin/shop-sales/:id', 'shop_sales.edit')
+    @route('/admin/shop-sales', @requireRole('shopadmin', strict: true), 'shop_sales.index')
+    @route('/admin/shop-sales/create', @requireRole('shopadmin', strict: true), 'shop_sales.create')
+    @route('/admin/shop-sales/:id', @requireRole('shopadmin', strict: true), 'shop_sales.edit')
 
     @route('/admin/*', 'error.notFound')
 

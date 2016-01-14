@@ -9,6 +9,7 @@ module.exports = class FileUploader extends Component
     url: "#{Uploader.url}?file_type=#{@props.section}"
 
     maxFiles: 1
+    maxFilesize: 2
     acceptedFiles: @props.accept
 
     previewsContainer: @refs.preview
@@ -20,12 +21,14 @@ module.exports = class FileUploader extends Component
     @uploader.on('removedfile', @handleRemove)
 
   handleSuccess: (file, resp) =>
-    @props.valueLink.requestChange(resp.url)
-    @trigger('change') unless file.existing
+    unless file.existing
+      @props.valueLink.requestChange(resp.url)
+      @trigger('change')
 
   handleRemove: (file) =>
-    @props.valueLink.requestChange(null)
-    @trigger('change')
+    if file.accepted
+      @props.valueLink.requestChange(null)
+      @trigger('change')
 
   setFiles: (files) ->
     @uploader.setFiles(files)

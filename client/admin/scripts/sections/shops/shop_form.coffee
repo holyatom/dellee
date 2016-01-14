@@ -1,5 +1,6 @@
 React = require('react')
 { ModelForm, Layout, FormStatus, FileUploader } = require('admin/components')
+profile = require('admin/modules/profile')
 
 
 module.exports = class ShopView extends ModelForm
@@ -12,14 +13,21 @@ module.exports = class ShopView extends ModelForm
     <Layout>
       <ul className="breadcrumb">
         <li><a href="/admin">Главная</a></li>
-        <li><a href={@props.data.controllerRoot}>Магазины</a></li>
-        <li className="active">{if @state.model._id then _.trunc(@state.model._id, 10) else 'Создание'}</li>
+        {
+          if profile.is('admin')
+            [
+              <li><a href={@props.data.controllerRoot}>Магазины</a></li>
+              <li className="active">{if @state.model._id then _.trunc(@state.model._id, 10) else 'Создание'}</li>
+            ]
+          else
+            <li className="active">{'Редактирование магазина'}</li>
+        }
       </ul>
       <header className="page-header">
         <div className="row">
           <h3 className="col-xs-6 col-md-8">{@title()}</h3>
           {
-            if @state.model._id
+            if @state.model._id and profile.is('admin')
               <div className="col-xs-6 col-md-4 text-right">
                 <button onClick={@handleDelete} className="btn btn-danger">Удалить</button>
               </div>

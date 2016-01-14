@@ -40,9 +40,10 @@ module.exports = class Header extends Component
             if profile.is('shopadmin', strict: true)
               <ul className="nav navbar-nav">
                 <li className="dropdown">
-                  <a href="javascript:void(0);" className="dropdown-toggle" data-toggle="dropdown">Магазин ({ profile.get('shop').name }) <span className="caret"></span></a>
+                  <a href="javascript:void(0);" className="dropdown-toggle" data-toggle="dropdown">{ profile.get('shop').name } <span className="caret"></span></a>
                   <ul className="dropdown-menu">
                     <li><a href="/admin/shop-sales">Акции</a></li>
+                    <li><a href="/admin/shops/#{profile.get('shop')._id}">Редактирование</a></li>
                   </ul>
                 </li>
               </ul>

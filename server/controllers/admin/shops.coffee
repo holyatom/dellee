@@ -11,7 +11,6 @@ class ShopsController extends AdminController
   urlPrefix: '/shops'
 
   auth: true
-  roles: ['admin']
 
   Model: require('server/models/shop')
 
@@ -20,18 +19,36 @@ class ShopsController extends AdminController
   listFields: ['_id', 'name', 'slug']
   updateFields: ['name', 'slug', 'logo_url']
 
+  list: -> super
+  ShopsController::list.roles = ['admin']
+
+  get: (req, res, next) ->
+    unless @canViewAndEdit(req)
+      return @error(res, 'role_required', 401)
+
+    super
+
+  ShopsController::get.url = '/:id'
+
+
   create: (req, res, next) ->
     req.body.slug = utils.slugify(req.body.name)
     super(req, res, next)
 
   ShopsController::create.type = 'post'
+  ShopsController::create.roles = ['admin']
+
 
   update: (req, res, next) ->
+    unless @canViewAndEdit(req)
+      return @error(res, 'role_required', 401)
+
     req.body.slug = utils.slugify(req.body.name)
     super(req, res, next)
 
   ShopsController::update.type = 'put'
   ShopsController::update.url = '/:id'
+
 
   delete: (req, res, next) ->
     Q.all([
@@ -45,6 +62,8 @@ class ShopsController extends AdminController
 
   ShopsController::delete.type = 'delete'
   ShopsController::delete.url = '/:id'
+  ShopsController::delete.roles = ['admin']
+
 
   mapDoc: (req, res, next) ->
     item = req.modelItem.toJSON()
@@ -54,5 +73,9 @@ class ShopsController extends AdminController
 
       item.logo = fileDoc.toJSON() if fileDoc
       res.json(item)
+
+
+  canViewAndEdit: (req) ->
+    (req.adminUser.role is 'shopadmin' and req.adminUser.shop.equals(req.params.id)) or req.adminUser.role is 'admin'
 
 module.exports = new ShopsController()
