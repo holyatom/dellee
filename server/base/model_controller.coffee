@@ -1,6 +1,7 @@
 _ = require('lodash')
 Q = require('q')
 Controller = require('./controller')
+File = require('server/models/file')
 
 
 module.exports = class ModelController extends Controller
@@ -157,7 +158,13 @@ module.exports = class ModelController extends Controller
       query.populate(name, fields.join(' '))
 
   getUpdateFields: (req) ->
-    _.pick(req.body, @updateFields)
+    fields = _.pick(req.body, @updateFields)
+
+    for key, field of fields
+      if key.indexOf('url') >= 0
+        File.deleteByUrl(req.modelItem[key]) if req.modelItem[key] and req.modelItem[key] isnt field
+
+    fields
 
   getListOptions: (req) ->
     opts =

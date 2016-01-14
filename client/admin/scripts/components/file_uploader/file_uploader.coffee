@@ -6,11 +6,29 @@ Uploader = require('./uploader')
 
 module.exports = class FileUploader extends Component
   options: ->
+    url: "#{Uploader.url}?file_type=#{@props.section}"
+
+    maxFiles: 1
+    acceptedFiles: @props.accept
+
     previewsContainer: @refs.preview
     previewTemplate: fs.readFileSync("#{__dirname}/file_preview.html", 'utf8')
 
   componentDidMount: ->
     @uploader = new Uploader(@refs.dropzone, @options())
+    @uploader.on('success', @handleSuccess)
+    @uploader.on('removedfile', @handleRemove)
+
+  handleSuccess: (file, resp) =>
+    @props.valueLink.requestChange(resp.url)
+    @trigger('change') unless file.existing
+
+  handleRemove: (file) =>
+    @props.valueLink.requestChange(null)
+    @trigger('change')
+
+  setFiles: (files) ->
+    @uploader.setFiles(files)
 
   render: ->
     <div className="c-file_uploader">

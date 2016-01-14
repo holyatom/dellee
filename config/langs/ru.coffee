@@ -11,6 +11,7 @@ module.exports =
     bad_email: 'Неправельный e-mail адрес'
     bad_username: 'Зарезервированное слово'
     bad_enum_value: '%s не входит в список доступных значений'
+    invalid_value: 'Неправельное значение'
 
     user_exist: 'Пользователь с таким логином уже существует'
     wrong_login_or_password: 'Неверный логин или пароль'
@@ -24,3 +25,5 @@ module.exports =
 
     alwready_following: 'Пользователь уже подписан'
     not_following: 'Пользователь не подписан'
+
+    bad_file_type: 'Неизвестный тип файла'

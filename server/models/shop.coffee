@@ -12,6 +12,9 @@ schema = Schema(
   slug:
     type: String
     unique: true
+
+  logo_url:
+    type: String
 )
 
 module.exports = mongoose.model('Shop', schema)
