@@ -30,7 +30,7 @@ module.exports = class SaleView extends Form
       <ul className="breadcrumb">
         <li><a href="/admin">Главная</a></li>
         <li><a href={@props.data.controllerRoot}>Акции</a></li>
-        <li className="active">{_.trunc(@state.model._id, 10)}</li>
+        <li className="active">{if @state.model._id then _.trunc(@state.model._id, 10) else 'Создание'}</li>
       </ul>
       <header className="page-header">
         <div className="row">
