@@ -8,3 +8,4 @@ module.exports =
   Modal: require('./modal/modal')
   Loading: require('./loading/loading')
   FileUploader: require('./file_uploader/file_uploader')
+  Datepicker: require('./datepicker/datepicker')
