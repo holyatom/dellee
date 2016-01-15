@@ -12,7 +12,11 @@ module.exports = class SaleView extends ModelForm
 
     model: props.data.model
 
-  handleSubmit: ->
+  handleSend: (event) =>
+    @state.model.status = 'pending'
+    @handleSubmit(event)
+
+  handleSubmit: =>
     return if @state.isLocked
 
     if @state.model.status is 'rejected'
@@ -21,6 +25,8 @@ module.exports = class SaleView extends ModelForm
 
     @state.model.start_date = @state.model.date_range[0]
     @state.model.end_date = @state.model.date_range[1]
+
+    @state.model.status = 'new' unless @state.model.status
 
     super
 
@@ -79,9 +85,10 @@ module.exports = class SaleView extends ModelForm
         <FormStatus {...@state} />
 
         {
-          unless @state.model._id
-            <div className="text-right">
+          if not @state.model._id or @state.model.status is 'new'
+            <div className="form-buttons">
               <button className="btn btn-success" type="submit" disabled={@state.isLocked}>Сохранить</button>
+              <button className="btn btn-warning" type="button" onClick={@handleSend} disabled={@state.isLocked}>Сохранить и отправить</button>
             </div>
         }
 
