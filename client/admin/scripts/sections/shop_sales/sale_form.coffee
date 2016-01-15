@@ -63,7 +63,7 @@ module.exports = class SaleView extends ModelForm
         </div>
 
         <div className="form-group">
-          <label htmlFor="inputStartDate" className="col-md-3 control-label">Период акции</label>
+          <label className="col-md-3 control-label">Период акции</label>
           <div className="col-md-9">
             <Datepicker valueLink={@stateLink('model.date_range')} disabled={disableForm} range />
           </div>
