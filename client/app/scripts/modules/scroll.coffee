@@ -15,6 +15,7 @@ class Scroll
     @$scrollable = $('html, body')
 
     vent.on('route:after', @afterRoute, @)
+    vent.on('scroll', @scroll, @)
 
   scroll: (options) ->
     return @$win.scrollTop() unless options

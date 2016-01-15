@@ -1,6 +1,7 @@
 React = require('react')
 Form = require('app/base/form')
 { Footer } = require('app/components')
+vent = require('app/modules/vent')
 
 
 module.exports = class HomeView extends Form
@@ -17,6 +18,9 @@ module.exports = class HomeView extends Form
     event.preventDefault()
     @trigger('save', @state.model)
 
+  scrollToCreateShop: =>
+    vent.trigger('scroll', target: '#shop-create', duration: 500)
+
   render: ->
     <div className="layout p-home">
       <div className="l-wrapper">
@@ -28,7 +32,15 @@ module.exports = class HomeView extends Form
             <h2>Первый Мессенджер Акций</h2>
             <h3>узнавай первым о скидках и акциях в любимых магазинах</h3>
             <div className="p-h-t-divider"></div>
-            <a href="/about" className="ui-btn ui-btn_default">о проекте</a>
+            <div className="p-h-t-link">
+              <a href="/about" className="ui-btn ui-btn_default">о проекте</a>
+            </div>
+            <div className="p-h-t-arrow">
+              <button className="ui-btn" onClick={@scrollToCreateShop}>
+                <span>магазинам</span>
+                <i className="icon-arrowdown"></i>
+              </button>
+            </div>
           </div>
         </section>
         <div className="container">
@@ -112,7 +124,7 @@ module.exports = class HomeView extends Form
             </div>
           </section>
         </div>
-        <section className="p-h-create_shop">
+        <section className="p-h-create_shop" id="shop-create">
           <div className="container">
             <figure>
               <i className="icon-agreement"></i>

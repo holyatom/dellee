@@ -26,11 +26,31 @@
       width: 100px
       background: #e8e8e8
 
-    .ui-btn
-      width: 180px
+    .p-h-t-link
+      .ui-btn
+        width: 180px
+
+    .p-h-t-arrow
+      padding-top: 50px
+
+      .ui-btn
+        border: none
+        color: #4078c0
+        opacity: .7
+
+        animation: bounce 5s ease infinite
+        transition: opacity 200ms ease
+
+        span
+          display: block
+          margin-bottom: 3px
+
+        &:hover
+          opacity: 1
+
 
     @media $tablet
-      padding: 60px 0 80px
+      padding: 60px 0 45px
 
       .ui-logo
         width: 125px
@@ -276,9 +296,15 @@
         padding-left: 30px
         padding-right: @padding-left
 
-        color: #666
-        border: 2px solid #c4d0d9
+        color: #4078c0
         background: #f9fcff
+
+        transition: background 200ms linear, color 200ms linear
+
+        &:hover
+          color: #fff
+          border-color: #4078c0
+          background: @border-color
 
     .p-h-cs-help_message
       padding-bottom: 80px
