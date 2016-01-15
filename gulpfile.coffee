@@ -58,6 +58,7 @@ ADMIN_VENDOR = [
   'moment'
   'moment/locale/ru'
   'dropzone'
+  'bootstrap-datepicker'
 ]
 
 SYMLINKS =

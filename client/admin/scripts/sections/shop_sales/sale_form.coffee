@@ -1,10 +1,16 @@
 React = require('react')
-{ Layout, ModelForm, FormStatus } = require('admin/components')
+{ Layout, ModelForm, FormStatus, Datepicker } = require('admin/components')
 formatters = require('lib/formatters')
 
 
 module.exports = class SaleView extends ModelForm
   title: -> if @state.model._id then 'Редактирование акции' else 'Создание акции'
+
+  initState: (props) ->
+    model = props.data.model
+    model.date_range = [model.start_date, model.end_date]
+
+    model: props.data.model
 
   handleSubmit: ->
     return if @state.isLocked
@@ -12,6 +18,9 @@ module.exports = class SaleView extends ModelForm
     if @state.model.status is 'rejected'
       @state.model.status = 'pending'
       @state.model.status_message = ''
+
+    @state.model.start_date = @state.model.date_range[0]
+    @state.model.end_date = @state.model.date_range[1]
 
     super
 
@@ -54,16 +63,9 @@ module.exports = class SaleView extends ModelForm
         </div>
 
         <div className="form-group">
-          <label htmlFor="inputStartDate" className="col-md-3 control-label">Дата запуска</label>
+          <label htmlFor="inputStartDate" className="col-md-3 control-label">Период акции</label>
           <div className="col-md-9">
-            <input valueLink={@stateLink('model.start_date')} type="text" className="form-control" id="inputStartDate" placeholder="mm.dd.yyyy" disabled={disableForm} />
-          </div>
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="inputEndDate" className="col-md-3 control-label">Дата окончания</label>
-          <div className="col-md-9">
-            <input valueLink={@stateLink('model.end_date')} type="text" className="form-control" id="inputEndDate" placeholder="mm.dd.yyyy" disabled={disableForm} />
+            <Datepicker valueLink={@stateLink('model.date_range')} disabled={disableForm} range />
           </div>
         </div>
 
