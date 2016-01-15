@@ -26,7 +26,6 @@ class UsersController extends AdminController
       else
         delete req.body.shop
 
-      req.body.created = new Date()
       super(req, res, next)
 
   UsersController::create.type = 'post'
@@ -37,9 +36,9 @@ class UsersController extends AdminController
       return @error(res, shop: 'required') unless req.body.shop?
     else
       delete req.body.shop
-      req.modelItem.shop = null
+      req.modelDoc.shop = null
 
-    super(req, res, next)
+    super
 
   UsersController::update.type = 'put'
   UsersController::update.url = '/:id'
@@ -55,8 +54,8 @@ class UsersController extends AdminController
   UsersController::delete.type = 'delete'
   UsersController::delete.url = '/:id'
 
-  getModelItem: (req, res, next) ->
+  getModelDoc: (req, res, next) ->
     req.params.id = req.adminUser._id if req.params.id is 'profile'
-    super(req, res, next)
+    super
 
 module.exports = new UsersController()

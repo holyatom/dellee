@@ -17,36 +17,27 @@ class CustomersController extends PublicController
   CustomersController::get.url = '/profile'
   CustomersController::get.auth = true
 
-  create: (req, res, next) ->
-    model = new @Model(req.body)
+  mapDoc: (req, res, next) ->
+    unless req.oldDoc
+      verification = new Verification(
+        customer: req.modelDoc._id
+        type: 'email'
+      )
 
-    model.validate (err) =>
-      return @error(res, err.errors) if err
+      verification.save (err, doc) =>
+        return @log(err, 'red bold') if err
 
-      model.save (err, doc) =>
-        return next(err) if err
-        req.modelItem = doc
+        data =
+          to: req.modelDoc.email
+          subject: 'Верификация email адреса'
+          template: 'email_verification'
+          context:
+            verificationId: doc._id
+            email: req.modelDoc.email
 
-        verification = new Verification(
-          customer: doc._id
-          type: 'email'
-          created: new Date()
-        )
+        sendEmail.task data, (err) => @log(err, 'red bold') if err
 
-        verification.save (err, verificationDoc) =>
-          return next(err) if err
-
-          data =
-            to: req.modelItem.email
-            subject: 'Верификация email адреса'
-            template: 'email_verification'
-            context:
-              verificationId: verificationDoc._id
-              email: req.modelItem.email
-
-          sendEmail.task data, (err) =>
-            return next(err) if err
-            res.json(sucess: true)
+    super
 
   CustomersController::create.type = 'post'
 

@@ -46,7 +46,7 @@ module.exports = class ModelController extends Controller
       url = "#{baseUrl}#{handlerUrl}"
 
       @addHandlers?(handler, handlers)
-      handlers.push(@getModelItem) if handlerUrl.indexOf('/:id') >= 0
+      handlers.push(@getModelDoc) if handlerUrl.indexOf('/:id') >= 0
       handlers.push(handler)
 
       @_handler(method, url, handlers...)
@@ -57,11 +57,11 @@ module.exports = class ModelController extends Controller
     if @joins
       opts = (path: name, select: fields.join(' ') for name, fields of @joins)
 
-      @Model.populate req.modelItem, opts, (err, doc) =>
+      @Model.populate req.modelDoc, opts, (err, doc) =>
         return next(err) if err
-        @mapDoc?(req, res, next, doc) or res.json(doc.toJSON())
+        @mapDoc(req, res, next)
     else
-      @mapDoc?(req, res, next, req.modelItem) or res.json(req.modelItem.toJSON())
+      @mapDoc(req, res, next)
 
   ModelController::get.url = '/:id'
 
@@ -75,7 +75,7 @@ module.exports = class ModelController extends Controller
 
       model.save (err, doc) =>
         return next(err) if err
-        req.modelItem = doc
+        req.modelDoc = doc
         @get(req, res, next)
 
   ModelController::create.type = 'post'
@@ -83,13 +83,15 @@ module.exports = class ModelController extends Controller
 
   # Update model
   update: (req, res, next) ->
-    fields = @getUpdateFields(req)
-    req.modelItem.set(fields)
+    req.oldDoc = new @Model(req.modelDoc.toObject())
 
-    req.modelItem.validate (err) =>
+    fields = @getUpdateFields(req)
+    req.modelDoc.set(fields)
+
+    req.modelDoc.validate (err) =>
       return @error(res, err.errors) if err
 
-      req.modelItem.save (err) =>
+      req.modelDoc.save (err) =>
         return next(err) if err
         @get(req, res, next)
 
@@ -98,7 +100,7 @@ module.exports = class ModelController extends Controller
 
   # Delete model
   delete: (req, res, next) ->
-    @Model.remove _id: req.modelItem._id, (err) =>
+    @Model.remove _id: req.modelDoc._id, (err) =>
       return next(err) if err
       res.json(success: true)
 
@@ -140,7 +142,7 @@ module.exports = class ModelController extends Controller
 
 
   # Middlewares
-  getModelItem: (req, res, next) ->
+  getModelDoc: (req, res, next) ->
     filter = {}
     filter[@keyField] = req.params.id
 
@@ -148,8 +150,11 @@ module.exports = class ModelController extends Controller
       return next(err) if err
       return @notFound(res) unless doc
 
-      req.modelItem = doc
+      req.modelDoc = doc
       next()
+
+  mapDoc: (req, res, next) ->
+    res.json(req.modelDoc.toJSON())
 
 
   # Helpers
@@ -162,7 +167,7 @@ module.exports = class ModelController extends Controller
 
     for key, field of fields
       if key.indexOf('url') >= 0
-        File.deleteByUrl(req.modelItem[key]) if req.modelItem[key] and req.modelItem[key] isnt field
+        File.deleteByUrl(req.modelDoc[key]) if req.modelDoc[key] and req.modelDoc[key] isnt field
 
     fields
 

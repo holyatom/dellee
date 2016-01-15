@@ -19,6 +19,12 @@ schema = Schema(
   email_verified:
     type: Boolean
     default: false
+
+  created:
+    type: Date
+
+  updated:
+    type: Date
 )
 
 schema.pre 'save', (next) ->

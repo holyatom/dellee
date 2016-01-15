@@ -31,9 +31,7 @@ class ShopsController extends AdminController
   ShopsController::get.url = '/:id'
 
 
-  create: (req, res, next) ->
-    req.body.slug = utils.slugify(req.body.name)
-    super(req, res, next)
+  create: -> super
 
   ShopsController::create.type = 'post'
   ShopsController::create.roles = ['admin']
@@ -43,8 +41,7 @@ class ShopsController extends AdminController
     unless @canViewAndEdit(req)
       return @error(res, 'role_required', 401)
 
-    req.body.slug = utils.slugify(req.body.name)
-    super(req, res, next)
+    super
 
   ShopsController::update.type = 'put'
   ShopsController::update.url = '/:id'
@@ -52,8 +49,8 @@ class ShopsController extends AdminController
 
   delete: (req, res, next) ->
     Q.all([
-      User.remove(shop: req.modelItem._id)
-      Sale.remove(shop: req.modelItem._id)
+      User.remove(shop: req.modelDoc._id)
+      Sale.remove(shop: req.modelDoc._id)
     ])
     .then =>
       super(req, res, next)
@@ -66,7 +63,7 @@ class ShopsController extends AdminController
 
 
   mapDoc: (req, res, next) ->
-    item = req.modelItem.toJSON()
+    item = req.modelDoc.toJSON()
 
     File.findOne(url: item.logo_url).exec (err, fileDoc) ->
       return next(err) if err

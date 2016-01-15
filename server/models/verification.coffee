@@ -17,7 +17,6 @@ schema = Schema(
 
   created:
     type: Date
-    required: v.required()
 )
 
 module.exports = mongoose.model('Verification', schema)

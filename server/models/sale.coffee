@@ -38,6 +38,12 @@ schema = Schema(
   status_message:
     type: String
     text: true
+
+  created:
+    type: Date
+
+  updated:
+    type: Date
 )
 
 module.exports = mongoose.model('Sale', schema)

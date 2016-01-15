@@ -12,7 +12,7 @@ class ShopFollowersController extends PublicController
   actions: ['create', 'delete']
   auth: true
 
-  mapDoc: (req, res, next, doc) ->
+  mapDoc: (req, res, next) ->
     res.json(success: true)
 
   create: (req, res, next) ->
@@ -45,7 +45,7 @@ class ShopFollowersController extends PublicController
         return next(err) if err
         return @error(res, shop_id: 'not_following') unless doc
 
-        req.modelItem = doc
+        req.modelDoc = doc
         super(req, res, next)
 
   ShopFollowersController::delete.type = 'delete'

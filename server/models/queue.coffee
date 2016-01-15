@@ -19,11 +19,9 @@ schema = Schema(
 
   created:
     type: Date
-    required: v.required()
 
   updated:
     type: Date
-    required: v.required()
 )
 
 schema.methods.complete = (callback) ->
@@ -50,8 +48,6 @@ Queue.enqueue = (task, data, callback) ->
     task: task
     data: data
     status: 'new'
-    created: new Date()
-    updated: new Date()
   )
 
   taskModel.save(callback)

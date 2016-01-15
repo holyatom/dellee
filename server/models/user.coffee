@@ -29,7 +29,9 @@ schema = Schema(
 
   created:
     type: Date
-    required: v.required()
+
+  updated:
+    type: Date
 )
 
 schema.pre 'save', (next) ->
