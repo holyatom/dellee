@@ -16,6 +16,9 @@ schema = Schema(
     ref: 'Shop'
     set: setters.objectId
     required: v.required()
+
+  created:
+    type: Date
 )
 
 module.exports = mongoose.model('Subscription', schema)

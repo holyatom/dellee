@@ -11,11 +11,11 @@ class VerificationsController extends PublicController
   actions: ['get']
 
   get: (req, res, next) ->
-    Customer.findOne _id: req.modelItem.customer, (err, customer) =>
+    Customer.findOne _id: req.modelDoc.customer, (err, customer) =>
       return next(err) if err
       return @notFound(res) unless customer
 
-      if req.modelItem.type is 'email'
+      if req.modelDoc.type is 'email'
         customer.email_verified = true
 
       customer.save (err) =>

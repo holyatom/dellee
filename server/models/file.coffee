@@ -29,7 +29,6 @@ schema = Schema(
 
   created:
     type: Date
-    required: v.required()
 )
 
 File = mongoose.model('File', schema)
@@ -55,7 +54,6 @@ File.upload = (fileType, mimeType, stream, filename, cb) ->
       size: 0
       file_type: fileType
       mime_type: mimeType
-      created: new Date()
 
     stream.on('data', (chunk) -> data.size += chunk.length)
     stream.on('end', File.finishUpload.bind(null, data, cdnObj, cb))

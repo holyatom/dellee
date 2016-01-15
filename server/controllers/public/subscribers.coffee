@@ -10,27 +10,17 @@ class SubscribersController extends PublicController
 
   actions: ['create']
 
-  create: (req, res, next) ->
-    model = new @Model(req.body)
+  mapDoc: (req, res, next) ->
+    unless req.oldDoc
+      data =
+        to: req.modelDoc.email
+        subject: 'Приветствуем'
+        template: 'welcome'
+        context:
+          email: req.modelDoc.email
 
-    model.validate (err) =>
-      return @error(res, err.errors) if err
+      sendEmail.task data, (err) => @log(err, 'red bold') if err
 
-      model.save (err, doc) =>
-        return next(err) if err
-        req.modelItem = doc
-
-        data =
-          to: req.modelItem.email
-          subject: 'Приветствуем'
-          template: 'welcome'
-          context:
-            email: req.modelItem.email
-
-        sendEmail.task data, (err) =>
-          return next(err) if err
-          res.json(sucess: true)
-
-  SubscribersController::create.type = 'post'
+    super
 
 module.exports = new SubscribersController()

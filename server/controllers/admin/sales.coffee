@@ -38,7 +38,7 @@ class SalesController extends AdminController
     'rejected': ['pending']
 
   get: (req, res, next) ->
-    if not req.modelItem.shop.equals(req.adminUser.shop)  and req.adminUser.role is 'shopadmin'
+    if not req.modelDoc.shop.equals(req.adminUser.shop)  and req.adminUser.role is 'shopadmin'
       return @notFound(res)
 
     super
@@ -46,9 +46,7 @@ class SalesController extends AdminController
   SalesController::get.url = '/:id'
 
   create: (req, res, next) ->
-    { status } = req.body
-
-    return @error(res, status: 'invalid_sale_status') unless status in @SHOP_AVAILABEL_STATUES
+    return @error(res, status: 'invalid_sale_status') unless req.body.status in @SHOP_AVAILABEL_STATUES
 
     req.body.shop = req.adminUser.shop if req.adminUser.role is 'shopadmin'
     super
@@ -59,32 +57,32 @@ class SalesController extends AdminController
     { status } = req.body
 
     if req.adminUser.role is 'shopadmin'
-      return @error(res, 'can_not_update_sale') unless req.modelItem.status in @SHOP_UPDATE_STATUES
+      return @error(res, 'can_not_update_sale') unless req.modelDoc.status in @SHOP_UPDATE_STATUES
       return @error(res, status: 'invalid_sale_status') if status and status not in @SHOP_AVAILABEL_STATUES
 
-    if status and status isnt req.modelItem.status
-      availableStatuses = @STATUSES_MAP[req.modelItem.status] or []
+    if status and status isnt req.modelDoc.status
+      availableStatuses = @STATUSES_MAP[req.modelDoc.status] or []
       return @error(res, status: 'invalid_sale_status') unless status in availableStatuses
 
-    fields = @getUpdateFields(req)
-    req.modelItem.set(fields)
-
-    req.modelItem.validate (err) =>
-      return @error(res, err.errors) if err
-
-      req.modelItem.save (err) =>
-        return next(err) if err
-
-        @send(req.modelItem) if status is 'processed'
-        @get(req, res, next)
+    super
 
   SalesController::update.type = 'put'
   SalesController::update.url = '/:id'
 
-  send: (sale) ->
+  getListOptions: (req) ->
+    opts = super
+    opts.filters.shop = req.adminUser.shop if req.adminUser.role is 'shopadmin'
+
+    opts
+
+  mapDoc: (req, res, next) ->
+    @dispatch(req.modelDoc) if req.oldDoc and req.modelDoc.status is 'processed'
+    super
+
+  dispatch: (sale) ->
     Customer.find(email_verified: true).lean().exec (err, verifiedCustomers) =>
-      if err
-        return @log("failed to find verified customers")
+      return @log("failed to find verified customers") if err
+      return unless verifiedCustomers.length
 
       query = Subscription
         .find(shop: sale.shop, customer: $in: _.pluck(verifiedCustomers, '_id'))
@@ -111,11 +109,5 @@ class SalesController extends AdminController
         context:
           message: sale.message
       )
-
-  getListOptions: (req) ->
-    opts = super
-    opts.filters.shop = req.adminUser.shop if req.adminUser.role is 'shopadmin'
-
-    opts
 
 module.exports = new SalesController()
