@@ -20,8 +20,8 @@ module.exports = class HomeView extends Form
   render: ->
     <div className="layout p-home">
       <div className="l-wrapper">
-        <div className="container">
-          <section className="p-h-top">
+        <section className="p-h-top">
+          <div className="container">
             <a href="/">
               <h1 className="ui-logo">Dellee<span className="ui-l-beta_label"></span></h1>
             </a>
@@ -29,7 +29,9 @@ module.exports = class HomeView extends Form
             <h3>узнавай первым о скидках и акциях в любимых магазинах</h3>
             <div className="p-h-t-divider"></div>
             <a href="/about" className="ui-btn ui-btn_default">о проекте</a>
-          </section>
+          </div>
+        </section>
+        <div className="container">
           <section className="p-h-benefits">
             <h2>Наши преимущества</h2>
             <ul className="p-h-benefits_list">
@@ -110,6 +112,21 @@ module.exports = class HomeView extends Form
             </div>
           </section>
         </div>
+        <section className="p-h-create_shop">
+          <div className="container">
+            <figure>
+              <i className="icon-agreement"></i>
+            </figure>
+            <h2>Используйте Dellee бесплатно в своем заведении</h2>
+            <h3>Мы предоставляем всем заведениям бесплатный доступ в панель управления для оповещения своих клиентов о акциях и событиях. Перейдите по ссылке ниже для создания профиля.</h3>
+            <div className="p-h-cs-link">
+              <a href="" className="ui-btn">создать профиль магазина</a>
+            </div>
+            <div className="p-h-cs-help_message">
+              Хотите связаться с нами лично? Перейдите на <a href="/contacts">страницу контактов</a>
+            </div>
+          </div>
+          <Footer />
+        </section>
       </div>
-      <Footer />
     </div>
