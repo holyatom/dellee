@@ -33,7 +33,7 @@ schema = Schema(
   status:
     type: String
     required: v.required()
-    enum: v.enum(['pending', 'rejected', 'processed'])
+    enum: v.enum(['new', 'pending', 'rejected', 'processed'])
 
   status_message:
     type: String

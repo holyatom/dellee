@@ -9,9 +9,11 @@ module.exports =
     if val is 'pending'
       "<span class=\"label label-warning\">В очереди</span>"
     else if val is 'rejected'
-      "<span class=\"label label-danger\">Отклонен</span>"
+      "<span class=\"label label-danger\">Отклонена</span>"
+    else if val is 'new'
+      "<span class=\"label label-default\">Новая</span>"
     else
-      "<span class=\"label label-success\">Обработан</span>"
+      "<span class=\"label label-success\">Обработана</span>"
 
   boolean: (val) ->
     if val

@@ -22,9 +22,20 @@ class SalesController extends AdminController
   joins:
     shop: ['_id', 'name', 'slug']
 
+  SHOP_AVAILABEL_STATUES: [
+    'new'
+    'pending'
+  ]
+
+  SHOP_UPDATE_STATUES: [
+    'new'
+    'rejected'
+  ]
+
   STATUSES_MAP:
-    pending: ['rejected', 'processed']
-    rejected: ['pending']
+    'new': ['pending']
+    'pending': ['rejected', 'processed']
+    'rejected': ['pending']
 
   get: (req, res, next) ->
     if not req.modelItem.shop.equals(req.adminUser.shop)  and req.adminUser.role is 'shopadmin'
@@ -35,7 +46,10 @@ class SalesController extends AdminController
   SalesController::get.url = '/:id'
 
   create: (req, res, next) ->
-    req.body.status = 'pending'
+    { status } = req.body
+
+    return @error(res, status: 'invalid_sale_status') unless status in @SHOP_AVAILABEL_STATUES
+
     req.body.shop = req.adminUser.shop if req.adminUser.role is 'shopadmin'
     super
 
@@ -44,10 +58,11 @@ class SalesController extends AdminController
   update: (req, res, next) ->
     { status } = req.body
 
-    if req.adminUser.role is 'shopadmin' and status
-      return @error(res, status: 'invalid_sale_status') if status isnt 'pending'
+    if req.adminUser.role is 'shopadmin'
+      return @error(res, 'can_not_update_sale') unless req.modelItem.status in @SHOP_UPDATE_STATUES
+      return @error(res, status: 'invalid_sale_status') if status and status not in @SHOP_AVAILABEL_STATUES
 
-    if status
+    if status and status isnt req.modelItem.status
       availableStatuses = @STATUSES_MAP[req.modelItem.status] or []
       return @error(res, status: 'invalid_sale_status') unless status in availableStatuses
 
