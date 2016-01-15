@@ -1,7 +1,9 @@
 .p-home
   .p-h-top
-    padding-top: 30px
+    padding: 40px 0 50px
+
     text-align: center
+    border-bottom: 1px solid #e8e8e8
 
     .ui-logo
       width: 108px
@@ -11,6 +13,7 @@
       margin: 35px 0 0
       color: #4d4d4d
       font-size: 24px
+      line-height: 35px
 
     h3
       margin: 16px 0 0
@@ -27,7 +30,7 @@
       width: 180px
 
     @media $tablet
-      padding-top: 45px
+      padding: 60px 0 80px
 
       .ui-logo
         width: 125px
@@ -41,18 +44,14 @@
         font-size: 18px
 
   .p-h-benefits
-    margin-top: 55px
-
     h2
-      margin: 0
+      margin: 40px 0
       text-align: center
       color: #333
       font-size: 27px
 
-    @media $tablet
-      margin-top: 80px
-
-      h2
+      @media $tablet
+        margin: 50px 0
         font-size: 36px
 
   .p-h-benefits_list
@@ -60,7 +59,7 @@
 
     list-style: none
     padding: 0
-    margin: 0
+    margin: -50px 0 0
 
     li
       box-sizing: border-box
@@ -104,7 +103,7 @@
         width: 50%
 
   .p-h-signup
-    margin: 38px auto
+    margin: 38px auto 50px
     max-width: 400px
 
     h2
@@ -167,7 +166,8 @@
           transform: translateY(0)
 
     @media $tablet
-      margin-top: 70px
+      margin-top: 50px
+      margin-bottom: 60px
 
       h2
         font-size: 36px
@@ -235,3 +235,66 @@
 
           .ui-iconbox-circle
             margin: 0 5px
+
+  .p-h-create_shop
+    text-align: center
+    border-top: 1px solid #dfe8ee
+    background: linear-gradient(to bottom, #f5f8fa, #e9eff5)
+
+    figure
+      margin: 45px auto 0
+      width: 80px
+      height: @width
+
+      font-size: 48px
+      line-height: @height
+      color: #eab77e
+      text-align: center
+
+      border: 1px solid #dfe8ee
+      border-radius: 50%
+      background: #fff
+
+    h2
+      margin: 30px 0 0
+      color: #4d4d4d
+      font-size: 24px
+      line-height: 35px
+
+    h3
+      margin: 16px auto 0
+      color: #8c8c8c
+      font-size: 16px
+      max-width: 630px
+      line-height: 30px
+
+    .p-h-cs-link
+      padding: 50px 0
+      text-align: center
+
+      .ui-btn
+        padding-left: 30px
+        padding-right: @padding-left
+
+        color: #666
+        border: 2px solid #c4d0d9
+        background: #f9fcff
+
+    .p-h-cs-help_message
+      padding-bottom: 80px
+
+      color: #b9b9b9
+      font-weight: 300
+      font-size: 15px
+      line-height: 25px
+
+    .c-footer
+      border-color: #dcdcdc
+
+    @media $tablet
+      h2
+        margin: 30px 0 0
+        font-size: 30px
+
+      h3
+        font-size: 18px
