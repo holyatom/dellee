@@ -4,6 +4,7 @@ v = require('lib/validators')
 cdn = require('lib/cdn')
 fs = require('fs')
 Schema = require('../base/schema')
+log = require('lib/logger').bind(logPrefix: '[file]')
 
 
 schema = Schema(
@@ -23,6 +24,7 @@ schema = Schema(
     required: v.required()
     enum: v.enum([
       'image/jpeg'
+      'image/jpg'
       'image/png'
       'image/gif'
     ])
@@ -48,6 +50,8 @@ File.upload = (fileType, mimeType, stream, filename, cb) ->
   ext =  if _.startsWith(mimeType, 'image/') then 'jpg' else File.getExtention(mimeType)
 
   cdn.getWriteStream fileType, ext, (err, cdnObj) =>
+    return log(err, 'red bold') if err
+
     data =
       url: cdnObj.relativeUrl
       name: filename

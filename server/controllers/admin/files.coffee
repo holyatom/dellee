@@ -38,7 +38,7 @@ class FilesController extends AdminController
         return busboy.end()
 
       @Model.upload fileType, mimetype, file, filename, (err, model) ->
-        throw err if err
+        return next(err) if err
         res.json(model)
 
     busboy.on('finish', => @error(res, file: 'required') unless created)
