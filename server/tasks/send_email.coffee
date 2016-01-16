@@ -24,7 +24,7 @@ module.exports =
     )
 
   task: (data, callback) ->
-    unless data.template and data.to and data.subject
-      throw new Error('Required "to" and "template" and "subject"')
+    unless data.template and data.to
+      throw new Error('Required "to" and "template"')
 
     Queue.enqueue('send_email', data, callback)
