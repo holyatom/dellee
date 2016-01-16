@@ -9,17 +9,26 @@ module.exports = class Header extends Component
   beforeRoute: =>
     @$nav.removeClass('in')
 
+  afterRoute: (ctx) =>
+    @$nav.find('li.active').removeClass('active')
+    $li = @$nav.find("a[href=\"#{ctx.pathname}\"]").parent()
+    $li.addClass('active') if $li.is('li')
+
   logout: ->
     profile.logout()
 
   componentDidMount: ->
     @$nav = $(@refs.navigation)
     vent.on('route:before', @beforeRoute)
+    vent.on('route:after', @afterRoute)
 
   componentWillUnmount: ->
     vent.off('route:before', @beforeRoute)
+    vent.off('route:after', @afterRoute)
 
   render: ->
+    homeUrl = if profile.authorized() then '/admin/dashboard' else '/admin'
+
     <nav className="c-header navbar navbar-default navbar-fixed-top">
       <div className="container-fluid">
 
@@ -30,12 +39,21 @@ module.exports = class Header extends Component
             <span className="icon-bar"></span>
             <span className="icon-bar"></span>
           </button>
-          <a className="navbar-brand" href="/admin/dashboard">
+          <a className="navbar-brand" href={homeUrl}>
             <h1 className="ui-logo">Dellee<span className="ui-l-beta_label"></span></h1>
           </a>
         </div>
 
         <div ref="navigation" className="collapse navbar-collapse" id="navigation">
+          {
+            unless profile.authorized()
+              <ul className="nav navbar-nav">
+                <li>
+                  <a href="/admin">Вход</a>
+                </li>
+              </ul>
+          }
+
           {
             if profile.is('shopadmin', strict: true)
               <ul className="nav navbar-nav">
@@ -76,14 +94,17 @@ module.exports = class Header extends Component
               </ul>
           }
 
-          <ul className="nav navbar-nav navbar-right">
-            <li className="dropdown">
-              <a href="javascript:void(0);" className="dropdown-toggle" data-toggle="dropdown">{profile.get('username')} <span className="caret"></span></a>
-              <ul className="dropdown-menu">
-                <li><a href="javascript:void(0);" onClick={@logout}>Выйти</a></li>
+          {
+            if profile.authorized()
+              <ul className="nav navbar-nav navbar-right">
+                <li className="dropdown">
+                  <a href="javascript:void(0);" className="dropdown-toggle" data-toggle="dropdown">{profile.get('username')} <span className="caret"></span></a>
+                  <ul className="dropdown-menu">
+                    <li><a href="javascript:void(0);" onClick={@logout}>Выйти</a></li>
+                  </ul>
+                </li>
               </ul>
-            </li>
-          </ul>
+          }
         </div>
       </div>
     </nav>
