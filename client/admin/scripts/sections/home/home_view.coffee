@@ -1,24 +1,9 @@
 React = require('react')
-Form = require('admin/base/form')
-profile = require('admin/modules/profile')
-{ Layout, FormStatus } = require('admin/components')
+{ Layout, FormStatus, ModelForm } = require('admin/components')
 
 
-module.exports = class HomeView extends Form
+module.exports = class HomeView extends ModelForm
   title: -> 'Dellee • Вход в Админ панель'
-
-  initState: ->
-    model: {}
-
-  handleSubmit: (event) =>
-    event.preventDefault()
-
-    @lockForm()
-
-    dfd = profile.login(@state.model)
-    dfd.fail (xhr) =>
-      @showErrorMessage(xhr)
-      @unlockForm()
 
   render: ->
     <Layout centered className="p-home">
