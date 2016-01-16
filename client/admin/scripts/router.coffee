@@ -27,6 +27,8 @@ module.exports = class Router extends BaseRouter
 
   router: ->
     @route('/admin', @notAuth, 'home.index')
+    @route('/admin/shop-register', @notAuth, 'shop_register.create')
+
     @route('/admin/dashboard', @auth, 'dashboard.index')
 
     @route('/admin/users', @requireRole('admin'), 'users.index')
@@ -64,3 +66,4 @@ if process.browser
     sales: require('./sections/sales/sales_controller')
     customers: require('./sections/customers/customers_controller')
     subscribers: require('./sections/subscribers/subscribers_controller')
+    shop_register: require('./sections/shop_register/shop_register_controller')
