@@ -7,8 +7,8 @@ module.exports = class Router extends BaseRouter
   run: ->
     super
 
-    vent.on('user:login', => @routeTo('/admin/dashboard'))
-    vent.on('user:logout', => @routeTo('/admin'))
+    vent.on('user:login', => @routeTo('/admin/dashboard', force: true))
+    vent.on('user:logout', => @routeTo('/admin', force: true))
 
   auth: (ctx, next) =>
     return @page.redirect('/admin') unless profile.authorized()
