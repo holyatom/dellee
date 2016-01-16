@@ -46,10 +46,15 @@ module.exports = class Uploader extends Dropzone
 
   handleSuccess: (file, resp) =>
     image = new Image()
+    $thumb = file.$el.find('[data-dz-thumbnail]')
+    $link = $thumb.parent()
+
+    if $link.is('a')
+      $link.attr('href', resp.url)
 
     image.onload = ->
       file.$el.removeClass('dz-processing')
-      file.$el.find('[data-dz-thumbnail]').css(backgroundImage: "url(#{resp.url})")
+      $thumb.css(backgroundImage: "url(#{resp.url})")
 
     image.src = resp.url
 
