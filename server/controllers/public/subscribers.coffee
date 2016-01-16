@@ -11,16 +11,15 @@ class SubscribersController extends PublicController
   actions: ['create']
 
   mapDoc: (req, res, next) ->
-    unless req.oldDoc
+    if not req.oldDoc and req.method is 'POST'
       data =
         to: req.modelDoc.email
-        subject: 'Приветствуем'
         template: 'welcome'
         context:
           email: req.modelDoc.email
 
       sendEmail.task data, (err) => @log(err, 'red bold') if err
 
-    super
+    res.json(success: true)
 
 module.exports = new SubscribersController()
