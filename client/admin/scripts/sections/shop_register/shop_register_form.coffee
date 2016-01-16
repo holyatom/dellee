@@ -64,7 +64,7 @@ module.exports = class ShopRegisterView extends ModelForm
                   </div>
                   <FormStatus {...@state} />
                   <div className="form-buttons">
-                    <button type="submit" className="btn btn-primary">Отправить заявку</button>
+                    <button type="submit" className="btn btn-primary" disabled={@state.isLocked}>Отправить заявку</button>
                   </div>
                 </fieldset>
               </form>

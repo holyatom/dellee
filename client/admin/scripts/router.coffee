@@ -31,6 +31,7 @@ module.exports = class Router extends BaseRouter
 
     @route('/admin/dashboard', @auth, 'dashboard.index')
 
+    # Admin
     @route('/admin/users', @requireRole('admin'), 'users.index')
     @route('/admin/users/create', @requireRole('admin'), 'users.create')
     @route('/admin/users/:id', @requireRole('admin'), 'users.edit')
@@ -45,10 +46,15 @@ module.exports = class Router extends BaseRouter
 
     @route('/admin/subscribers', @requireRole('admin'), 'subscribers.index')
 
+    # Moderator
     @route('/admin/sales', @requireRole('moderator'), 'sales.index')
     @route('/admin/sales/create', @requireRole('moderator'), 'sales.create')
     @route('/admin/sales/:id', @requireRole('moderator'), 'sales.edit')
 
+    @route('/admin/shop-registers', @requireRole('moderator'), 'shop_registers.index')
+    @route('/admin/shop-registers/:id', @requireRole('moderator'), 'shop_registers.edit')
+
+    # Shop admin
     @route('/admin/shop-sales', @requireRole('shopadmin', strict: true), 'shop_sales.index')
     @route('/admin/shop-sales/create', @requireRole('shopadmin', strict: true), 'shop_sales.create')
     @route('/admin/shop-sales/:id', @requireRole('shopadmin', strict: true), 'shop_sales.edit')
@@ -67,3 +73,4 @@ if process.browser
     customers: require('./sections/customers/customers_controller')
     subscribers: require('./sections/subscribers/subscribers_controller')
     shop_register: require('./sections/shop_register/shop_register_controller')
+    shop_registers: require('./sections/shop_registers/shop_registers_controller')
