@@ -16,6 +16,7 @@ compileTemplate = (name, context = {}) ->
   cache[name](context)
 
 Handlebars.registerPartial('button', readTemplate('partials/button'))
+Handlebars.registerPartial('share', readTemplate('partials/share'))
 Handlebars.registerHelper('format_email', (email) ->
   email = email.replace(/\@/g, '<span>@</span>')
   email = email.replace(/\./g, '<span>.</span>')

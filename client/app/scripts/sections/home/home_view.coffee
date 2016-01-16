@@ -132,7 +132,7 @@ module.exports = class HomeView extends Form
             <h2>Используйте Dellee бесплатно в своем заведении</h2>
             <h3>Мы предоставляем всем заведениям бесплатный доступ в панель управления для оповещения своих клиентов о акциях и событиях. Перейдите по ссылке ниже для создания профиля.</h3>
             <div className="p-h-cs-link">
-              <a href="" className="ui-btn">создать профиль магазина</a>
+              <a target="_self" href="/admin/shop-register" className="ui-btn">создать профиль магазина</a>
             </div>
             <div className="p-h-cs-help_message">
               Хотите связаться с нами лично? Перейдите на <a href="/contacts">страницу контактов</a>
