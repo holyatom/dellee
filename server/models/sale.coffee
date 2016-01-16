@@ -9,11 +9,13 @@ schema = Schema(
     type: String
     required: v.required()
     validate: [v.minLength(2)]
+    trim: true
 
   message:
     type: String
     required: v.required()
     validate: [v.minLength(10)]
+    text: true
 
   shop:
     type: mongoose.Schema.Types.ObjectId

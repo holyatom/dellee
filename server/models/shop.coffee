@@ -8,10 +8,12 @@ schema = Schema(
     type: String
     required: v.required()
     validate: [v.minLength(2)]
+    trim: true
 
   slug:
     type: String
     unique: true
+    trim: true
 
   logo_url:
     type: String

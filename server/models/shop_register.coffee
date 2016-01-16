@@ -8,24 +8,29 @@ schema = Schema(
     type: String
     required: v.required()
     validate: [v.minLength(2)]
+    trim: true
 
   person:
     name:
       type: String
       required: v.required()
       validate: [v.minLength(2)]
+      trim: true
 
     surname:
       type: String
+      trim: true
 
   contacts:
     email:
       type: String
       required: v.required()
       validate: [v.email()]
+      trim: true
 
     phonenumber:
       type: String
+      trim: true
 
   additional:
     type: String

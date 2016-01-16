@@ -1,6 +1,7 @@
 React = require('react')
 { ModelForm, Layout, FormStatus, FileUploader } = require('admin/components')
 profile = require('admin/modules/profile')
+utils = require('lib/utils')
 
 
 module.exports = class ShopView extends ModelForm
@@ -9,6 +10,9 @@ module.exports = class ShopView extends ModelForm
   componentDidMount: ->
     @refs.uploader.setFiles([@state.model.logo]) if @state.model.logo
 
+  componentWillUpdate: ->
+    @state.model.slug = utils.slugify(@state.model.name)
+
   render: ->
     <Layout>
       <ul className="breadcrumb">
@@ -16,8 +20,8 @@ module.exports = class ShopView extends ModelForm
         {
           if profile.is('admin')
             [
-              <li><a href={@props.data.controllerRoot}>Магазины</a></li>
-              <li className="active">{if @state.model._id then _.trunc(@state.model._id, 10) else 'Создание'}</li>
+              <li key={1}><a href={@props.data.controllerRoot}>Магазины</a></li>
+              <li key={2} className="active">{if @state.model._id then _.trunc(@state.model._id, 10) else 'Создание'}</li>
             ]
           else
             <li className="active">{'Редактирование магазина'}</li>
@@ -35,6 +39,13 @@ module.exports = class ShopView extends ModelForm
         </div>
       </header>
       <form className="c-model_form form-horizontal" onSubmit={@handleSubmit}>
+        <div className="form-group">
+          <label className="col-sm-3 control-label">Slug</label>
+          <div className="col-sm-9">
+            <p className="form-control-static">{@state.model.slug}</p>
+          </div>
+        </div>
+
         <div className="form-group">
           <label htmlFor="inputName" className="col-md-3 control-label">Название</label>
           <div className="col-md-9">

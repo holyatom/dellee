@@ -60,6 +60,7 @@ ADMIN_VENDOR = [
   'dropzone'
   'bootstrap-datepicker'
   'bootstrap-datepicker/js/locales/bootstrap-datepicker.ru'
+  'translitit-cyrillic-russian-to-latin'
 ]
 
 SYMLINKS =

@@ -10,11 +10,13 @@ schema = Schema(
     unique: true
     required: v.required()
     validate: [v.email()]
+    trim: true
 
   password:
     type: String
     required: v.required()
     validate: [v.minLength(6)]
+    trim: true
 
   email_verified:
     type: Boolean

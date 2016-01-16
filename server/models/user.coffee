@@ -11,11 +11,13 @@ schema = Schema(
     unique: true
     required: v.required()
     validate: [v.maxLength(20), v.minLength(3), v.username(), v.alphanumeric()]
+    trim: true
 
   password:
     type: String
     required: v.required()
     validate: [v.minLength(6)]
+    trim: true
 
   role:
     type: String

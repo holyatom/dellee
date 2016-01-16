@@ -1,4 +1,5 @@
 _ = require('lodash')
+translit = require('translitit-cyrillic-russian-to-latin')
 
 
 module.exports =
@@ -9,5 +10,6 @@ module.exports =
     string
 
   slugify: (string) ->
+    string = translit(string)
     string = _.startCase(string)
     string.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-')
