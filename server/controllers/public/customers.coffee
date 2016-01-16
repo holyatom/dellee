@@ -18,7 +18,7 @@ class CustomersController extends PublicController
   CustomersController::get.auth = true
 
   mapDoc: (req, res, next) ->
-    unless req.oldDoc
+    if not req.oldDoc and req.method is 'POST'
       verification = new Verification(
         customer: req.modelDoc._id
         type: 'email'
@@ -29,7 +29,6 @@ class CustomersController extends PublicController
 
         data =
           to: req.modelDoc.email
-          subject: 'Верификация email адреса'
           template: 'email_verification'
           context:
             verificationId: doc._id

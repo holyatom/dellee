@@ -76,6 +76,7 @@ module.exports = class ModelController extends Controller
       model.save (err, doc) =>
         return next(err) if err
         req.modelDoc = doc
+
         @get(req, res, next)
 
   ModelController::create.type = 'post'

@@ -19,6 +19,15 @@ module.exports.render = (template, context) ->
   context.config = config
 
   body = compileTemplate(template, context)
+
+  # get subject from template
+  rows = body.split('\n')
+  subject = rows[0].trim()
+  body = rows[1..].join('\n').trim()
+
+  # render layout
   body = compileTemplate('layout', body: body, config: config)
 
-  body
+  # return
+  body: body
+  subject: subject
