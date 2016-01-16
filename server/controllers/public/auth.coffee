@@ -12,16 +12,16 @@ class AuthController extends PublicController
   Model: require('server/models/customer')
 
   generateToken: (customer) ->
-    expires = new Date();
+    expires = new Date()
     claims =
       sub: customer._id
       iss: 'https://dellee.me'
 
     token = jwt.sign(claims, config.public.jwt.secret,
-      expiresInMinutes: config.public.jwt.expires
+      expiresIn: config.public.jwt.expires
     )
 
-    expires.setMinutes(expires.getMinutes() + config.public.jwt.expires);
+    expires.setSeconds(expires.getSeconds() + config.public.jwt.expires);
 
     # return
     expires: expires

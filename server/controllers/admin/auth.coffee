@@ -12,17 +12,17 @@ class AdminAuthController extends AdminController
   Model: require('server/models/user')
 
   generateToken: (user) ->
-    expires = new Date();
+    expires = new Date()
     claims =
       sub: user._id
       iss: 'https://dellee.me'
       role: user.role
 
     token = jwt.sign(claims, config.admin.jwt.secret,
-      expiresInMinutes: config.admin.jwt.expires
+      expiresIn: config.admin.jwt.expires
     )
 
-    expires.setMinutes(expires.getMinutes() + config.admin.jwt.expires);
+    expires.setSeconds(expires.getSeconds() + config.admin.jwt.expires);
 
     # return
     expires: expires

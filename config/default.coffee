@@ -11,12 +11,12 @@ module.exports =
 
   admin:
     jwt:
-      expires: 1440
+      expires: 86400
       secret: 'whatdidyouwanttoseehere'
 
   public:
     jwt:
-      expires: 1440
+      expires: 86400
       secret: 'ourlittlesecret'
 
   mail:
