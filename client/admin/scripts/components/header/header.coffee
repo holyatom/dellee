@@ -77,6 +77,7 @@ module.exports = class Header extends Component
                   <a href="javascript:void(0);" className="dropdown-toggle" data-toggle="dropdown">Модерация <span className="caret"></span></a>
                   <ul className="dropdown-menu">
                     <li><a href="/admin/sales">Акции</a></li>
+                    <li><a href="/admin/shop-registers">Заявки магазинов</a></li>
                   </ul>
                 </li>
               </ul>

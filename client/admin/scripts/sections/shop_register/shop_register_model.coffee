@@ -2,4 +2,4 @@ Model = require('admin/base/model')
 
 
 module.exports = class ShopRegisterModel extends Model
-  urlPath: '/shop-register'
+  urlPath: '/shop-registers'

@@ -4,11 +4,13 @@ sendEmail = require('server/tasks/send_email')
 
 class ShopRegistersController extends AdminController
   logPrefix: '[admin shop registers controller]'
-  urlPrefix: '/shop-register'
+  urlPrefix: '/shop-registers'
 
   Model: require('server/models/shop_register')
 
-  actions: ['create']
+  actions: ['create', 'list', 'get']
+
+  listFields: ['_id', 'name', 'created']
 
   mapDoc: (req, res, next) ->
     if not req.oldDoc and req.method is 'POST'
