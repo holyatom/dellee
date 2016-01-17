@@ -5,7 +5,7 @@ utils = require('lib/utils')
 
 
 module.exports = class ShopView extends ModelForm
-  title: -> if @state.model._id then 'Редактирование магазина' else 'Создание магазина'
+  title: -> if @state.model._id then 'Редактирование заведения' else 'Создание заведения'
 
   componentDidMount: ->
     @refs.uploader.setFiles([@state.model.logo]) if @state.model.logo
@@ -24,7 +24,7 @@ module.exports = class ShopView extends ModelForm
               <li key={2} className="active">{if @state.model._id then _.trunc(@state.model._id, 10) else 'Создание'}</li>
             ]
           else
-            <li className="active">{'Редактирование магазина'}</li>
+            <li className="active">{@title()}</li>
         }
       </ul>
       <header className="page-header">

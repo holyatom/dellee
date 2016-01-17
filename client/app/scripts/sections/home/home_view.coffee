@@ -30,14 +30,14 @@ module.exports = class HomeView extends Form
               <h1 className="ui-logo">Dellee<span className="ui-l-beta_label"></span></h1>
             </a>
             <h2>Первый Мессенджер Акций</h2>
-            <h3>узнавай первым о скидках и акциях в любимых магазинах</h3>
+            <h3>узнавай первым о скидках и акциях в любимых заведениях</h3>
             <div className="p-h-t-divider"></div>
             <div className="p-h-t-link">
               <a href="/about" className="ui-btn ui-btn_default">о проекте</a>
             </div>
             <div className="p-h-t-arrow">
               <button className="ui-btn" onClick={@scrollToCreateShop}>
-                <span>магазинам</span>
+                <span>заведениям</span>
                 <i className="icon-arrowdown"></i>
               </button>
             </div>
@@ -132,7 +132,7 @@ module.exports = class HomeView extends Form
             <h2>Используйте Dellee бесплатно в своем заведении</h2>
             <h3>Мы предоставляем всем заведениям бесплатный доступ в панель управления для оповещения своих клиентов о акциях и событиях. Перейдите по ссылке ниже для создания профиля.</h3>
             <div className="p-h-cs-link">
-              <a target="_self" href="/admin/shop-register" className="ui-btn">создать профиль магазина</a>
+              <a target="_self" href="/admin/apply-account" className="ui-btn">создать аккаунт заведения</a>
             </div>
             <div className="p-h-cs-help_message">
               Хотите связаться с нами лично? Перейдите на <a href="/contacts">страницу контактов</a>

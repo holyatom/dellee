@@ -9,7 +9,7 @@ module.exports = class HomeView extends ModelForm
     <Layout centered className="p-home">
       <div className="text-center">
         <h1 className="ui-logo">Dellee<span className="ui-l-beta_label"></span></h1>
-        <h4>Вход в панель управления</h4>
+        <h4>Вход в админ панель</h4>
       </div>
       <form onSubmit={@handleSubmit}>
         <div className="form-group">

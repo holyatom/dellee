@@ -2,15 +2,21 @@ AdminController = require('server/base/admin_controller')
 sendEmail = require('server/tasks/send_email')
 
 
-class ShopRegistersController extends AdminController
-  logPrefix: '[admin shop registers controller]'
-  urlPrefix: '/shop-registers'
+class ShopApplicationsController extends AdminController
+  logPrefix: '[admin shop applications controller]'
+  urlPrefix: '/shop-applications'
 
-  Model: require('server/models/shop_register')
+  Model: require('server/models/shop_application')
 
   actions: ['create', 'list', 'get']
 
-  listFields: ['_id', 'name', 'created']
+  listFields: ['_id', 'shop_name', 'status', 'created']
+
+  create: (req, res, next) ->
+    req.body.status = 'new'
+    super
+
+  ShopApplicationsController::create.type = 'post'
 
   mapDoc: (req, res, next) ->
     if not req.oldDoc and req.method is 'POST'
@@ -25,4 +31,4 @@ class ShopRegistersController extends AdminController
     super
 
 
-module.exports = new ShopRegistersController()
+module.exports = new ShopApplicationsController()

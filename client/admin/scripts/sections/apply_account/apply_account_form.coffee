@@ -2,13 +2,13 @@ React = require('react')
 { ModelForm, Layout, FormStatus, FileUploader } = require('admin/components')
 
 
-module.exports = class ShopRegisterView extends ModelForm
-  title: -> 'Dellee • Регистрация магазина'
+module.exports = class ApplyAccountView extends ModelForm
+  title: -> 'Dellee • Заявка на создание аккаунта'
 
   render: ->
-    <Layout className="p-shop_register">
+    <Layout className="p-apply_account">
       <header className="page-header">
-        <h3>Регистрация магазина</h3>
+        <h3>Заявка на создание аккаунта</h3>
       </header>
       <div className="well">
         {
@@ -19,7 +19,7 @@ module.exports = class ShopRegisterView extends ModelForm
                 Ваша заявка была успешна сохранена, мы свяжемся с вами в теченнии <strong>5 рабочих дней</strong>.
               </p>
               <p>
-                Хотим напомнить что профиль магазина будет создан только после запуска проекта. Мы уведомим вас об этом по e-mail почте.
+                Хотим напомнить что аккаунт заведения будет создан только после запуска проекта. Мы уведомим вас об этом по e-mail почте.
               </p>
               <p className="text-muted">
                 Хорошего вам дня! <i className="fa fa-smile-o"></i>
@@ -30,9 +30,9 @@ module.exports = class ShopRegisterView extends ModelForm
               <fieldset>
                 <legend>Заполните форму</legend>
                 <div className="form-group">
-                  <label htmlFor="inputName" className="col-md-3 control-label">Название магазина</label>
+                  <label htmlFor="inputName" className="col-md-3 control-label">Название заведения</label>
                   <div className="col-md-9">
-                    <input valueLink={@stateLink('model.name')} type="text" className="form-control" id="inputName" placeholder="Cool&Fun" />
+                    <input valueLink={@stateLink('model.shop_name')} type="text" className="form-control" id="inputName" placeholder="Cool&Fun" />
                   </div>
                 </div>
                 <div className="form-group">

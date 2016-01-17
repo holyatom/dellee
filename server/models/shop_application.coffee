@@ -4,7 +4,7 @@ Schema = require('../base/schema')
 
 
 schema = Schema(
-  name:
+  shop_name:
     type: String
     required: v.required()
     validate: [v.minLength(2)]
@@ -36,6 +36,11 @@ schema = Schema(
     type: String
     text: true
 
+  status:
+    type: String
+    required: v.required()
+    enum: v.enum(['new', 'processed'])
+
   created:
     type: Date
 
@@ -43,4 +48,4 @@ schema = Schema(
     type: Date
 )
 
-module.exports = mongoose.model('ShopRegister', schema)
+module.exports = mongoose.model('ShopApplication', schema)

@@ -52,7 +52,7 @@ module.exports = class Header extends Component
                   <a href="/admin">Вход</a>
                 </li>
                 <li>
-                  <a href="/admin/shop-register">Регистрация магазина</a>
+                  <a href="/admin/apply-account">Заявка на аккаунт</a>
                 </li>
               </ul>
           }
@@ -77,7 +77,7 @@ module.exports = class Header extends Component
                   <a href="javascript:void(0);" className="dropdown-toggle" data-toggle="dropdown">Модерация <span className="caret"></span></a>
                   <ul className="dropdown-menu">
                     <li><a href="/admin/sales">Акции</a></li>
-                    <li><a href="/admin/shop-registers">Заявки магазинов</a></li>
+                    <li><a href="/admin/shop-applications">Заявки заведения</a></li>
                   </ul>
                 </li>
               </ul>
@@ -90,7 +90,7 @@ module.exports = class Header extends Component
                   <a href="javascript:void(0);" className="dropdown-toggle" data-toggle="dropdown">Управление <span className="caret"></span></a>
                   <ul className="dropdown-menu">
                     <li><a href="/admin/users">Пользователи</a></li>
-                    <li><a href="/admin/shops">Магазины</a></li>
+                    <li><a href="/admin/shops">Заведения</a></li>
                     <li><a href="/admin/customers">Клиенты</a></li>
                     <li><a href="/admin/subscribers">Подписчики</a></li>
                   </ul>

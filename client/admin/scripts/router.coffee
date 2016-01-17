@@ -27,7 +27,7 @@ module.exports = class Router extends BaseRouter
 
   router: ->
     @route('/admin', @notAuth, 'home.index')
-    @route('/admin/shop-register', @notAuth, 'shop_register.create')
+    @route('/admin/apply-account', @notAuth, 'apply_account.create')
 
     @route('/admin/dashboard', @auth, 'dashboard.index')
 
@@ -51,8 +51,8 @@ module.exports = class Router extends BaseRouter
     @route('/admin/sales/create', @requireRole('moderator'), 'sales.create')
     @route('/admin/sales/:id', @requireRole('moderator'), 'sales.edit')
 
-    @route('/admin/shop-registers', @requireRole('moderator'), 'shop_registers.index')
-    @route('/admin/shop-registers/:id', @requireRole('moderator'), 'shop_registers.edit')
+    @route('/admin/shop-applications', @requireRole('moderator'), 'shop_applications.index')
+    @route('/admin/shop-applications/:id', @requireRole('moderator'), 'shop_applications.edit')
 
     # Shop admin
     @route('/admin/shop-sales', @requireRole('shopadmin', strict: true), 'shop_sales.index')
@@ -72,5 +72,5 @@ if process.browser
     sales: require('./sections/sales/sales_controller')
     customers: require('./sections/customers/customers_controller')
     subscribers: require('./sections/subscribers/subscribers_controller')
-    shop_register: require('./sections/shop_register/shop_register_controller')
-    shop_registers: require('./sections/shop_registers/shop_registers_controller')
+    apply_account: require('./sections/apply_account/apply_account_controller')
+    shop_applications: require('./sections/shop_applications/shop_applications_controller')
