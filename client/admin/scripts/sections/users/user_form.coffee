@@ -50,7 +50,7 @@ module.exports = class UserView extends ModelForm
               <option value="">Выберите роль</option>
               <option value="admin">Админ</option>
               <option value="moderator">Модератор</option>
-              <option value="shopadmin">Администратор магазина</option>
+              <option value="shopadmin">Администратор заведения</option>
             </select>
           </div>
         </div>
@@ -61,7 +61,7 @@ module.exports = class UserView extends ModelForm
               <label htmlFor="inputShop" className="col-md-3 control-label">Магазин</label>
               <div className="col-md-9">
                 <select valueLink={@stateLink('model.shop._id')} className="form-control" id="inputShop">
-                  <option value="">Выберите магазин</option>
+                  <option value="">Выберите заведение</option>
                   {shops.collection.map((shop, index) ->
                     <option key={index} value={shop._id}>{shop.name}</option>
                   )}

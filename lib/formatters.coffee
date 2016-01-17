@@ -15,6 +15,12 @@ module.exports =
     else
       "<span class=\"label label-success\">Обработана</span>"
 
+  applicationStatus: (val) ->
+    if val is 'new'
+      "<span class=\"label label-default\">Новая</span>"
+    else
+      "<span class=\"label label-success\">Обработана</span>"
+
   boolean: (val) ->
     if val
       "<span class=\"text-success\">Да</span>"

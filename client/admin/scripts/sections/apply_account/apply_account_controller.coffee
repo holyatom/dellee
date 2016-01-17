@@ -2,11 +2,11 @@ CrudController = require('admin/base/crud_controller')
 vent = require('admin/modules/vent')
 
 
-module.exports = class ShopRegisterController extends CrudController
-  controllerRoot: '/shop-register'
+module.exports = class ApplyAccountController extends CrudController
+  controllerRoot: '/apply-account'
 
-  Model: require('./shop_register_model')
-  FormView: require('./shop_register_form')
+  Model: require('../shop_applications/shop_application_model')
+  FormView: require('./apply_account_form')
 
   saveModel: (data) =>
     model = new @Model(data)
