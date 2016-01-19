@@ -16,6 +16,7 @@ module.exports = class FileUploader extends Component
     previewTemplate: fs.readFileSync("#{__dirname}/file_preview.html", 'utf8')
 
   componentDidMount: ->
+    super
     @uploader = new Uploader(@refs.dropzone, @options())
     @uploader.on('success', @handleSuccess)
     @uploader.on('removedfile', @handleRemove)

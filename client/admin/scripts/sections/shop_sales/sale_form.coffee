@@ -16,9 +16,7 @@ module.exports = class SaleView extends ModelForm
     @state.model.status = 'pending'
     @handleSubmit(event)
 
-  handleSubmit: =>
-    return if @state.isLocked
-
+  saveModel: =>
     if @state.model.status is 'rejected'
       @state.model.status = 'pending'
       @state.model.status_message = ''

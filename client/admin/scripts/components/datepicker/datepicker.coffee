@@ -33,6 +33,7 @@ module.exports = class Datepicker extends Component
     format: 'dd MM yyyy'
 
   componentDidMount: ->
+    super
     @$input = $(@refs.input)
     @$input.datepicker(@options())
     @picker = @$input.data('datepicker')

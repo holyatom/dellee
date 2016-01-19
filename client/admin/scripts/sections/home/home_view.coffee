@@ -11,12 +11,13 @@ module.exports = class HomeView extends ModelForm
         <h1 className="ui-logo">Dellee<span className="ui-l-beta_label"></span></h1>
         <h4>Вход в админ панель</h4>
       </div>
-      <form onSubmit={@handleSubmit}>
+      <form ref="form" onSubmit={@handleSubmit}>
         <div className="form-group">
-          <input valueLink={@stateLink('model.username')} type="text" className="form-control" placeholder="логин" />
+          <input name="username" valueLink={@stateLink('model.username')} type="text" className="form-control" placeholder="логин" />
+          <div className="help-block with-errors"></div>
         </div>
         <div className="form-group">
-          <input valueLink={@stateLink('model.password')} type="password" className="form-control" placeholder="пароль" />
+          <input name="password" valueLink={@stateLink('model.password')} type="password" className="form-control" placeholder="пароль" />
         </div>
         <FormStatus {...@state} />
         <button className="btn btn-primary btn-block" disabled={@state.isLocked}>Вход</button>

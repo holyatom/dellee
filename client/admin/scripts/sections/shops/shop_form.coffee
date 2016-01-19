@@ -8,6 +8,7 @@ module.exports = class ShopView extends ModelForm
   title: -> if @state.model._id then 'Редактирование заведения' else 'Создание заведения'
 
   componentDidMount: ->
+    super
     @refs.uploader.setFiles([@state.model.logo]) if @state.model.logo
 
   componentWillUpdate: ->

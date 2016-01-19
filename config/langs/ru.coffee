@@ -13,6 +13,7 @@ module.exports =
     bad_username: 'Зарезервированное слово'
     bad_enum_value: '%s не входит в список доступных значений'
     invalid_value: 'Неправельное значение'
+    alphanumeric: 'Только латинские буквы и цифры'
 
     user_exist: 'Пользователь с таким логином уже существует'
     wrong_login_or_password: 'Неверный логин или пароль'

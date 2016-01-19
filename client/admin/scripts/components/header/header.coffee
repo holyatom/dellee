@@ -18,6 +18,7 @@ module.exports = class Header extends Component
     profile.logout()
 
   componentDidMount: ->
+    super
     @$nav = $(@refs.navigation)
     vent.on('route:before', @beforeRoute)
     vent.on('route:after', @afterRoute)

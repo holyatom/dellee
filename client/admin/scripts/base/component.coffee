@@ -8,6 +8,8 @@ module.exports = class Component extends React.Component
     super()
     @state = @initState(props)
 
+  componentDidMount: -> # noop
+
   refreshState: =>
     @setState(@initState())
 
