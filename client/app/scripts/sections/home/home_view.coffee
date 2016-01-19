@@ -115,6 +115,7 @@ module.exports = class HomeView extends Form
             <div className="p-h-share">
               Расскажи о <strong>Dellee</strong> своим друзьям
               <span className="p-h-s-links">
+                <span className="ui-iconbox-circle ui-iconbox-circle_facebook" onClick={=> @trigger('share', 'facebook')}><i className="icon-facebook"></i></span>
                 <span className="ui-iconbox-circle ui-iconbox-circle_vk" onClick={=> @trigger('share', 'vk')}><i className="icon-vk"></i></span>
                 <span className="ui-iconbox-circle ui-iconbox-circle_twitter" onClick={=> @trigger('share', 'twitter')}><i className="icon-twitter"></i></span>
               </span>

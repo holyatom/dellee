@@ -1,14 +1,31 @@
 $ = require('jquery')
 vent = require('./vent')
 config = require('config')
+Queue = require('../base/queue')
 
 
-class Social
+FACEBOOK_SDK_JS = 'https://connect.facebook.net/en_US/sdk.js'
+
+class Social extends Queue
   constructor: ->
+    @_fbIntialized = false
     @$win = $(global)
+
+    $.getScript(FACEBOOK_SDK_JS).done =>
+      @_fbIntialized = true
+      global.FB.init(appId: config.fb.app_id, version: config.fb.version)
+      @dequeue()
 
     vent.on('share:vk', @shareVk, @)
     vent.on('share:twitter', @shareTwitter, @)
+    vent.on('share:facebook', @shareFacebook, @)
+
+  shareFacebook: ->
+    @whenCondition @_fbIntialized, ->
+      global.FB.ui(
+        method: 'share'
+        href: global.location.href
+      )
 
   shareVk: ->
     params = $.param(
