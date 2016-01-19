@@ -69,6 +69,7 @@
     "express": "^4.13.3",
     "express-handlebars": "^2.0.1",
     "handlebars": "^4.0.5",
+    "helmet": "^1.1.0",
     "install": "^0.4.1",
     "jquery": "^2.1.4",
     "jsonwebtoken": "^5.4.1",

@@ -8,6 +8,7 @@ bodyParser = require('body-parser')
 middlewares = require('./middlewares')
 exphbs = require('express-handlebars')
 database = require('lib/database')
+helmet = require('helmet')
 
 
 class Server
@@ -25,6 +26,8 @@ class Server
       _domain.run(next)
       _domain.on('error', next)
     )
+
+    @app.use(helmet())
 
     @app.use(morgan(if config.debug then 'dev' else 'combined'))
 
