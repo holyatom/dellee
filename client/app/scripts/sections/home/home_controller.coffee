@@ -19,7 +19,7 @@ module.exports = class HomeControlller extends Controller
     @view.lockForm()
 
     @xhrs.save.then =>
-      @view.setState(success: true)
+      @view.setState(success: true, error: false)
     .fail (xhr) =>
       message = 'Ошибка сервера'
 
@@ -27,6 +27,7 @@ module.exports = class HomeControlller extends Controller
         if fields = error.fields
           message = fields.email.message
           message = 'E-mail адрес уже был зарегестрирован' if fields.email.code is 'unique'
+          message = 'Введите e-mail' if fields.email.code is 'required'
         else
           message = error.message
 

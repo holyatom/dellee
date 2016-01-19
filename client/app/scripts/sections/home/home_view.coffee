@@ -11,6 +11,7 @@ module.exports = class HomeView extends Form
     model: {}
     success: false
     error: false
+    focused: false
 
   handleSubmit: (event) =>
     return if @state.isLocked
@@ -20,6 +21,9 @@ module.exports = class HomeView extends Form
 
   scrollToCreateShop: =>
     vent.trigger('scroll', target: '#shop-create', duration: 500)
+
+  scrollToSubscribeForm: =>
+    vent.trigger('scroll', target: '#early-access', duration: 500)
 
   render: ->
     <div className="layout p-home">
@@ -33,7 +37,7 @@ module.exports = class HomeView extends Form
             <h3>узнавай первым о скидках и акциях в любимых заведениях</h3>
             <div className="p-h-t-divider"></div>
             <div className="p-h-t-link">
-              <a href="/about" className="ui-btn ui-btn_default">о проекте</a>
+              <span className="ui-btn ui-btn_default ui-btn_large" onClick={@scrollToSubscribeForm}>подписаться на запуск</span>
             </div>
             <div className="p-h-t-arrow">
               <button className="ui-btn" onClick={@scrollToCreateShop}>
@@ -43,8 +47,8 @@ module.exports = class HomeView extends Form
             </div>
           </div>
         </section>
-        <div className="container">
-          <section className="p-h-benefits">
+        <section className="p-h-benefits">
+          <div className="container">
             <h2>Наши преимущества</h2>
             <ul className="p-h-benefits_list">
               <li>
@@ -76,8 +80,13 @@ module.exports = class HomeView extends Form
                 </p>
               </li>
             </ul>
-          </section>
-          <section id="early-access" className="p-h-signup">
+            <div className="p-h-b-link">
+              <a href="/about" className="ui-btn ui-btn_default ui-btn_large">подробнее о проекте</a>
+            </div>
+          </div>
+        </section>
+        <section id="early-access" className="p-h-early_access">
+          <div className="container">
             <h2>Ранний доступ</h2>
             <div className="ui-alert ui-alert_info">
               <span className="ui-a-icon">
@@ -85,35 +94,23 @@ module.exports = class HomeView extends Form
               </span>
               Приложение находится на стадии разработки, но вы можете оставить нам свой e-mail адрес и мы уведомим вас о запуске
             </div>
-            <form className={@cx('p-h-s-form', success: @state.success)} onSubmit={@handleSubmit}>
-              <div className="ui-panel">
-                <div className="ui-p-body">
-                  <h3>Заполните форму</h3>
-                  <div className="ui-form_group">
-                    <input valueLink={@stateLink('model.email')} type="text" name="email" className="ui-form_control" placeholder="email" />
-                  </div>
+            <form className={@cx('p-h-ea-form', success: @state.success)} onSubmit={@handleSubmit}>
+              <div className={@cx('ui-form_group', focused: @state.focused)}>
+                <input onFocus={=> @setState(focused: true)} onBlur={=> @setState(focused: false)} valueLink={@stateLink('model.email')} type="text" name="email" className="ui-form_control ui-form_control_large" placeholder="введи свой e-mail" />
+                <button type="submit" className="ui-btn ui-btn_primary ui-btn_large" disabled={@state.isLocked}>Сообщить о запуске</button>
 
-                  {
-                    if @state.error
-                      <div className="ui-help_block ui-help_block_error">{ @state.error }</div>
-                  }
-
-                  <div className="ui-form_buttons">
-                    <button type="submit" className="ui-btn ui-btn_block ui-btn_primary" disabled={@state.isLocked}>Подписаться</button>
-                  </div>
-                </div>
-
-                <div className="p-h-success_signup">
-                  <div className="p-h-ss-body">
-                    <span className="ui-iconbox-success">
-                      <i className="icon-check"></i>
-                    </span>
-                    <p>
-                      Вы успешно подписаны на запуск!
-                    </p>
-                  </div>
+                <div className="p-h-ea-success">
+                  <span>
+                    <i className="ui-iconbox-success"><span className="icon-check"></span></i>
+                    Вы успешно подписаны на запуск!
+                  </span>
                 </div>
               </div>
+
+              {
+                if @state.error
+                  <div className="ui-help_block ui-help_block_error">{ @state.error }</div>
+              }
             </form>
             <div className="p-h-share">
               Расскажи о <strong>Dellee</strong> своим друзьям
@@ -122,8 +119,8 @@ module.exports = class HomeView extends Form
                 <span className="ui-iconbox-circle ui-iconbox-circle_twitter" onClick={=> @trigger('share', 'twitter')}><i className="icon-twitter"></i></span>
               </span>
             </div>
-          </section>
-        </div>
+          </div>
+        </section>
         <section className="p-h-create_shop" id="shop-create">
           <div className="container">
             <figure>
@@ -132,7 +129,7 @@ module.exports = class HomeView extends Form
             <h2>Используйте Dellee бесплатно в своем заведении</h2>
             <h3>Мы предоставляем всем заведениям бесплатный доступ в панель управления для оповещения своих клиентов о акциях и событиях. Перейдите по ссылке ниже для создания профиля.</h3>
             <div className="p-h-cs-link">
-              <a target="_self" href="/admin/apply-account" className="ui-btn">создать аккаунт заведения</a>
+              <a target="_self" href="/admin/apply-account" className="ui-btn ui-btn_large">создать аккаунт заведения</a>
             </div>
             <div className="p-h-cs-help_message">
               Хотите связаться с нами лично? Перейдите на <a href="/contacts">страницу контактов</a>
