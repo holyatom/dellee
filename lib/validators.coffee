@@ -1,6 +1,8 @@
 ALPHANUMERIC_REGEXP = /^[a-zA-Z0-9]*$/
 EMAIL_REGEXP = /^[a-zA-Z0-9_.+\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-.]+$/
 BAD_USERNAMES = require('./bad_usernames')
+phonenumber = require('./phonenumber')
+
 
 module.exports =
   username: ->
@@ -22,6 +24,10 @@ module.exports =
   email: ->
     message: 'bad_email'
     validator: (val) -> EMAIL_REGEXP.test(val)
+
+  phonenumber: ->
+    message: 'bad_phonenumber'
+    validator: (val) -> phonenumber(val) isnt 'INVALID'
 
   # Built-in validators
   required: -> [true, 'required']

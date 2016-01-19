@@ -1,5 +1,6 @@
 mongoose = require('mongoose')
 v = require('lib/validators')
+phonenumber = require('lib/phonenumber')
 Schema = require('../base/schema')
 
 
@@ -31,6 +32,8 @@ schema = Schema(
     phonenumber:
       type: String
       trim: true
+      validate: [v.phonenumber()]
+      set: phonenumber
 
   additional:
     type: String

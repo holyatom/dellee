@@ -257,6 +257,10 @@ gulp.task 'symlink', ->
 gulp.task 'fontello', ->
   installFontello()
 
+gulp.task 'mocha', (done) ->
+  runner = exec('env NODE_ENV=test mocha', done)
+  proxy(runner)
+
 
 # ===============================================================
 # SCRIPTS
