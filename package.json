@@ -58,7 +58,6 @@
     "body-parser": "^1.14.2",
     "bootstrap": "^3.3.6",
     "bootstrap-datepicker": "^1.5.1",
-    "bootstrap-validator": "^0.9.0",
     "bootswatch": "^3.3.6",
     "brfs": "^1.4.2",
     "busboy": "^0.2.12",
