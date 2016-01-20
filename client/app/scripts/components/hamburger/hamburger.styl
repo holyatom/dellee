@@ -1,0 +1,37 @@
+.c-hamburger
+  display: inline-block
+  position: relative
+
+  width: 24px
+  height: 14px
+
+  cursor: pointer
+
+  .c-h-line
+    absolute: top 6px left
+
+    height: 4px
+    width: 100%
+
+    border-radius: 3px
+    background: #666
+    transition: transform 200ms ease, opacity 200ms ease, background 200ms ease
+
+    &.top
+      transform: translateY(-6px)
+
+    &.bottom
+      transform: translateY(6px)
+
+  &.active
+    .c-h-line
+      background: #fff
+
+    .top
+      transform: rotateZ(45deg)
+
+    .middle
+      opacity: 0
+
+    .bottom
+      transform: rotateZ(135deg)

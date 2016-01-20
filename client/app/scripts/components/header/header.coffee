@@ -1,6 +1,8 @@
 $ = require('jquery')
 React = require('react')
 Component = require('app/base/component')
+Hamburger = require('../hamburger/hamburger')
+vent = require('app/modules/vent')
 
 
 module.exports = class Header extends Component
@@ -8,13 +10,15 @@ module.exports = class Header extends Component
     show: false
 
   toggleMenu: (event) =>
-    event.stopPropagation()
-    event.nativeEvent.stopImmediatePropagation()
+    event?.stopPropagation()
+    event?.nativeEvent.stopImmediatePropagation()
 
-    @setState(show: !@state.show)
+    show = !@state.show
+    if show then vent.trigger('scroll:lock') else vent.trigger('scroll:unlock')
+    @setState({ show })
 
   handleMisclick: =>
-    @setState(show: false)
+    @toggleMenu() if @state.show
 
   componentDidMount: ->
     @$doc = $(document)
@@ -28,7 +32,7 @@ module.exports = class Header extends Component
       <div className="container">
         <div className="c-h-main">
           <span className="c-h-menu_icon" onClick={@toggleMenu}>
-            <i className="icon-menu"></i>
+            <Hamburger active={@state.show} />
           </span>
           <a className="c-h-brand" href="/">
             <h1 className="ui-logo"><span className="ui-l-beta_label"></span>Dellee</h1>

@@ -16,6 +16,8 @@ class Scroll
 
     vent.on('route:after', @afterRoute, @)
     vent.on('scroll', @scroll, @)
+    vent.on('scroll:lock', @lock, @)
+    vent.on('scroll:unlock', @unlock, @)
 
   scroll: (options) ->
     return @$win.scrollTop() unless options
@@ -38,5 +40,13 @@ class Scroll
       @scroll(target: "##{ctx.hash}", animate: false)
     else
       @scroll(animate: false)
+
+  lock: ->
+    @$scrollable.on('touchmove', @_preventDefault)
+    @$scrollable.addClass('locked_scroll')
+
+  unlock: =>
+    @$scrollable.off('touchmove', @_preventDefault)
+    @$scrollable.removeClass('locked_scroll')
 
 module.exports = new Scroll()

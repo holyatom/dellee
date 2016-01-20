@@ -125,7 +125,7 @@ module.exports = class HomeView extends Form
               <i className="icon-agreement"></i>
             </figure>
             <h2>Бесплатная Регистрация Компаний</h2>
-            <h3>Мы предоставляем всем компаниям бесплатный аккаунт для оповещания пользователей о новостях и событиях.</h3>
+            <h3>мы предоставляем всем компаниям бесплатный аккаунт для оповещания пользователей о новостях и событиях</h3>
             <div className="p-h-cs-link">
               <a target="_self" href="/admin/apply-account" className="ui-btn ui-btn_large">регистрация компании</a>
             </div>
