@@ -12,7 +12,7 @@ module.exports = class Footer extends Component
             <a href="/about">о проекте</a>
             <a href="/terms">правила</a>
           </nav>
-          <div className="c-f-copyright">© {(new Date()).getFullYear()} Delle beta.</div>
+          <div className="c-f-copyright">© {(new Date()).getFullYear()} Dellee beta.</div>
         </footer>
       </div>
     </div>

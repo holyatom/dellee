@@ -33,15 +33,15 @@ module.exports = class HomeView extends Form
             <a href="/">
               <h1 className="ui-logo">Dellee<span className="ui-l-beta_label"></span></h1>
             </a>
-            <h2>Первый Мессенджер Акций</h2>
-            <h3>узнавай первым о скидках и акциях в любимых заведениях</h3>
+            <h2>Личный Менеджер Подписок</h2>
+            <h3>будь в курсе акций и новостей любимых заведений твоего города</h3>
             <div className="p-h-t-divider"></div>
             <div className="p-h-t-link">
-              <span className="ui-btn ui-btn_default ui-btn_large" onClick={@scrollToSubscribeForm}>подписаться на запуск</span>
+              <span className="ui-btn ui-btn_default ui-btn_large" onClick={@scrollToSubscribeForm}>подпишись на запуск</span>
             </div>
             <div className="p-h-t-arrow">
               <button className="ui-btn" onClick={@scrollToCreateShop}>
-                <span>заведениям</span>
+                <span>компаниям</span>
                 <i className="icon-arrowdown"></i>
               </button>
             </div>
@@ -49,34 +49,34 @@ module.exports = class HomeView extends Form
         </section>
         <section className="p-h-benefits">
           <div className="container">
-            <h2>Наши преимущества</h2>
+            <h2>Преимущества Dellee</h2>
             <ul className="p-h-benefits_list">
-              <li>
-                <figure><i className="icon-check_form"></i></figure>
-                <h3>Подписывайся одним кликом</h3>
-                <p>
-                  It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
-                </p>
-              </li>
-              <li>
-                <figure><i className="icon-lock"></i></figure>
-                <h3>Конфиденциальность</h3>
-                <p>
-                  It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
-                </p>
-              </li>
-              <li>
-                <figure><i className="icon-mail_phone"></i></figure>
-                <h3>Уведомления</h3>
-                <p>
-                  It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
-                </p>
-              </li>
               <li>
                 <figure><i className="icon-data_storage"></i></figure>
                 <h3>Единая база</h3>
                 <p>
-                  It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                  Новости любимых заведений собраны и доступны в одном сервисе
+                </p>
+              </li>
+              <li>
+                <figure><i className="icon-check_form"></i></figure>
+                <h3>Управление подписками</h3>
+                <p>
+                  Подписывайся/отписывайся одним кликом в любое время
+                </p>
+              </li>
+              <li>
+                <figure><i className="icon-mail_phone"></i></figure>
+                <h3>E-mail и SMS уведомления</h3>
+                <p>
+                  Выбирай удобный тебе способ оповещений
+                </p>
+              </li>
+              <li>
+                <figure><i className="icon-lock"></i></figure>
+                <h3>Приватность</h3>
+                <p>
+                  Нет нужды оставлять свои контактные данные компаниям или кому то еще
                 </p>
               </li>
             </ul>
@@ -89,7 +89,7 @@ module.exports = class HomeView extends Form
           <div className="container">
             <h2>Ранний доступ</h2>
             <div className="p-h-ea-message">
-              Приложение находится на стадии разработки, но вы можете оставить нам свой e-mail адрес и мы уведомим вас о запуске
+              Приложение находится на стадии разработки. Оставь свой e-mail и мы уведомим тебя о запуске!
             </div>
             <form className={@cx('p-h-ea-form', success: @state.success)} onSubmit={@handleSubmit}>
               <div className={@cx('ui-form_group', focused: @state.focused)}>
@@ -124,10 +124,10 @@ module.exports = class HomeView extends Form
             <figure>
               <i className="icon-agreement"></i>
             </figure>
-            <h2>Используйте Dellee бесплатно в своем заведении</h2>
-            <h3>Мы предоставляем всем заведениям бесплатный доступ в панель управления для оповещения своих клиентов о акциях и событиях. Перейдите по ссылке ниже для создания профиля.</h3>
+            <h2>Бесплатная Регистрация Компаний</h2>
+            <h3>Мы предоставляем всем компаниям бесплатный аккаунт для оповещания пользователей о новостях и событиях.</h3>
             <div className="p-h-cs-link">
-              <a target="_self" href="/admin/apply-account" className="ui-btn ui-btn_large">создать аккаунт заведения</a>
+              <a target="_self" href="/admin/apply-account" className="ui-btn ui-btn_large">регистрация компании</a>
             </div>
             <div className="p-h-cs-help_message">
               Хотите связаться с нами лично? Перейдите на <a href="/contacts">страницу контактов</a>
