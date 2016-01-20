@@ -8,6 +8,8 @@ FACEBOOK_SDK_JS = 'https://connect.facebook.net/en_US/sdk.js'
 
 class Social extends Queue
   constructor: ->
+    super
+
     @_fbIntialized = false
     @$win = $(global)
 
