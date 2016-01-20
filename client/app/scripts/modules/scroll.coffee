@@ -10,6 +10,8 @@ class Scroll
     duration: 200
     target: null
 
+  _preventDefault: (e) -> e.preventDefault()
+
   constructor: ->
     @$win = $(global)
     @$scrollable = $('html, body')
