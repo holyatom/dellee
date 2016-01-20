@@ -19,7 +19,7 @@ class Scroll
     vent.on('scroll:lock', @lock, @)
     vent.on('scroll:unlock', @unlock, @)
 
-  scroll: (options) ->
+  scroll: (options, callback) ->
     return @$win.scrollTop() unless options
 
     _.defaults(options, @defaults)
@@ -29,9 +29,10 @@ class Scroll
       options.pos = $target.offset().top
 
     if options.animate
-      @$scrollable.animate({ scrollTop: options.pos }, options.duration)
+      @$scrollable.animate({ scrollTop: options.pos }, options.duration, callback)
     else
       @$win.scrollTop(options.pos)
+      callback?()
 
   afterRoute: (ctx, props) ->
     return unless props.initialized
