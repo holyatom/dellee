@@ -88,10 +88,7 @@ module.exports = class HomeView extends Form
         <section id="early-access" className="p-h-early_access">
           <div className="container">
             <h2>Ранний доступ</h2>
-            <div className="ui-alert ui-alert_info">
-              <span className="ui-a-icon">
-                <i className="icon-info"></i>
-              </span>
+            <div className="p-h-ea-message">
               Приложение находится на стадии разработки, но вы можете оставить нам свой e-mail адрес и мы уведомим вас о запуске
             </div>
             <form className={@cx('p-h-ea-form', success: @state.success)} onSubmit={@handleSubmit}>
