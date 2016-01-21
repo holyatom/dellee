@@ -32,3 +32,6 @@ module.exports =
 
   cdn:
     storage: "#{__dirname}/../cdn"
+
+  contacts:
+    email: 'atomio.ak@gmail.com'

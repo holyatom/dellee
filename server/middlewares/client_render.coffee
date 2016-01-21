@@ -7,6 +7,7 @@ SERVER_RENDER =
   '/': require('app/sections/home/home_view')
   '/about': require('app/sections/content/about_view')
   '/terms': require('app/sections/content/terms_view')
+  '/privacy': require('app/sections/content/privacy_view')
   '/contacts': require('app/sections/content/contacts_view')
 
 module.exports = (req, res) ->

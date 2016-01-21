@@ -22,6 +22,7 @@ module.exports = class Router extends BaseRouter
     @route('/', 'home.index')
     @route('/about', 'content.about')
     @route('/terms', 'content.terms')
+    @route('/privacy', 'content.privacy')
     @route('/contacts', 'content.contacts')
 
     # @route('/login', @notAuth, 'login.index')
