@@ -16,14 +16,14 @@ dropTmpFolder = ->
   fs.removeSync(TMP_FOLDER)
 
 replaceFontello = (opts, done) ->
-  [folderName] = _.last(opts.source.split('/')).split('.')
+  [fileName] = _.last(opts.source.split('/')).split('.')
 
   log('Extract new zip file...', 'cyan')
 
   fs.createReadStream(opts.source).pipe(unzip.Extract(path: TMP_FOLDER)).on 'close', ->
     log('Replacing files...', 'cyan')
 
-    unzipped = "#{TMP_FOLDER}/#{folderName}"
+    unzipped = "#{TMP_FOLDER}/#{fileName}"
 
     fs.mkdirsSync(opts.dest) unless fs.ensureDirSync(opts.dest)
     fs.copySync("#{unzipped}/font", "#{opts.dest}", clobber: true)
@@ -58,10 +58,10 @@ module.exports =
     log('Extract old zip file...', 'cyan')
 
     glob "#{opts.source}/fontello-*.zip", (err, [oldZip]) ->
-      [folderName] = _.last(oldZip.split('/')).split('.')
+      [oldFileName] = _.last(oldZip.split('/')).split('.')
 
       fs.createReadStream(oldZip).pipe(unzip.Extract(path: TMP_FOLDER)).on 'close', ->
-        config = "#{TMP_FOLDER}/#{folderName}/config.json"
+        config = "#{TMP_FOLDER}/#{oldFileName}/config.json"
 
         log('Getting session url...', 'cyan')
 
@@ -85,6 +85,10 @@ module.exports =
               [full, filename] = regexp.exec(res.headers['content-disposition'])
 
               newZip = "#{opts.source}/#{filename}"
+
+              if filename.split('.')[0] is oldFileName
+                log('There is no changes', 'green')
+                return process.exit()
 
               fs.writeFile newZip, body, ->
                 fs.removeSync(oldZip)
