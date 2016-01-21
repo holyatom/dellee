@@ -175,7 +175,10 @@ compileJsPackets = (opts) ->
   bundle.transform(global: true, aliasify)
 
   bundle.bundle()
-    .on('error', errorReport)
+    .on('error', (err) ->
+      errorReport(err)
+      @emit('end')
+    )
     .pipe(source(opts.output))
     .pipe(streamify(uglify()))
     .pipe(gulp.dest(PUBLIC_ASSETS))
@@ -198,7 +201,10 @@ compileJsBundle = (opts) ->
   bundle.transform(global: true, aliasify)
 
   bundle = bundle.bundle()
-    .on('error', errorReport)
+    .on('error', (err) ->
+      errorReport(err)
+      @emit('end')
+    )
     .pipe(source(opts.output))
 
   bundle = bundle.pipe(streamify(uglify())) if opts.minify
@@ -223,7 +229,10 @@ compileCss = (opts) ->
       'define':
         '$version': pkg.version
     ))
-    .on('error', errorReport)
+    .on('error', (err) ->
+      errorReport(err)
+      @emit('end')
+    )
     .pipe(rename(opts.output))
 
   task = task.pipe(minifyCSS()) if opts.minify
