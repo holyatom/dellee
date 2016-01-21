@@ -12,21 +12,15 @@ aliasify = require('aliasify')
 source = require('vinyl-source-stream')
 symlink = require('gulp-symlink')
 { exec } = require('child_process')
-log = require('./lib/logger').bind(logPrefix: '[gulp]')
-fs = require('fs-extra')
-glob = require('glob')
-unzip = require('unzip')
-needle = require('needle')
-open = require('open')
 fontello = require('./lib/fontello')
 watch = require('gulp-watch')
+log = require('./lib/logger').bind(logPrefix: '[gulp]')
 
 
 PUBLIC_DIR = './public'
 PUBLIC_ASSETS = "#{PUBLIC_DIR}/assets"
 FONTS_DIR = "#{PUBLIC_DIR}/fonts"
 
-TMP_FOLDER = './.tmp'
 SOURCE_FOLDER = './.source'
 
 APP_LOCATION = "#{__dirname}/client/app"
@@ -84,8 +78,7 @@ proxy = (runner, callback) ->
 errorReport = (err) ->
   log(err.message or err, 'red bold')
 
-dropTmpFolder = ->
-  fs.removeSync(TMP_FOLDER)
+
 
 watchTask = (taskName) ->
   (event) ->
@@ -102,61 +95,6 @@ createSymlink = (key, path) ->
   gulp
     .src(src.trim())
     .pipe(symlink("#{target.trim()}/#{key}", force: true))
-
-replaceFontello = (zipFile, done) ->
-  [folderName] = _.last(zipFile.split('/')).split('.')
-
-  SOURCE = "#{TMP_FOLDER}/#{folderName}"
-  FONT_LOCATION = "#{FONTS_DIR}/fontello"
-
-  unless fs.ensureDirSync(FONT_LOCATION)
-    fs.mkdirsSync(FONT_LOCATION)
-
-  log('Extract new zip file...', 'cyan')
-
-  fs.createReadStream(zipFile).pipe(unzip.Extract(path: TMP_FOLDER)).on 'close', ->
-    log('Replacing files...', 'cyan')
-
-    fs.copySync("#{SOURCE}/font", "#{FONT_LOCATION}", clobber: true)
-    fs.copySync("#{SOURCE}/css/fontello-codes.css", "#{APP_LOCATION}/stylesheets/vendor/fontello_codes.css")
-    dropTmpFolder()
-    done?()
-
-installFontello = ->
-  log('Extract old zip file...', 'cyan')
-
-  glob "#{SOURCE_FOLDER}/fontello-*.zip", (err, [oldZip]) ->
-    [folderName] = _.last(oldZip.split('/')).split('.')
-
-    fs.createReadStream(oldZip).pipe(unzip.Extract(path: TMP_FOLDER)).on 'close', ->
-      config = "#{TMP_FOLDER}/#{folderName}/config.json"
-
-      log('Getting session url...', 'cyan')
-
-      fontello.apiRequest { config }, (sessionUrl) ->
-        open(sessionUrl)
-        dropTmpFolder()
-
-        log('Press "ENTER" to start download (save session in browser before downloading)', 'green')
-
-        process.stdin.setRawMode(true)
-        process.stdin.resume()
-        process.stdin.on 'data', ([keyCode]) ->
-          return unless keyCode is 13
-
-          log('Download new zip file...', 'cyan')
-
-          stream = needle.get "#{sessionUrl}/get", (err, res, body) ->
-            # Getting file name
-            regexp = /filename=(.*)/gi
-            [full, filename] = regexp.exec(res.headers['content-disposition'])
-
-            newZip = "#{SOURCE_FOLDER}/#{filename}"
-
-            fs.writeFile(newZip, body, ->
-              fs.removeSync(oldZip)
-              replaceFontello(newZip, -> process.exit())
-            )
 
 
 # ===============================================================
@@ -264,7 +202,11 @@ gulp.task 'symlink', ->
   createSymlink(key, path) for key, path of SYMLINKS
 
 gulp.task 'fontello', ->
-  installFontello()
+  fontello.open(
+    source: SOURCE_FOLDER
+    dest: "#{FONTS_DIR}/fontello"
+    styles: "#{APP_LOCATION}/stylesheets/vendor"
+  )
 
 gulp.task 'mocha', (done) ->
   runner = exec('env NODE_ENV=test mocha', done)
