@@ -29,14 +29,14 @@ module.exports = class RegisterCompanyView extends ModelForm
             <form ref="form" className="form-horizontal" onSubmit={@handleSubmit}>
               <fieldset>
                 <div className="form-group">
-                  <label htmlFor="inputName" className="col-md-3 control-label">Название компании</label>
+                  <label htmlFor="inputName" className="col-md-3 control-label">Название компании*</label>
                   <div className="col-md-9">
                     <input name="shop_name" valueLink={@stateLink('model.shop_name')} type="text" className="form-control" id="inputName" placeholder="Dellee" />
                     <div className="help-block with-errors"></div>
                   </div>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="inputPerson" className="col-md-3 control-label">Контактное лицо</label>
+                  <label htmlFor="inputPerson" className="col-md-3 control-label">Контактное лицо*</label>
                   <div className="col-md-9">
                     <div className="form-double">
                       <div className="form-group">
@@ -50,7 +50,7 @@ module.exports = class RegisterCompanyView extends ModelForm
                   </div>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="inputEmail" className="col-md-3 control-label">E-mail</label>
+                  <label htmlFor="inputEmail" className="col-md-3 control-label">E-mail*</label>
                   <div className="col-md-9">
                     <input name="contacts.email" valueLink={@stateLink('model.contacts.email')} type="text" className="form-control" id="inputEmail" placeholder="shop@mail.com" />
                     <div className="help-block with-errors"></div>
