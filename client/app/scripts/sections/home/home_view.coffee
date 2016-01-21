@@ -131,7 +131,7 @@ module.exports = class HomeView extends Form
             <h2>Бесплатная Регистрация Компаний</h2>
             <h3>мы предоставляем всем компаниям бесплатный аккаунт для оповещания пользователей о новостях и событиях</h3>
             <div className="p-h-cs-link">
-              <a target="_self" href="/admin/apply-account" className="ui-btn ui-btn_large">регистрация компании</a>
+              <a target="_self" href="/admin/register-company" className="ui-btn ui-btn_large">регистрация компании</a>
             </div>
             <div className="p-h-cs-help_message">
               Хотите связаться с нами лично? Перейдите на <a href="/contacts">страницу контактов</a>

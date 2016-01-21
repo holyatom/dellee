@@ -27,7 +27,7 @@ module.exports = class Router extends BaseRouter
 
   router: ->
     @route('/admin', @notAuth, 'home.index')
-    @route('/admin/apply-account', @notAuth, 'apply_account.create')
+    @route('/admin/register-company', @notAuth, 'register_company.create')
 
     @route('/admin/dashboard', @auth, 'dashboard.index')
 
@@ -72,5 +72,5 @@ if process.browser
     sales: require('./sections/sales/sales_controller')
     customers: require('./sections/customers/customers_controller')
     subscribers: require('./sections/subscribers/subscribers_controller')
-    apply_account: require('./sections/apply_account/apply_account_controller')
+    register_company: require('./sections/register_company/register_company_controller')
     shop_applications: require('./sections/shop_applications/shop_applications_controller')

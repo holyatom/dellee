@@ -53,7 +53,7 @@ module.exports = class Header extends Component
                   <a href="/admin">Вход</a>
                 </li>
                 <li>
-                  <a href="/admin/apply-account">Заявка на аккаунт</a>
+                  <a href="/admin/register-company">Регистрация компании</a>
                 </li>
               </ul>
           }

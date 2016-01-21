@@ -2,13 +2,13 @@ React = require('react')
 { ModelForm, Layout, FormStatus, FileUploader } = require('admin/components')
 
 
-module.exports = class ApplyAccountView extends ModelForm
-  title: -> 'Dellee • Заявка на создание аккаунта'
+module.exports = class RegisterCompanyView extends ModelForm
+  title: -> 'Dellee • Регистрация компании'
 
   render: ->
-    <Layout className="p-apply_account">
+    <Layout className="p-register_company">
       <header className="page-header">
-        <h3>Заявка на создание аккаунта</h3>
+        <h3>Регистрация компании</h3>
       </header>
       <div className="well">
         {
@@ -16,10 +16,10 @@ module.exports = class ApplyAccountView extends ModelForm
             <div>
               <h4 className="text-success"><i className="fa fa-hand-peace-o"></i> Успех!</h4>
               <p>
-                Ваша заявка была успешна сохранена, мы свяжемся с вами в теченнии <strong>5 рабочих дней</strong>.
+                Ваша заявка на регистрацияю компании успешно отправлена! Мы свяжемся с Вами в теченнии  <strong>5 рабочих дней</strong>.
               </p>
               <p>
-                Хотим напомнить что аккаунт заведения будет создан только после запуска проекта. Мы уведомим вас об этом по e-mail почте.
+                Напоминаем, что аккаунт компании будет открыт после запуска проекта, о чем мы уведомим Вас по e-mail.
               </p>
               <p className="text-muted">
                 Хорошего вам дня! <i className="fa fa-smile-o"></i>
@@ -28,11 +28,10 @@ module.exports = class ApplyAccountView extends ModelForm
           else
             <form ref="form" className="form-horizontal" onSubmit={@handleSubmit}>
               <fieldset>
-                <legend>Заполните форму</legend>
                 <div className="form-group">
-                  <label htmlFor="inputName" className="col-md-3 control-label">Название заведения</label>
+                  <label htmlFor="inputName" className="col-md-3 control-label">Название компании</label>
                   <div className="col-md-9">
-                    <input name="shop_name" valueLink={@stateLink('model.shop_name')} type="text" className="form-control" id="inputName" placeholder="Cool&Fun" />
+                    <input name="shop_name" valueLink={@stateLink('model.shop_name')} type="text" className="form-control" id="inputName" placeholder="Dellee" />
                     <div className="help-block with-errors"></div>
                   </div>
                 </div>
@@ -58,7 +57,7 @@ module.exports = class ApplyAccountView extends ModelForm
                   </div>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="inputPhonenumber" className="col-md-3 control-label">Телефонный номер</label>
+                  <label htmlFor="inputPhonenumber" className="col-md-3 control-label">Номер телефона</label>
                   <div className="col-md-9">
                     <input name="contacts.phonenumber" valueLink={@stateLink('model.contacts.phonenumber')} type="text" className="form-control" id="inputPhonenumber" placeholder="+77XX XXX XXXX" />
                     <div className="help-block with-errors"></div>
@@ -68,12 +67,12 @@ module.exports = class ApplyAccountView extends ModelForm
                   <label htmlFor="inputAdditional" className="col-md-3 control-label">Дополнительно</label>
                   <div className="col-md-9">
                     <textarea name="additional" rows="5" valueLink={@stateLink('model.additional')} type="text" className="form-control" id="inputAdditional" />
-                    <span className="help-block">Введите дополнительную информацию, которую мы должны принять во внимание</span>
+                    <span className="help-block">Здесь Вы можете указать дополнительные данные</span>
                   </div>
                 </div>
                 <FormStatus {...@state} />
                 <div className="form-buttons">
-                  <button type="submit" className="btn btn-primary" disabled={@state.isLocked}>Отправить заявку</button>
+                  <button type="submit" className="btn btn-primary" disabled={@state.isLocked}>Регистрация</button>
                 </div>
               </fieldset>
             </form>
