@@ -19,6 +19,7 @@ module.exports = class HomeControlller extends Controller
     @view.lockForm()
 
     @xhrs.save.then =>
+      vent.trigger('analytics:event', category: 'form', action: 'early_access')
       @view.setState(success: true, error: false)
     .fail (xhr) =>
       message = 'Ошибка сервера'

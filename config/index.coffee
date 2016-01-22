@@ -18,8 +18,10 @@ defaults =
   debug: nodeEnv is 'development'
 
 config = _.deepExtend(defaults, readConfigs('./')...)
-config._app = _.deepExtend(readConfigs('./app/')...)
-config._admin = _.deepExtend(readConfigs('./admin/')...)
+client = _.pick(config, ['contacts', 'ga', 'fb'])
+
+config._app = _.deepExtend({}, client, readConfigs('./app/')...)
+config._admin = _.deepExtend({}, client, readConfigs('./admin/')...)
 
 unless config.base_url
   config.base_url = "http://#{ config.host or config.server.ip }"

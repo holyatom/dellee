@@ -20,7 +20,7 @@ module.exports =
       secret: 'ourlittlesecret'
 
   mail:
-    default_from: 'Dellee <info@dellee.me>'
+    default_from: 'Dellee <hello@dellee.me>'
     mailgun:
       key: 'key-e9651b7f70bf011ab5d000e5a01ab8b7'
       domain: 'sandbox60c1d1eb15aa486c999a81aa410ef821.mailgun.org'
@@ -33,5 +33,13 @@ module.exports =
   cdn:
     storage: "#{__dirname}/../cdn"
 
+  # Client
   contacts:
     email: 'atomio.ak@gmail.com'
+
+  fb:
+    version: 'v2.5'
+    app_id: '1708242352752774'
+
+  ga:
+    id: 'UA-72780272-1'

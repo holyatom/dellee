@@ -38,6 +38,4 @@ class CustomersController extends PublicController
 
     super
 
-  CustomersController::create.type = 'post'
-
 module.exports = new CustomersController()
