@@ -1,3 +1,35 @@
 .c-footer
-  text-align: center
-  padding: 15px 0
+  @media $tablet
+    padding: 15px 0
+
+  .c-f-links
+    margin-bottom: 20px
+    list-style: none
+    padding: 0
+    margin: 0
+
+    li
+      text-align: center
+      padding: 5px 0
+
+    @media $tablet
+      float: right
+
+      li
+        display: inline-block
+        margin-left: 22px
+
+  .c-f-copyright
+    margin: 15px 0 20px
+    text-align: center
+
+    @media $tablet
+      margin: 0
+      text-align: left
+
+  .c-f-info
+    display: none
+
+    @media $tablet
+      margin-top: 20px
+      display: block
