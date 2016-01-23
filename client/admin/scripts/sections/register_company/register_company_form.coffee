@@ -4,7 +4,7 @@ vent = require('admin/modules/vent')
 
 
 module.exports = class RegisterCompanyView extends ModelForm
-  title: -> 'Dellee • Регистрация компании'
+  title: -> 'Регистрация компании • Dellee'
 
   share: (type) ->
     vent.trigger("share:#{type}", url: global.location.origin)

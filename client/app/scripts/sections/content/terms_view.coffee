@@ -5,7 +5,7 @@ React = require('react')
 
 
 module.exports = class TermsView extends Сomponent
-  title: -> 'Dellee • Правила сервиса'
+  title: -> 'Правила сервиса • Dellee'
 
   render: ->
     <Content>

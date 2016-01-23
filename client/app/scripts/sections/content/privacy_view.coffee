@@ -5,7 +5,7 @@ React = require('react')
 
 
 module.exports = class PrivacyView extends Сomponent
-  title: -> 'Dellee • Политика Конфидециальности'
+  title: -> 'Политика Конфидециальности • Dellee'
 
   initState: ->
     analyticsEnabled: true

@@ -6,7 +6,7 @@ vent = require('app/modules/vent')
 
 
 module.exports = class HomeView extends Form
-  title: -> 'Dellee • Первый мессенджер акций'
+  title: -> 'Dellee • Личный Менеджер Подписок'
 
   initState: ->
     model: {}

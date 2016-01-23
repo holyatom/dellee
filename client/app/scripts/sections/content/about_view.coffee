@@ -4,7 +4,7 @@ React = require('react')
 
 
 module.exports = class AboutView extends Сomponent
-  title: -> 'Dellee • О проекте'
+  title: -> 'О проекте • Dellee'
 
   render: ->
     <Content>

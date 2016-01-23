@@ -3,7 +3,7 @@ React = require('react')
 
 
 module.exports = class HomeView extends ModelForm
-  title: -> 'Dellee • Вход в Админ панель'
+  title: -> 'Dellee • Админ панель'
 
   render: ->
     <Layout centered className="p-home">

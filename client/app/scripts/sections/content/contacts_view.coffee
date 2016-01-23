@@ -5,7 +5,7 @@ React = require('react')
 
 
 module.exports = class ContactsView extends Сomponent
-  title: -> 'Dellee • Контакты'
+  title: -> 'Контакты • Dellee'
 
   render: ->
     <Content>
