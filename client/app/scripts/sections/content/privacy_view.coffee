@@ -7,6 +7,15 @@ React = require('react')
 module.exports = class PrivacyView extends Сomponent
   title: -> 'Dellee • Политика Конфидециальности'
 
+  initState: ->
+    analyticsEnabled: true
+
+  componentDidMount: ->
+    @setState(analyticsEnabled: @props.data.analyticsEnabled)
+
+  handleAnalyticsChange: (event) =>
+    @trigger('disableAnalytics', not event.target.checked)
+
   render: ->
     <Content>
       <div className="container">
@@ -38,6 +47,14 @@ module.exports = class PrivacyView extends Сomponent
         </p>
         <p>
           Google не будет ассоциировать ваш IP-адрес с любыми другими данными, которые собирает Google. Используя этот сайт, Вы даете согласие на обработку данных, собранных Google для вышеупомянутых задач. Более подробную информацию о безопасности данных в Google можно найти на веб-сайте <a href="https://www.google.com/analytics/">Google Analytics</a>.
+        </p>
+        <p>
+          В данный момент Ваше посещение сайта записывается Google Analytics. Вы можете отключить данную функцию сняв галочку ниже:
+        </p>
+        <p>
+          <label className="ui-checkbox">
+            <input className="ui-input" type="checkbox" checked={@state.analyticsEnabled} onChange={@handleAnalyticsChange} /> Включить Google analytics
+          </label>
         </p>
         <h2>Поставщики Услуг</h2>
         <p>

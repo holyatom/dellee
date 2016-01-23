@@ -97,7 +97,7 @@ module.exports = class HomeView extends Form
             </div>
             <form className={@cx('p-h-ea-form', success: @state.success)} onSubmit={@handleSubmit}>
               <div className={@cx('ui-form_group', focused: @state.focused)}>
-                <input id="email-input" onFocus={=> @setState(focused: true)} onBlur={=> @setState(focused: false)} valueLink={@stateLink('model.email')} type="text" name="email" className="ui-form_control ui-form_control_large" placeholder="введи свой e-mail" />
+                <input id="email-input" onFocus={=> @setState(focused: true)} onBlur={=> @setState(focused: false)} valueLink={@stateLink('model.email')} type="text" name="email" className="ui-input ui-input_large" placeholder="введи свой e-mail" />
                 <button type="submit" className="ui-btn ui-btn_primary ui-btn_large" disabled={@state.isLocked}>Сообщить о запуске</button>
 
                 <div className="p-h-ea-success">

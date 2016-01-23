@@ -35,7 +35,7 @@ module.exports =
 
   # Client
   contacts:
-    email: 'atomio.ak@gmail.com'
+    email: 'info@dellee.me'
 
   fb:
     version: 'v2.5'

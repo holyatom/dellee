@@ -1,17 +1,33 @@
 $ = require('jquery')
-vent = require('./vent')
 config = require('config')
 log = require('lib/logger').bind(logPrefix: '[analytics]')
+vent = require('./vent')
+session = require('./session')
 Queue = require('../base/queue')
 
 
 ANALYTICS_JS = 'https://google-analytics.com/analytics.js'
 TRACKING_TIMEOUT = 1000
+ANALYTICS_DISABLE_KEY = 'analytics:disable'
+
+# Because we love each and every browser
+getDoNotTrack = ->
+  if typeof global.navigator.doNotTrack isnt 'undefined'
+    dntValue = global.navigator.doNotTrack
+  else if typeof global.navigator.msDoNotTrack isnt 'undefined'
+    dntValue = global.navigator.msDoNotTrack
+  else
+    dntValue = global.doNotTrack
+
+  dntPositiveValues = ['yes', '1', 1]
+
+  dntValue in dntPositiveValues
 
 class Analytics extends Queue
   constructor: ->
     super
     @_initialized = false
+    return if @isDisabled()
 
     $.getScript(ANALYTICS_JS).done =>
       @ga = global.ga
@@ -37,6 +53,9 @@ class Analytics extends Queue
 
     tid = setTimeout(done, TRACKING_TIMEOUT)
     done
+
+  isDisabled: -> getDoNotTrack() or session.get(ANALYTICS_DISABLE_KEY)
+  disable: (val) -> session.set(ANALYTICS_DISABLE_KEY, val)
 
   # page: String # URL
   # title: String
