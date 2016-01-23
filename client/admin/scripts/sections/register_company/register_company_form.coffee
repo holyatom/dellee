@@ -1,19 +1,23 @@
 React = require('react')
+vent = require('admin/modules/vent')
 { ModelForm, Layout, FormStatus, FileUploader } = require('admin/components')
 
 
 module.exports = class RegisterCompanyView extends ModelForm
   title: -> 'Dellee • Регистрация компании'
 
+  share: (type) ->
+    vent.trigger("share:#{type}", url: global.location.origin)
+
   render: ->
     <Layout className="p-register_company">
       <header className="page-header">
         <h3>Регистрация компании</h3>
       </header>
-      <div className="well">
-        {
-          if @state.success
-            <div>
+      {
+        if @state.success or true
+          <div>
+            <div className="well">
               <h4 className="text-success"><i className="fa fa-hand-peace-o"></i> Успех!</h4>
               <p>
                 Ваша заявка на регистрацияю компании успешно отправлена! Мы свяжемся с Вами в теченнии  <strong>5 рабочих дней</strong>.
@@ -25,7 +29,31 @@ module.exports = class RegisterCompanyView extends ModelForm
                 Хорошего вам дня! <i className="fa fa-smile-o"></i>
               </p>
             </div>
-          else
+
+            <p className="text-center hidden-sm hidden-md hidden-lg">
+              Расскажите своим клиентам о <span className="text-warning">Dellee</span>
+            </p>
+
+            <div className="p-rc-share_links btn-group btn-group-justified">
+              <div className="btn-group">
+                <button type="button" className="btn btn-primary" onClick={@share.bind(null, 'facebook')}>
+                  <i className="fa fa-facebook"></i> <span className="hidden-xs">Поделиться</span>
+                </button>
+              </div>
+              <div className="btn-group">
+                <button type="button" className="btn btn-primary" onClick={@share.bind(null, 'vk')}>
+                  <i className="fa fa-vk"></i> <span className="hidden-xs">Поделиться</span>
+                </button>
+              </div>
+              <div className="btn-group">
+                <button type="button" className="btn btn-primary" onClick={@share.bind(null, 'twitter')}>
+                  <i className="fa fa-twitter"></i> <span className="hidden-xs">Твитнуть</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        else
+          <div className="well">
             <form ref="form" className="form-horizontal" onSubmit={@handleSubmit}>
               <fieldset>
                 <div className="form-group">
@@ -76,6 +104,6 @@ module.exports = class RegisterCompanyView extends ModelForm
                 </div>
               </fieldset>
             </form>
-        }
-      </div>
+          </div>
+      }
     </Layout>
