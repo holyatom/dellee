@@ -28,7 +28,7 @@ ADMIN_LOCATION = "#{__dirname}/client/admin"
 
 APP_VENDOR = [
   'backbone'
-  # 'backbone.localstorage'
+  'backbone.localstorage'
   'classnames'
   'lodash'
   'page'

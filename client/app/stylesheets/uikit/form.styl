@@ -1,4 +1,4 @@
-.ui-form_control
+.ui-input
   padding: 0 10px
   height: 36px
 
@@ -12,11 +12,19 @@
   &:focus
     border-color: #4078c0
 
-  &.ui-form_control_large
+  &.ui-input_large
     padding-left: 15px
     padding-right: @padding-left
     height: 45px
     font-size: 16px
+
+.ui-checkbox
+  cursor: pointer
+
+  .ui-input
+    width: auto
+    height: auto
+    margin-right: .3em
 
 .ui-form_group
   margin-bottom: 15px

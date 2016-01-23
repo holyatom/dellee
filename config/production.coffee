@@ -6,3 +6,7 @@ module.exports =
 
   mongodb:
     database: 'delleelive'
+
+  mail:
+    mailgun:
+      domain: 'mail.dellee.me'
