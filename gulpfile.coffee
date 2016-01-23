@@ -1,19 +1,31 @@
 _ = require('lodash')
 pkg = require('./package.json')
+
 gulp = require('gulp')
-stylus = require('gulp-stylus')
-minifyCSS = require('gulp-minify-css')
-uglify = require('gulp-uglify')
-streamify = require('gulp-streamify')
-nib = require('nib')
-rename = require('gulp-rename')
+gulpSequence = require('gulp-sequence')
+
 browserify = require('browserify')
 aliasify = require('aliasify')
+
+stylus = require('gulp-stylus')
+nib = require('nib')
+
+minifyCSS = require('gulp-minify-css')
+uglify = require('gulp-uglify')
+
+gzip = require('gulp-gzip')
+del = require('del')
+
+streamify = require('gulp-streamify')
 source = require('vinyl-source-stream')
+rename = require('gulp-rename')
+
 symlink = require('gulp-symlink')
 { exec } = require('child_process')
 fontello = require('./lib/fontello')
+
 watch = require('gulp-watch')
+
 log = require('./lib/logger').bind(logPrefix: '[gulp]')
 
 
@@ -27,34 +39,15 @@ APP_LOCATION = "#{__dirname}/client/app"
 ADMIN_LOCATION = "#{__dirname}/client/admin"
 
 APP_VENDOR = [
-  'backbone'
-  'backbone.localstorage'
-  'classnames'
-  'lodash'
-  'page'
   'react'
   'react/lib/ReactLink'
   'react-dom'
-  'jquery'
 ]
 
 ADMIN_VENDOR = [
-  'backbone'
-  'backbone.localstorage'
-  'bootstrap'
-  'classnames'
-  'lodash'
-  'page'
   'react'
   'react/lib/ReactLink'
   'react-dom'
-  'jquery'
-  'moment'
-  'moment/locale/ru'
-  'dropzone'
-  'bootstrap-datepicker'
-  'bootstrap-datepicker/js/locales/bootstrap-datepicker.ru'
-  'translitit-cyrillic-russian-to-latin'
 ]
 
 SYMLINKS =
@@ -77,8 +70,6 @@ proxy = (runner, callback) ->
 
 errorReport = (err) ->
   log(err.message or err, 'red bold')
-
-
 
 watchTask = (taskName) ->
   (event) ->
@@ -105,6 +96,7 @@ compileJsPackets = (opts) ->
   opts = _.extend(
     packets: []
     output: ''
+    minify: false
   , opts)
 
   bundle = browserify()
@@ -112,14 +104,15 @@ compileJsPackets = (opts) ->
   bundle.require(packet, expose: packet) for packet in opts.packets
   bundle.transform(global: true, aliasify)
 
-  bundle.bundle()
+  bundle = bundle.bundle()
     .on('error', (err) ->
       errorReport(err)
       @emit('end')
     )
     .pipe(source(opts.output))
-    .pipe(streamify(uglify()))
-    .pipe(gulp.dest(PUBLIC_ASSETS))
+
+  bundle = bundle.pipe(streamify(uglify())) if opts.minify
+  bundle.pipe(gulp.dest(PUBLIC_ASSETS))
 
 compileJsBundle = (opts) ->
   opts = _.extend(
@@ -213,6 +206,12 @@ gulp.task 'mocha', (done) ->
   proxy(runner)
 
 
+gulp.task 'clean', (done) ->
+  del([
+    PUBLIC_ASSETS
+  ], done)
+
+
 # ===============================================================
 # SCRIPTS
 # ===============================================================
@@ -236,13 +235,13 @@ gulp.task 'js:app', ->
   compileJsBundle(input: "#{APP_LOCATION}/scripts/index.coffee", output: 'app.js', exclude: APP_VENDOR)
 
 gulp.task 'js:app_vendor', ->
-  compileJsPackets(packets: APP_VENDOR, output: 'app.vendor.js')
+  compileJsPackets(packets: APP_VENDOR, output: 'app_vendor.js')
 
 gulp.task 'js:admin', ->
   compileJsBundle(input: "#{ADMIN_LOCATION}/scripts/index.coffee", output: 'admin.js', exclude: ADMIN_VENDOR)
 
 gulp.task 'js:admin_vendor', ->
-  compileJsPackets(packets: ADMIN_VENDOR, output: 'admin.vendor.js')
+  compileJsPackets(packets: ADMIN_VENDOR, output: 'admin_vendor.js')
 
 gulp.task('js', ['js:app', 'js:app_vendor', 'js:admin', 'js:admin_vendor'])
 
@@ -283,18 +282,26 @@ gulp.task 'worker:staging', ->
 gulp.task 'server:staging', ->
   runNodeJs(envVariables: { NODE_ENV: 'staging' }, skipWatch: true)
 
+
 gulp.task 'js:app:min', ->
-  compileJsBundle(input: "#{APP_LOCATION}/scripts/index.coffee", output: 'app.js', exclude: APP_VENDOR, minify: true)
+  compileJsBundle(input: "#{APP_LOCATION}/scripts/index.coffee", output: 'app.min.js', exclude: APP_VENDOR, minify: true)
+
+gulp.task 'js:app_vendor:min', ->
+  compileJsPackets(packets: APP_VENDOR, output: 'app_vendor.min.js', minify: true)
 
 gulp.task 'js:admin:min', ->
-  compileJsBundle(input: "#{ADMIN_LOCATION}/scripts/index.coffee", output: 'admin.js', exclude: ADMIN_VENDOR, minify: true)
+  compileJsBundle(input: "#{ADMIN_LOCATION}/scripts/index.coffee", output: 'admin.min.js', exclude: ADMIN_VENDOR, minify: true)
 
-gulp.task('js:min', ['js:app:min', 'js:app_vendor', 'js:admin:min', 'js:admin_vendor'])
+gulp.task 'js:admin_vendor:min', ->
+  compileJsPackets(packets: ADMIN_VENDOR, output: 'admin_vendor.min.js', minify: true)
+
+gulp.task('js:min', ['js:app:min', 'js:app_vendor:min', 'js:admin:min', 'js:admin_vendor:min'])
+
 
 gulp.task 'css:app:min', ->
   compileCss(
     input: "#{APP_LOCATION}/stylesheets/index.styl"
-    output: 'app.css'
+    output: 'app.min.css'
     paths: ["#{APP_LOCATION}/scripts"]
     minify: true
   )
@@ -302,15 +309,31 @@ gulp.task 'css:app:min', ->
 gulp.task 'css:admin:min', ->
   compileCss(
     input: "#{ADMIN_LOCATION}/stylesheets/index.styl"
-    output: 'admin.css'
+    output: 'admin.min.css'
     paths: ["#{ADMIN_LOCATION}/scripts"]
     minify: true
   )
 
 gulp.task('css:min', ['css:app:min', 'css:admin:min'])
 
-gulp.task('assets:min', ['js:min', 'css:min'])
-gulp.task('staging', ['server:staging', 'assets:min'])
+
+gulp.task 'compress', ->
+  gulp
+    .src(["#{PUBLIC_ASSETS}/*.min.*", "!#{PUBLIC_ASSETS}/*.gz"])
+    .pipe(gzip())
+    .pipe(gulp.dest(PUBLIC_ASSETS))
+
+
+gulp.task('build', gulpSequence(
+  'clean'
+  [
+    'js:min'
+    'css:min'
+  ]
+  'compress'
+))
+
+gulp.task('staging', ['server:staging', 'build'])
 
 # ===============================================================
 # PRODUCTION
@@ -322,4 +345,4 @@ gulp.task 'worker:prod', ->
 gulp.task 'server:prod', ->
   runNodeJs(envVariables: { NODE_ENV: 'production' }, skipWatch: true)
 
-gulp.task('prod', ['server:prod', 'assets:min'])
+gulp.task('prod', ['server:prod', 'build'])

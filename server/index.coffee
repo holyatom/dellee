@@ -9,6 +9,7 @@ middlewares = require('./middlewares')
 exphbs = require('express-handlebars')
 database = require('lib/database')
 helmet = require('helmet')
+compress = require('compression')
 
 
 class Server
@@ -30,6 +31,9 @@ class Server
     @app.use(helmet())
 
     @app.use(morgan(if config.debug then 'dev' else 'combined'))
+
+    # Enable gzip
+    @app.use(compress())
 
     # Set publis assets.
     @app.use(require('serve-favicon')("#{__dirname}/../public/favicon.ico"))
