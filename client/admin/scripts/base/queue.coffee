@@ -1,4 +1,4 @@
-_ = require('underscore')
+_ = require('lodash')
 { Events } = require('backbone')
 
 

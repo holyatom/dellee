@@ -15,7 +15,7 @@ module.exports = class RegisterCompanyView extends ModelForm
         <h3>Регистрация компании</h3>
       </header>
       {
-        if @state.success or true
+        if @state.success
           <div>
             <div className="well">
               <h4 className="text-success"><i className="fa fa-hand-peace-o"></i> Успех!</h4>
