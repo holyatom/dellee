@@ -22,7 +22,7 @@ schema = Schema(
   role:
     type: String
     required: v.required()
-    enum: v.enum(['admin', 'moderator', 'companyadmin'])
+    enum: v.enum(['admin', 'moderator', 'company_user'])
 
   company:
     type: mongoose.Schema.Types.ObjectId

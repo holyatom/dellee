@@ -59,7 +59,7 @@ module.exports = class Header extends Component
           }
 
           {
-            if profile.is('companyadmin', strict: true)
+            if profile.is('company_user', strict: true)
               <ul className="nav navbar-nav">
                 <li className="dropdown">
                   <a href="javascript:void(0);" className="dropdown-toggle" data-toggle="dropdown">{ profile.get('company').name } <span className="caret"></span></a>

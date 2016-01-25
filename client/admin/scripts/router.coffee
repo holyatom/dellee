@@ -38,7 +38,7 @@ module.exports = class Router extends BaseRouter
 
     @route('/admin/companies', @requireRole('admin'), 'companies.index')
     @route('/admin/companies/create', @requireRole('admin'), 'companies.create')
-    @route('/admin/companies/:id', @requireRole('companyadmin'), 'companies.edit')
+    @route('/admin/companies/:id', @requireRole('company_user'), 'companies.edit')
 
     @route('/admin/customers', @requireRole('admin'), 'customers.index')
     @route('/admin/customers/create', @requireRole('admin'), 'customers.create')
@@ -55,9 +55,9 @@ module.exports = class Router extends BaseRouter
     @route('/admin/company-applications/:id', @requireRole('moderator'), 'company_applications.edit')
 
     # company admin
-    @route('/admin/company-sales', @requireRole('companyadmin', strict: true), 'company_sales.index')
-    @route('/admin/company-sales/create', @requireRole('companyadmin', strict: true), 'company_sales.create')
-    @route('/admin/company-sales/:id', @requireRole('companyadmin', strict: true), 'company_sales.edit')
+    @route('/admin/company-sales', @requireRole('company_user', strict: true), 'company_sales.index')
+    @route('/admin/company-sales/create', @requireRole('company_user', strict: true), 'company_sales.create')
+    @route('/admin/company-sales/:id', @requireRole('company_user', strict: true), 'company_sales.edit')
 
     @route('/admin/*', 'error.notFound')
 

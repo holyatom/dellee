@@ -73,6 +73,6 @@ class CompaniesController extends AdminController
 
 
   canViewAndEdit: (req) ->
-    (req.adminUser.role is 'companyadmin' and req.adminUser.company.equals(req.params.id)) or req.adminUser.role is 'admin'
+    (req.adminUser.role is 'company_user' and req.adminUser.company.equals(req.params.id)) or req.adminUser.role is 'admin'
 
 module.exports = new CompaniesController()

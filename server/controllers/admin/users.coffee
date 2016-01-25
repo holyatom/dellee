@@ -21,7 +21,7 @@ class UsersController extends AdminController
       return next(err) if err
       return @error(res, 'user_exist', 409) if doc
 
-      if req.body.role is 'companyadmin'
+      if req.body.role is 'company_user'
         return @error(res, company: 'required') unless req.body.company?
       else
         delete req.body.company
@@ -32,7 +32,7 @@ class UsersController extends AdminController
   UsersController::create.roles = ['admin']
 
   update: (req, res, next) ->
-    if req.body.role is 'companyadmin'
+    if req.body.role is 'company_user'
       return @error(res, company: 'required') unless req.body.company?
     else
       delete req.body.company

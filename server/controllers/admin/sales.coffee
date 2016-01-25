@@ -11,7 +11,7 @@ class SalesController extends AdminController
   urlPrefix: '/sales'
 
   auth: true
-  roles: ['admin', 'companyadmin', 'moderator']
+  roles: ['admin', 'company_user', 'moderator']
 
   Model: require('server/models/sale')
 
@@ -38,7 +38,7 @@ class SalesController extends AdminController
     'rejected': ['pending']
 
   get: (req, res, next) ->
-    if not req.modelDoc.company.equals(req.adminUser.company)  and req.adminUser.role is 'companyadmin'
+    if not req.modelDoc.company.equals(req.adminUser.company)  and req.adminUser.role is 'company_user'
       return @notFound(res)
 
     super
@@ -48,7 +48,7 @@ class SalesController extends AdminController
   create: (req, res, next) ->
     return @error(res, status: 'invalid_sale_status') unless req.body.status in @COMPANY_AVAILABLE_STATUSES_TO_TRANSFER
 
-    req.body.company = req.adminUser.company if req.adminUser.role is 'companyadmin'
+    req.body.company = req.adminUser.company if req.adminUser.role is 'company_user'
     super
 
   SalesController::create.type = 'post'
@@ -56,7 +56,7 @@ class SalesController extends AdminController
   update: (req, res, next) ->
     { status } = req.body
 
-    if req.adminUser.role is 'companyadmin'
+    if req.adminUser.role is 'company_user'
       return @error(res, 'can_not_update_sale') unless req.modelDoc.status in @COMPANY_AVAILABLE_STATUSES_TO_UPDATE
       return @error(res, status: 'invalid_sale_status') if status and status not in @COMPANY_AVAILABLE_STATUSES_TO_TRANSFER
 
@@ -71,7 +71,7 @@ class SalesController extends AdminController
 
   getListOptions: (req) ->
     opts = super
-    opts.filters.company = req.adminUser.company if req.adminUser.role is 'companyadmin'
+    opts.filters.company = req.adminUser.company if req.adminUser.role is 'company_user'
 
     opts
 

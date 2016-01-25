@@ -50,13 +50,13 @@ module.exports = class UserView extends ModelForm
               <option value="">Выберите роль</option>
               <option value="admin">Админ</option>
               <option value="moderator">Модератор</option>
-              <option value="companyadmin">Пользователь компании</option>
+              <option value="company_user">Пользователь компании</option>
             </select>
           </div>
         </div>
 
         {
-          if @state.model.role is 'companyadmin'
+          if @state.model.role is 'company_user'
             <div className="form-group">
               <label htmlFor="inputCompany" className="col-md-3 control-label">Компания</label>
               <div className="col-md-9">
