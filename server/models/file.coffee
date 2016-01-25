@@ -16,7 +16,7 @@ schema = Schema(
     type: String
     required: v.required()
     enum: v.enum([
-      'images/shops'
+      'images/companies'
     ])
 
   mime_type:

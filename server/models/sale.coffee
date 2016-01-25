@@ -17,9 +17,9 @@ schema = Schema(
     validate: [v.minLength(10)]
     text: true
 
-  shop:
+  company:
     type: mongoose.Schema.Types.ObjectId
-    ref: 'Shop'
+    ref: 'Company'
     set: setters.objectId
 
   start_date:

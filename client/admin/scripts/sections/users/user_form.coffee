@@ -6,7 +6,7 @@ module.exports = class UserView extends ModelForm
   title: -> if @state.model._id then 'Редактирование пользователя' else 'Создание пользователя'
 
   render: ->
-    { shops } = @props.data
+    { companies } = @props.data
 
     <Layout>
       <ul className="breadcrumb">
@@ -50,20 +50,20 @@ module.exports = class UserView extends ModelForm
               <option value="">Выберите роль</option>
               <option value="admin">Админ</option>
               <option value="moderator">Модератор</option>
-              <option value="shopadmin">Администратор заведения</option>
+              <option value="company_user">Пользователь компании</option>
             </select>
           </div>
         </div>
 
         {
-          if @state.model.role is 'shopadmin'
+          if @state.model.role is 'company_user'
             <div className="form-group">
-              <label htmlFor="inputShop" className="col-md-3 control-label">Магазин</label>
+              <label htmlFor="inputCompany" className="col-md-3 control-label">Компания</label>
               <div className="col-md-9">
-                <select valueLink={@stateLink('model.shop._id')} className="form-control" id="inputShop">
-                  <option value="">Выберите заведение</option>
-                  {shops.collection.map((shop, index) ->
-                    <option key={index} value={shop._id}>{shop.name}</option>
+                <select valueLink={@stateLink('model.company._id')} className="form-control" id="inputCompany">
+                  <option value="">Выберите компанию</option>
+                  {companies.collection.map((company, index) ->
+                    <option key={index} value={company._id}>{company.name}</option>
                   )}
                 </select>
               </div>

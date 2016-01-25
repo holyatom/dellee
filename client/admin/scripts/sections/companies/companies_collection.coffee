@@ -1,8 +1,8 @@
 Collection = require('admin/base/collection')
 
 
-module.exports = class ShopsCollection extends Collection
-  urlPath: '/shops'
+module.exports = class CompaniesCollection extends Collection
+  urlPath: '/companies'
 
   fields: ['name', 'slug']
   fieldNames:

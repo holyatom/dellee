@@ -5,14 +5,14 @@ Form = require('admin/base/form')
 formatters = require('lib/formatters')
 
 
-module.exports = class ShopApplicationView extends ModelForm
-  title: -> 'Заявка заведения'
+module.exports = class CompanyApplicationView extends ModelForm
+  title: -> 'Заявка компании'
 
   render: ->
     <Layout>
       <ul className="breadcrumb">
         <li><a href="/admin">Главная</a></li>
-        <li><a href={@props.data.controllerRoot}>Заявки заведений</a></li>
+        <li><a href={@props.data.controllerRoot}>Заявки компаний</a></li>
         <li className="active">{if @state.model._id then _.trunc(@state.model._id, 10) else 'Создание'}</li>
       </ul>
       <header className="page-header">
@@ -31,7 +31,7 @@ module.exports = class ShopApplicationView extends ModelForm
         <div className="form-group">
           <label className="col-sm-3 control-label">Название</label>
           <div className="col-sm-9">
-            <p className="form-control-static">{ @state.model.shop_name }</p>
+            <p className="form-control-static">{ @state.model.company_name }</p>
           </div>
         </div>
 

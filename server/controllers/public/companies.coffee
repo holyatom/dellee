@@ -3,11 +3,11 @@ PublicController = require('server/base/public_controller')
 Subscription = require('server/models/subscription')
 
 
-class ShopsController extends PublicController
-  logPrefix: '[shops controller]'
-  urlPrefix: '/shops'
+class CompaniesController extends PublicController
+  logPrefix: '[companies controller]'
+  urlPrefix: '/companies'
 
-  Model: require('server/models/shop')
+  Model: require('server/models/company')
 
   actions: ['list']
   auth: true
@@ -17,15 +17,15 @@ class ShopsController extends PublicController
   mapList: (req, res, next, data) ->
     filters =
       customer: req.user._id
-      shop: $in: _.pluck(data.collection, '_id')
+      company: $in: _.pluck(data.collection, '_id')
 
     Subscription.find(filters).lean().exec (err, docs) =>
       return next(err) if err
 
-      shopsIds = _.indexBy(docs, 'shop')
-      item.is_followed = !!shopsIds[item._id] for item in data.collection
+      companiesIds = _.indexBy(docs, 'company')
+      item.is_followed = !!companiesIds[item._id] for item in data.collection
 
       res.json(data)
 
 
-module.exports = new ShopsController()
+module.exports = new CompaniesController()

@@ -12,19 +12,19 @@ class UsersController extends AdminController
   actions: ['create', 'list', 'get', 'delete', 'update']
 
   listFields: ['_id', 'username', 'role', 'created']
-  updateFields: ['username', 'role', 'shop']
+  updateFields: ['username', 'role', 'company']
   joins:
-    shop: ['_id', 'name', 'slug']
+    company: ['_id', 'name', 'slug']
 
   create: (req, res, next) ->
     @Model.findOne(username: req.body.username).exec (err, doc) =>
       return next(err) if err
       return @error(res, 'user_exist', 409) if doc
 
-      if req.body.role is 'shopadmin'
-        return @error(res, shop: 'required') unless req.body.shop?
+      if req.body.role is 'company_user'
+        return @error(res, company: 'required') unless req.body.company?
       else
-        delete req.body.shop
+        delete req.body.company
 
       super(req, res, next)
 
@@ -32,11 +32,11 @@ class UsersController extends AdminController
   UsersController::create.roles = ['admin']
 
   update: (req, res, next) ->
-    if req.body.role is 'shopadmin'
-      return @error(res, shop: 'required') unless req.body.shop?
+    if req.body.role is 'company_user'
+      return @error(res, company: 'required') unless req.body.company?
     else
-      delete req.body.shop
-      req.modelDoc.shop = null
+      delete req.body.company
+      req.modelDoc.company = null
 
     super
 

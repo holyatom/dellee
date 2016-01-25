@@ -1,17 +1,17 @@
 React = require('react')
 Controller = require('app/base/controller')
 SubscriptionsView = require('./subscriptions_view')
-ShopsCollection = require('./shops_collection')
+CompaniesCollection = require('./companies_collection')
 
 
 module.exports = class SubscriptionsControlller extends Controller
   index: (ctx, done) ->
-    shopsCollection = new ShopsCollection()
-    @xhrs.shops = shopsCollection.fetch()
+    companies = new CompaniesCollection()
+    @xhrs.companies = companies.fetch()
 
-    @xhrs.shops.then =>
+    @xhrs.companies.then =>
       data =
-        shops: shopsCollection.toJSON()
+        companies: companies.toJSON()
 
       @renderView(<SubscriptionsView data={data} />, done)
 

@@ -11,9 +11,9 @@ schema = Schema(
     required: v.required()
     set: setters.objectId
 
-  shop:
+  company:
     type: mongoose.Schema.Types.ObjectId
-    ref: 'Shop'
+    ref: 'Company'
     set: setters.objectId
     required: v.required()
 

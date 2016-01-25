@@ -5,7 +5,7 @@ Schema = require('../base/schema')
 
 
 schema = Schema(
-  shop_name:
+  company_name:
     type: String
     required: v.required()
     validate: [v.minLength(2)]
@@ -51,4 +51,4 @@ schema = Schema(
     type: Date
 )
 
-module.exports = mongoose.model('ShopApplication', schema)
+module.exports = mongoose.model('CompanyApplication', schema)

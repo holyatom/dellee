@@ -59,7 +59,7 @@ module.exports = class RegisterCompanyView extends ModelForm
                 <div className="form-group">
                   <label htmlFor="inputName" className="col-md-3 control-label">Название компании*</label>
                   <div className="col-md-9">
-                    <input name="shop_name" valueLink={@stateLink('model.shop_name')} type="text" className="form-control" id="inputName" placeholder="Dellee" />
+                    <input name="company_name" valueLink={@stateLink('model.company_name')} type="text" className="form-control" id="inputName" placeholder="Dellee" />
                     <div className="help-block with-errors"></div>
                   </div>
                 </div>
@@ -80,7 +80,7 @@ module.exports = class RegisterCompanyView extends ModelForm
                 <div className="form-group">
                   <label htmlFor="inputEmail" className="col-md-3 control-label">E-mail*</label>
                   <div className="col-md-9">
-                    <input name="contacts.email" valueLink={@stateLink('model.contacts.email')} type="text" className="form-control" id="inputEmail" placeholder="shop@mail.com" />
+                    <input name="contacts.email" valueLink={@stateLink('model.contacts.email')} type="text" className="form-control" id="inputEmail" placeholder="company@mail.com" />
                     <div className="help-block with-errors"></div>
                   </div>
                 </div>

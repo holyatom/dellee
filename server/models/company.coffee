@@ -25,4 +25,4 @@ schema = Schema(
     type: Date
 )
 
-module.exports = mongoose.model('Shop', schema)
+module.exports = mongoose.model('Company', schema)
