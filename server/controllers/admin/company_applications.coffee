@@ -13,7 +13,7 @@ class CompanyApplicationsController extends AdminController
   actions: ['create', 'list', 'get', 'update']
 
   listFields: ['_id', 'company_name', 'is_replied', 'status', 'created']
-  updateFields: ['is_replied']
+  updateFields: ['is_replied', 'notes']
 
   create: (req, res, next) ->
     req.body.status = 'new'

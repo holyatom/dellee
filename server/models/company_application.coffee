@@ -48,6 +48,10 @@ schema = Schema(
     type: Boolean
     default: false
 
+  notes:
+    type: String
+    text: true
+
   created:
     type: Date
 

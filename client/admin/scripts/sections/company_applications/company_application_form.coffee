@@ -24,7 +24,7 @@ module.exports = class CompanyApplicationView extends ModelForm
           <h3 className="col-xs-6 col-md-8">{@title()}</h3>
         </div>
       </header>
-      <section className="c-model_form form-horizontal">
+      <form className="c-model_form form-horizontal" onSubmit={@handleSubmit}>
         <div className="form-group">
           <label className="col-sm-3 control-label">Статус</label>
           <div className="col-sm-9">
@@ -77,5 +77,18 @@ module.exports = class CompanyApplicationView extends ModelForm
             </div>
           </div>
         </div>
-      </section>
+
+        <div className="form-group">
+          <label htmlForm="inputNotes" className="col-md-3 control-label">Заметки</label>
+          <div className="col-md-9">
+            <textarea name="notes" rows="5" valueLink={@stateLink('model.notes')} type="text" className="form-control" id="inputNotes" />
+            <span className="help-block with-errors"></span>
+          </div>
+        </div>
+
+        <FormStatus {...@state} />
+        <div className="form-buttons">
+          <button type="submit" className="btn btn-primary" disabled={@state.isLocked}>Сохранить</button>
+        </div>
+      </form>
     </Layout>
