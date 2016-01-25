@@ -40,7 +40,7 @@ class SalesController extends AdminController
     'rejected': ['pending']
 
   get: (req, res, next) ->
-    if not req.modelDoc.company.equals(req.adminUser.company)  and req.adminUser.role is 'company_user'
+    if not req.modelDoc.company.equals(req.adminUser.company) and req.adminUser.role is 'company_user'
       return @notFound(res)
 
     super

@@ -20,6 +20,7 @@ schema = Schema(
   company:
     type: mongoose.Schema.Types.ObjectId
     ref: 'Company'
+    required: v.required()
     set: setters.objectId
 
   start_date:

@@ -10,11 +10,13 @@ module.exports = class ErrorView extends Component
     <div className="p-error layout">
       <div className="l-top"></div>
       <div>
-        <h1>500</h1>
+        <div className="container text-center">
+          <h1>500</h1>
           <h2>Ошибка сервера</h2>
           <p>
             <a href="/admin">На главную</a>
           </p>
+        </div>
       </div>
       <div className="l-bottom"></div>
       <Footer />
