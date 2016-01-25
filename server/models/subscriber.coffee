@@ -10,6 +10,9 @@ schema = Schema(
     unique: true
     validate: [v.email()]
     trim: true
+
+  created:
+    type: Date
 )
 
 module.exports = mongoose.model('Subscriber', schema)

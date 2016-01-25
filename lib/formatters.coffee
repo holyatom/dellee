@@ -5,6 +5,9 @@ module.exports =
   date: (val) ->
     moment(val).format('DD MMM YYYY')
 
+  timeAgo: (val) ->
+    moment(val).fromNow()
+
   saleStatus: (val) ->
     if val is 'pending'
       "<span class=\"label label-warning\">В очереди</span>"

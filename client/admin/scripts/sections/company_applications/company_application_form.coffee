@@ -8,6 +8,10 @@ formatters = require('lib/formatters')
 module.exports = class CompanyApplicationView extends ModelForm
   title: -> 'Заявка компании'
 
+  handleIsRepliedChange: (event) =>
+    @state.model.is_replied = !@state.model.is_replied
+    @saveModel()
+
   render: ->
     <Layout>
       <ul className="breadcrumb">
@@ -60,6 +64,17 @@ module.exports = class CompanyApplicationView extends ModelForm
           <label className="col-sm-3 control-label">Дополнительно</label>
           <div className="col-sm-9">
             <p className="form-control-static">{ if additional = @state.model.additional then additional else <span className="text-muted">Не указано</span> }</p>
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label className="col-md-3 control-label">Операции</label>
+          <div className="col-md-9">
+            <div className="checkbox">
+              <label>
+                <input name="is_replied" onChange={@handleIsRepliedChange} checked={@state.model.is_replied} type="checkbox" /> Компании ответили
+              </label>
+            </div>
           </div>
         </div>
       </section>

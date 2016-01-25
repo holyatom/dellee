@@ -8,6 +8,8 @@ class SubscribersController extends AdminController
   auth: true
   roles: ['admin']
 
+  DEFAULT_ORDER: '-created'
+
   Model: require('server/models/subscriber')
 
   actions: ['list']

@@ -44,6 +44,10 @@ schema = Schema(
     required: v.required()
     enum: v.enum(['new', 'processed'])
 
+  is_replied:
+    type: Boolean
+    default: false
+
   created:
     type: Date
 

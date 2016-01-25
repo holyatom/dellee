@@ -13,6 +13,8 @@ class SalesController extends AdminController
   auth: true
   roles: ['admin', 'company_user', 'moderator']
 
+  DEFAULT_ORDER: '-created'
+
   Model: require('server/models/sale')
 
   actions: ['create', 'list', 'get', 'update', 'delete']

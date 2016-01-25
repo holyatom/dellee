@@ -6,11 +6,14 @@ class CompanyApplicationsController extends AdminController
   logPrefix: '[admin company applications controller]'
   urlPrefix: '/company-applications'
 
+  DEFAULT_ORDER: 'is_replied created'
+
   Model: require('server/models/company_application')
 
-  actions: ['create', 'list', 'get']
+  actions: ['create', 'list', 'get', 'update']
 
-  listFields: ['_id', 'company_name', 'status', 'created']
+  listFields: ['_id', 'company_name', 'is_replied', 'status', 'created']
+  updateFields: ['is_replied']
 
   create: (req, res, next) ->
     req.body.status = 'new'

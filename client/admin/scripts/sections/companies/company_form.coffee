@@ -14,6 +14,9 @@ module.exports = class CompanyView extends ModelForm
   componentWillUpdate: ->
     @state.model.slug = utils.slugify(@state.model.name)
 
+  handleImageChange: =>
+    @saveModel() if @state.model._id
+
   render: ->
     <Layout>
       <ul className="breadcrumb">
@@ -57,7 +60,7 @@ module.exports = class CompanyView extends ModelForm
         <div className="form-group">
           <label className="col-md-3 control-label">Лого</label>
           <div className="col-md-9">
-            <FileUploader ref="uploader" onChange={@saveModel} accept="image/*" valueLink={@stateLink('model.logo_url')} section="images/companies" />
+            <FileUploader ref="uploader" onChange={@handleImageChange} accept="image/*" valueLink={@stateLink('model.logo_url')} section="images/companies" />
           </div>
         </div>
 

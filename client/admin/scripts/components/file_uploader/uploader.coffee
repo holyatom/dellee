@@ -13,7 +13,8 @@ defaultOptions =
   dictInvalidFileType: 'Неверный тип'
   dictFileTooBig: 'Макс. размер'
   dictResponseError: 'Ошибка сервера'
-  dictCancelUploadConfirmation: 'Вы уверены что хотите удалить файл?'
+  dictCancelUploadConfirmation: 'Вы уверены что хотите прервать загрузку?'
+  dictRemoveFileConfirmation: 'Вы уверены что хотите удалить файл?'
 
   # headers:
   #   'Cache-Control': '' # remove cache control header
