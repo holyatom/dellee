@@ -25,11 +25,12 @@ module.exports = class UserView extends ModelForm
           }
         </div>
       </header>
-      <form className="c-model_form form-horizontal" onSubmit={@handleSubmit}>
+      <form ref="form" className="c-model_form form-horizontal" onSubmit={@handleSubmit}>
         <div className="form-group">
           <label htmlFor="inputUsername" className="col-md-3 control-label">Логин</label>
           <div className="col-md-9">
-            <input valueLink={@stateLink('model.username')} type="text" className="form-control" id="inputUsername" placeholder="логин" />
+            <input name="username" valueLink={@stateLink('model.username')} type="text" className="form-control" id="inputUsername" placeholder="логин" />
+            <div className="help-block with-errors"></div>
           </div>
         </div>
 
@@ -38,7 +39,8 @@ module.exports = class UserView extends ModelForm
             <div className="form-group">
               <label htmlFor="inputPassword" className="col-md-3 control-label">Пароль</label>
               <div className="col-md-9">
-                <input valueLink={@stateLink('model.password')} type="password" className="form-control" id="inputPassword" placeholder="пароль" />
+                <input name="password" valueLink={@stateLink('model.password')} type="password" className="form-control" id="inputPassword" placeholder="пароль" />
+                <div className="help-block with-errors"></div>
               </div>
             </div>
         }
@@ -46,12 +48,13 @@ module.exports = class UserView extends ModelForm
         <div className="form-group">
           <label htmlFor="inputRole" className="col-md-3 control-label">Роль</label>
           <div className="col-md-9">
-            <select valueLink={@stateLink('model.role')} className="form-control" id="inputRole">
+            <select name="role" valueLink={@stateLink('model.role')} className="form-control" id="inputRole">
               <option value="">Выберите роль</option>
               <option value="admin">Админ</option>
               <option value="moderator">Модератор</option>
               <option value="company_user">Пользователь компании</option>
             </select>
+            <div className="help-block with-errors"></div>
           </div>
         </div>
 
@@ -60,12 +63,13 @@ module.exports = class UserView extends ModelForm
             <div className="form-group">
               <label htmlFor="inputCompany" className="col-md-3 control-label">Компания</label>
               <div className="col-md-9">
-                <select valueLink={@stateLink('model.company._id')} className="form-control" id="inputCompany">
+                <select name="company" valueLink={@stateLink('model.company._id')} className="form-control" id="inputCompany">
                   <option value="">Выберите компанию</option>
                   {companies.collection.map((company, index) ->
                     <option key={index} value={company._id}>{company.name}</option>
                   )}
                 </select>
+                <div className="help-block with-errors"></div>
               </div>
             </div>
         }

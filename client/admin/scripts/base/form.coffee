@@ -48,6 +48,7 @@ module.exports = class Form extends Component
     if error = xhr.responseJSON?.error
       if (fields = error.fields) and @$form
         @showInputError(key, value) for key, value of fields
+        @setState(success: false, error: false)
         return
       else
         message = error.message or message
