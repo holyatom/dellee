@@ -6,13 +6,13 @@ Sale = require('server/models/sale')
 File =require('server/models/file')
 
 
-class ShopsController extends AdminController
-  logPrefix: '[admin shops controller]'
-  urlPrefix: '/shops'
+class CompaniesController extends AdminController
+  logPrefix: '[admin companies controller]'
+  urlPrefix: '/companies'
 
   auth: true
 
-  Model: require('server/models/shop')
+  Model: require('server/models/company')
 
   actions: ['create', 'list', 'get', 'delete', 'update']
 
@@ -20,7 +20,7 @@ class ShopsController extends AdminController
   updateFields: ['name', 'slug', 'logo_url']
 
   list: -> super
-  ShopsController::list.roles = ['admin']
+  CompaniesController::list.roles = ['admin']
 
   get: (req, res, next) ->
     unless @canViewAndEdit(req)
@@ -28,13 +28,13 @@ class ShopsController extends AdminController
 
     super
 
-  ShopsController::get.url = '/:id'
+  CompaniesController::get.url = '/:id'
 
 
   create: -> super
 
-  ShopsController::create.type = 'post'
-  ShopsController::create.roles = ['admin']
+  CompaniesController::create.type = 'post'
+  CompaniesController::create.roles = ['admin']
 
 
   update: (req, res, next) ->
@@ -43,23 +43,23 @@ class ShopsController extends AdminController
 
     super
 
-  ShopsController::update.type = 'put'
-  ShopsController::update.url = '/:id'
+  CompaniesController::update.type = 'put'
+  CompaniesController::update.url = '/:id'
 
 
   delete: (req, res, next) ->
     Q.all([
-      User.remove(shop: req.modelDoc._id)
-      Sale.remove(shop: req.modelDoc._id)
+      User.remove(company: req.modelDoc._id)
+      Sale.remove(company: req.modelDoc._id)
     ])
     .then =>
       super(req, res, next)
     .fail (err) ->
       next(err)
 
-  ShopsController::delete.type = 'delete'
-  ShopsController::delete.url = '/:id'
-  ShopsController::delete.roles = ['admin']
+  CompaniesController::delete.type = 'delete'
+  CompaniesController::delete.url = '/:id'
+  CompaniesController::delete.roles = ['admin']
 
 
   mapDoc: (req, res, next) ->
@@ -73,6 +73,6 @@ class ShopsController extends AdminController
 
 
   canViewAndEdit: (req) ->
-    (req.adminUser.role is 'shopadmin' and req.adminUser.shop.equals(req.params.id)) or req.adminUser.role is 'admin'
+    (req.adminUser.role is 'companyadmin' and req.adminUser.company.equals(req.params.id)) or req.adminUser.role is 'admin'
 
-module.exports = new ShopsController()
+module.exports = new CompaniesController()

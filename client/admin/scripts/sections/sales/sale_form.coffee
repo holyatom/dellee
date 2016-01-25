@@ -48,7 +48,7 @@ module.exports = class SaleView extends Form
         <div className="form-group">
           <label className="col-sm-3 control-label">Магазин</label>
           <div className="col-sm-9">
-            <p className="form-control-static">{ @state.model.shop?.name }</p>
+            <p className="form-control-static">{ @state.model.company?.name }</p>
           </div>
         </div>
 

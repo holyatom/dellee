@@ -5,7 +5,7 @@ vent = require('admin/modules/vent')
 module.exports = class RegisterCompanyController extends CrudController
   controllerRoot: '/register-company'
 
-  Model: require('../shop_applications/shop_application_model')
+  Model: require('../company_applications/company_application_model')
   FormView: require('./register_company_form')
 
   saveModel: (data) =>

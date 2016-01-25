@@ -23,8 +23,8 @@ module.exports = class HomeView extends Form
     event.preventDefault()
     @trigger('save', @state.model)
 
-  scrollToCreateShop: =>
-    vent.trigger('scroll', target: '#shop-create', duration: 500)
+  scrollToCompanyRegistration: =>
+    vent.trigger('scroll', target: '#register-company', duration: 500)
 
   scrollToSubscribeForm: =>
     vent.trigger('scroll', {target: '#early-access', duration: 500}, => @$emailInput.focus())
@@ -44,7 +44,7 @@ module.exports = class HomeView extends Form
               <span className="ui-btn ui-btn_default ui-btn_large" onClick={@scrollToSubscribeForm}>подпишись на запуск</span>
             </div>
             <div className="p-h-t-arrow">
-              <button className="ui-btn" onClick={@scrollToCreateShop}>
+              <button className="ui-btn" onClick={@scrollToCompanyRegistration}>
                 <span>компаниям</span>
                 <i className="icon-arrowdown"></i>
               </button>
@@ -123,17 +123,17 @@ module.exports = class HomeView extends Form
             </div>
           </div>
         </section>
-        <section className="p-h-create_shop" id="shop-create">
+        <section className="p-h-register_company" id="register-company">
           <div className="container">
             <figure>
               <i className="icon-agreement"></i>
             </figure>
             <h2>Бесплатная Регистрация Компаний</h2>
             <h3>мы предоставляем всем компаниям бесплатный аккаунт для оповещения пользователей о новостях и событиях</h3>
-            <div className="p-h-cs-link">
+            <div className="p-h-rc-link">
               <a target="_self" href="/admin/register-company" className="ui-btn ui-btn_large">регистрация компании</a>
             </div>
-            <div className="p-h-cs-help_message">
+            <div className="p-h-rc-help_message">
               Хотите связаться с нами лично? Перейдите на <a href="/contacts">страницу контактов</a>
             </div>
           </div>

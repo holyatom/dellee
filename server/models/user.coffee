@@ -22,11 +22,11 @@ schema = Schema(
   role:
     type: String
     required: v.required()
-    enum: v.enum(['admin', 'moderator', 'shopadmin'])
+    enum: v.enum(['admin', 'moderator', 'companyadmin'])
 
-  shop:
+  company:
     type: mongoose.Schema.Types.ObjectId
-    ref: 'Shop'
+    ref: 'Company'
     set: setters.objectId
 
   created:

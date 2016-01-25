@@ -2,7 +2,7 @@ React = require('react')
 Component = require('app/base/component')
 { Footer } = require('app/components')
 profile = require('app/modules/profile')
-ShopCard = require('./shop_card')
+CompanyCard = require('./company_card')
 
 
 module.exports = class SubscriptionsView extends Component
@@ -15,9 +15,9 @@ module.exports = class SubscriptionsView extends Component
           <h1>Dellee <button onClick={-> profile.logout()}>Выход</button></h1>
           <h2>Подписки</h2>
           <ul>
-            {@props.data.shops.collection.map((shop, index) =>
+            {@props.data.companies.collection.map((company, index) =>
               <li key={index}>
-                <ShopCard shop={shop} />
+                <CompanyCard company={company} />
               </li>
             )}
           </ul>

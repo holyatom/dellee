@@ -3,15 +3,15 @@ Form = require('app/base/form')
 SubscriptionModel = require('./subscription_model')
 
 
-module.exports = class ShopCard extends Form
+module.exports = class CompanyCard extends Form
   initState: (props) ->
-    is_followed: props.shop.is_followed
+    is_followed: props.company.is_followed
 
   subscribe: =>
     return if @state.isLocked
 
     model = new SubscriptionModel()
-    model.shopId = @props.shop._id
+    model.companyId = @props.company._id
 
     @lockForm()
     model.save().then =>
@@ -23,7 +23,7 @@ module.exports = class ShopCard extends Form
     return if @state.isLocked
 
     model = new SubscriptionModel()
-    model.shopId = @props.shop._id
+    model.companyId = @props.company._id
 
     @lockForm()
     model.destroy().then =>
@@ -33,7 +33,7 @@ module.exports = class ShopCard extends Form
 
   render: ->
     <div>
-      <h4>{ @props.shop.name }</h4>
+      <h4>{ @props.company.name }</h4>
       {
         unless @state.is_followed
           <button onClick={@subscribe} disabled={@state.isLocked}>Подписаться</button>

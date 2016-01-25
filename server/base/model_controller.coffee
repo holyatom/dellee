@@ -87,8 +87,11 @@ module.exports = class ModelController extends Controller
     req.oldDoc = new @Model(req.modelDoc.toObject())
 
     fields = @getUpdateFields(req)
-    req.modelDoc.set(fields)
 
+    for key, field of fields when key.indexOf('url') >= 0
+      File.deleteByUrl(req.modelDoc[key]) if req.modelDoc[key] and req.modelDoc[key] isnt field
+
+    req.modelDoc.set(fields)
     req.modelDoc.validate (err) =>
       return @error(res, err.errors) if err
 
@@ -164,13 +167,7 @@ module.exports = class ModelController extends Controller
       query.populate(name, fields.join(' '))
 
   getUpdateFields: (req) ->
-    fields = _.pick(req.body, @updateFields)
-
-    for key, field of fields
-      if key.indexOf('url') >= 0
-        File.deleteByUrl(req.modelDoc[key]) if req.modelDoc[key] and req.modelDoc[key] isnt field
-
-    fields
+    _.pick(req.body, @updateFields)
 
   getListOptions: (req) ->
     opts =

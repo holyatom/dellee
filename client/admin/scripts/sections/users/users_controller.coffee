@@ -1,6 +1,6 @@
 React = require('react')
 CrudController = require('admin/base/crud_controller')
-ShopsCollection = require('../shops/shops_collection')
+CompaniesCollection = require('../companies/companies_collection')
 
 
 module.exports = class UsersController extends CrudController
@@ -14,13 +14,13 @@ module.exports = class UsersController extends CrudController
 
   extraData: (method) ->
     if method in ['edit', 'create']
-      shops: @shopsCollection.toJSON()
+      companies: @companies.toJSON()
     else
       super
 
   fetchExtraData: (method) ->
     if method in ['edit', 'create']
-      @shopsCollection = new ShopsCollection()
-      @xhrs.shops = @shopsCollection.fetch()
+      @companies = new CompaniesCollection()
+      @xhrs.companies = @companies.fetch()
     else
       super

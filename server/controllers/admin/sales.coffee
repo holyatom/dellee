@@ -11,7 +11,7 @@ class SalesController extends AdminController
   urlPrefix: '/sales'
 
   auth: true
-  roles: ['admin', 'shopadmin', 'moderator']
+  roles: ['admin', 'companyadmin', 'moderator']
 
   Model: require('server/models/sale')
 
@@ -20,14 +20,14 @@ class SalesController extends AdminController
   listFields: ['_id', 'title', 'start_date', 'end_date', 'status']
   updateFields: ['title', 'start_date', 'end_date', 'message', 'status', 'status_message']
   joins:
-    shop: ['_id', 'name', 'slug']
+    company: ['_id', 'name', 'slug']
 
-  SHOP_AVAILABEL_STATUES: [
+  COMPANY_AVAILABLE_STATUSES_TO_TRANSFER: [
     'new'
     'pending'
   ]
 
-  SHOP_UPDATE_STATUES: [
+  COMPANY_AVAILABLE_STATUSES_TO_UPDATE: [
     'new'
     'rejected'
   ]
@@ -38,7 +38,7 @@ class SalesController extends AdminController
     'rejected': ['pending']
 
   get: (req, res, next) ->
-    if not req.modelDoc.shop.equals(req.adminUser.shop)  and req.adminUser.role is 'shopadmin'
+    if not req.modelDoc.company.equals(req.adminUser.company)  and req.adminUser.role is 'companyadmin'
       return @notFound(res)
 
     super
@@ -46,9 +46,9 @@ class SalesController extends AdminController
   SalesController::get.url = '/:id'
 
   create: (req, res, next) ->
-    return @error(res, status: 'invalid_sale_status') unless req.body.status in @SHOP_AVAILABEL_STATUES
+    return @error(res, status: 'invalid_sale_status') unless req.body.status in @COMPANY_AVAILABLE_STATUSES_TO_TRANSFER
 
-    req.body.shop = req.adminUser.shop if req.adminUser.role is 'shopadmin'
+    req.body.company = req.adminUser.company if req.adminUser.role is 'companyadmin'
     super
 
   SalesController::create.type = 'post'
@@ -56,9 +56,9 @@ class SalesController extends AdminController
   update: (req, res, next) ->
     { status } = req.body
 
-    if req.adminUser.role is 'shopadmin'
-      return @error(res, 'can_not_update_sale') unless req.modelDoc.status in @SHOP_UPDATE_STATUES
-      return @error(res, status: 'invalid_sale_status') if status and status not in @SHOP_AVAILABEL_STATUES
+    if req.adminUser.role is 'companyadmin'
+      return @error(res, 'can_not_update_sale') unless req.modelDoc.status in @COMPANY_AVAILABLE_STATUSES_TO_UPDATE
+      return @error(res, status: 'invalid_sale_status') if status and status not in @COMPANY_AVAILABLE_STATUSES_TO_TRANSFER
 
     if status and status isnt req.modelDoc.status
       availableStatuses = @STATUSES_MAP[req.modelDoc.status] or []
@@ -71,7 +71,7 @@ class SalesController extends AdminController
 
   getListOptions: (req) ->
     opts = super
-    opts.filters.shop = req.adminUser.shop if req.adminUser.role is 'shopadmin'
+    opts.filters.company = req.adminUser.company if req.adminUser.role is 'companyadmin'
 
     opts
 
@@ -85,7 +85,7 @@ class SalesController extends AdminController
       return unless verifiedCustomers.length
 
       query = Subscription
-        .find(shop: sale.shop, customer: $in: _.pluck(verifiedCustomers, '_id'))
+        .find(company: sale.company, customer: $in: _.pluck(verifiedCustomers, '_id'))
         .populate('customer')
         .lean()
 

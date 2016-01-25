@@ -36,9 +36,9 @@ module.exports = class Router extends BaseRouter
     @route('/admin/users/create', @requireRole('admin'), 'users.create')
     @route('/admin/users/:id', @requireRole('admin'), 'users.edit')
 
-    @route('/admin/shops', @requireRole('admin'), 'shops.index')
-    @route('/admin/shops/create', @requireRole('admin'), 'shops.create')
-    @route('/admin/shops/:id', @requireRole('shopadmin'), 'shops.edit')
+    @route('/admin/companies', @requireRole('admin'), 'companies.index')
+    @route('/admin/companies/create', @requireRole('admin'), 'companies.create')
+    @route('/admin/companies/:id', @requireRole('companyadmin'), 'companies.edit')
 
     @route('/admin/customers', @requireRole('admin'), 'customers.index')
     @route('/admin/customers/create', @requireRole('admin'), 'customers.create')
@@ -51,13 +51,13 @@ module.exports = class Router extends BaseRouter
     @route('/admin/sales/create', @requireRole('moderator'), 'sales.create')
     @route('/admin/sales/:id', @requireRole('moderator'), 'sales.edit')
 
-    @route('/admin/shop-applications', @requireRole('moderator'), 'shop_applications.index')
-    @route('/admin/shop-applications/:id', @requireRole('moderator'), 'shop_applications.edit')
+    @route('/admin/company-applications', @requireRole('moderator'), 'company_applications.index')
+    @route('/admin/company-applications/:id', @requireRole('moderator'), 'company_applications.edit')
 
-    # Shop admin
-    @route('/admin/shop-sales', @requireRole('shopadmin', strict: true), 'shop_sales.index')
-    @route('/admin/shop-sales/create', @requireRole('shopadmin', strict: true), 'shop_sales.create')
-    @route('/admin/shop-sales/:id', @requireRole('shopadmin', strict: true), 'shop_sales.edit')
+    # company admin
+    @route('/admin/company-sales', @requireRole('companyadmin', strict: true), 'company_sales.index')
+    @route('/admin/company-sales/create', @requireRole('companyadmin', strict: true), 'company_sales.create')
+    @route('/admin/company-sales/:id', @requireRole('companyadmin', strict: true), 'company_sales.edit')
 
     @route('/admin/*', 'error.notFound')
 
@@ -67,10 +67,10 @@ if process.browser
     dashboard: require('./sections/dashboard/dashboard_controller')
     error: require('./sections/error/error_controller')
     users: require('./sections/users/users_controller')
-    shops: require('./sections/shops/shops_controller')
-    shop_sales: require('./sections/shop_sales/sales_controller')
+    companies: require('./sections/companies/companies_controller')
+    company_sales: require('./sections/company_sales/company_sales_controller')
     sales: require('./sections/sales/sales_controller')
     customers: require('./sections/customers/customers_controller')
     subscribers: require('./sections/subscribers/subscribers_controller')
     register_company: require('./sections/register_company/register_company_controller')
-    shop_applications: require('./sections/shop_applications/shop_applications_controller')
+    company_applications: require('./sections/company_applications/company_applications_controller')
