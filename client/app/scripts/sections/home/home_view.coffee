@@ -38,7 +38,7 @@ module.exports = class HomeView extends Form
               <h1 className="ui-logo">Dellee<span className="ui-l-beta_label"></span></h1>
             </a>
             <h2>Личный Менеджер Подписок</h2>
-            <h3>будь в курсе акций и новостей любимых заведений твоего города</h3>
+            <h3>Будь в курсе акций и новостей любимых заведений твоего города</h3>
             <div className="p-h-t-divider"></div>
             <div className="p-h-t-link">
               <span className="ui-btn ui-btn_default ui-btn_large" onClick={@scrollToSubscribeForm}>подпишись на запуск</span>
@@ -129,7 +129,7 @@ module.exports = class HomeView extends Form
               <i className="icon-agreement"></i>
             </figure>
             <h2>Бесплатная Регистрация Компаний</h2>
-            <h3>мы предоставляем всем компаниям бесплатный аккаунт для оповещения пользователей о новостях и событиях</h3>
+            <h3>Мы предоставляем всем компаниям бесплатный аккаунт для оповещения пользователей о новостях и событиях</h3>
             <div className="p-h-rc-link">
               <a target="_self" href="/admin/register-company" className="ui-btn ui-btn_large">регистрация компании</a>
             </div>
