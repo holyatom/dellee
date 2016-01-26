@@ -89,6 +89,7 @@ class Server
       extname: '.hbs'
       defaultLayout: 'layout'
       layoutsDir: "#{__dirname}/../views"
+      partialsDir: "#{__dirname}/../views/partials"
       helpers: _.extend({}, require('lib/assets'))
     ))
 

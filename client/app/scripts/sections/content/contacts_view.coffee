@@ -10,7 +10,7 @@ module.exports = class ContactsView extends Сomponent
   render: ->
     <Content>
       <div className="container">
-        <h2>Контакты</h2>
+        <h1>Контакты</h1>
         <p>
           Есть вопросы или пожелания? Напишите нам на <a href={"mailto:#{config.contacts.email}"}>{config.contacts.email}</a> и мы ответим Вам быстрее, чем Вы успеете произнести Dellee!
         </p>

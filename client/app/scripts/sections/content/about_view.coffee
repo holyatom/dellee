@@ -7,11 +7,30 @@ module.exports = class AboutView extends Сomponent
   title: -> 'О проекте • Dellee'
 
   render: ->
-    <Content>
+    <Content className="p-about">
       <div className="container">
-        <h2>О проекте</h2>
-        <p>Fusce sit amet purus a tellus porttitor sollicitudin eu in risus. In hac habitasse platea dictumst. Aenean at tortor interdum, dignissim libero eu, ultricies nisl. Etiam fringilla odio at ligula faucibus ultrices. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla gravida aliquam euismod. Donec maximus condimentum volutpat. Etiam malesuada, nisl ut placerat accumsan, leo est gravida nisl, in laoreet eros enim sit amet libero. Nunc in felis dolor. Nulla purus purus, egestas a arcu vitae, interdum blandit lectus. Sed dignissim, felis sit amet tristique auctor, ipsum enim auctor mauris, egestas sodales libero mi nec tortor. Maecenas in eleifend leo.</p>
-        <p>Nulla condimentum risus sit amet turpis tincidunt cursus. Morbi nec mi ex. Ut non nisl nec elit sagittis hendrerit. Suspendisse imperdiet felis a urna lacinia venenatis. Vivamus id mi quis mi commodo euismod. Aliquam at eleifend tellus. Ut tincidunt augue enim.</p>
+        <header>
+          <h1>Dellee</h1>
+          <h2>Первый сервис подписок</h2>
+        </header>
+        <p>Идея создания сервиса подписок Dellee появилась тогда, когда мы заметили, что существующие способы следить за новостями любимых заведений не всегда удобны и эффективны. Для того, чтобы быть в курсе событий, нам нужно проверять страницы в социальных сетях, сайты заведений, либо же оставлять свои данные для рассылки новостей. И не редко получается, что узнаем об акции любимого магазина или спец-предложении модного ресторана, когда событие подошло к концу или давно завершилось (:</p>
+
+        <h2>Почему вам нужен Dellee?</h2>
+        <p>Dellee - это сервис, на котором вы сможете получить доступ к заведениям города в одной базе данных, легко находить ваши любимые и подписываться на их новости (внимание) одним кликом! Далее, в своем аккаунте выбирайте удобный способ получения оповещений, sms или e-mail, и, voilà, все интересные и актуальные новости находят вас сами!</p>
+        <p>С Dellee вы перестанете засорять свой телефон или e-mail, ведь все новости будут приходить одним сообщением <strong>от одного адресанта Dellee</strong>. Кроме того, вы сможете <strong>регулировать частоту получения сообщений</strong> (например, раз в день). Сотрудники Dellee также будут проверять содержание всех новостей, поэтому можете быть уверенны, что вы <strong>НЕ будете получать неверную информацию и спам</strong>.</p>
+        <p>С Dellee вы можете легко обновлять контактную информацию в своем аккаунте и поэтому всегда <strong>оставаться на связи</strong> с любимым заведением.</p>
+        <p>Ну а для того, чтобы перестать получать новости какой-либо компании опять же, все, что нужно сделать это <strong>кликнуть “отписаться”</strong>!</p>
+        <p>Большим плюсом Dellee является то, что вы <strong>сохраняете свою приватность</strong>, так как компании не имеют доступ к какой-либо информации своих подписчиков.</p>
+        <p>Dellee станет <strong>личным менеджером всех ваших подписок</strong>, с помощью которого вы не будете пропускать грандиозные акции и крутые события и сможете легко следить за всем новым и интересным в Астане!</p>
+
+        <h2>Почему вашей компании нужен Dellee?</h2>
+        <p>Мы верим в то, что Dellee увеличит число подписчиков, а значит и потенциальных клиентов,  так как вы сможете сообщать новости  не только по списку клиентской базы (зачастую устаревшей), а всем заинтересованным, которые легко будут находить вас сами!</p>
+        <p>Сотрудники Dellee будут проверять содержание текстов, помогать с оформлением сообщений, а также производить sms и e-mail рассылки вместо вас, что сократит ваши расходы и усилия в работе с клиентами.</p>
+        <p>Dellee станет отличным помощником для вашей компании, с которым вы можете быть уверенны, что ваши клиенты и все заинтересованные всегда будут своевременно уведомлены о новостях!</p>
+
+        <h2>Наша миссия</h2>
+        <p>В Dellee наша команда работает на тем, чтобы разрушить барьер между компаниями и клиентами и сделать ваше общение максимально простым и удобным!</p>
+        <p>Мы всегда открыты для предложений по улучшению сервиса.</p>
+        <p>Ну, чего вы ждете? <a href="/#early-access">Подписывайтесь на запуск проекта!</a></p>
       </div>
     </Content>

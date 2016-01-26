@@ -20,7 +20,7 @@ module.exports = class RegisterCompanyView extends ModelForm
             <div className="well">
               <h4 className="text-success"><i className="fa fa-hand-peace-o"></i> Успех!</h4>
               <p>
-                Ваша заявка на регистрацияю компании успешно отправлена! Мы свяжемся с Вами в теченнии  <strong>5 рабочих дней</strong>.
+                Ваша заявка на регистрацияю компании успешно отправлена! Мы свяжемся с Вами в теченнии  <strong>1 рабочего дня</strong>.
               </p>
               <p>
                 Напоминаем, что аккаунт компании будет открыт после запуска проекта, о чем мы уведомим Вас по e-mail.
