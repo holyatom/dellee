@@ -106,7 +106,7 @@ class SalesController extends AdminController
       tasks.sendEmail(
         to: customer.email
         subject: sale.title
-        template: 'sale'
+        template: 'email/sale'
         context:
           message: sale.message
       )

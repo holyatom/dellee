@@ -14,7 +14,7 @@ class SubscribersController extends PublicController
     if not req.oldDoc and req.method is 'POST'
       data =
         to: req.modelDoc.email
-        template: 'welcome'
+        template: 'email/welcome'
         context:
           email: req.modelDoc.email
 

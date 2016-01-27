@@ -7,7 +7,7 @@ config = require('config')
 cache = {}
 
 readTemplate = (name) ->
-  fs.readFileSync("#{__dirname}/../views/mail/#{name}.hbs", encoding: 'utf-8')
+  fs.readFileSync("#{__dirname}/../views/#{name}.hbs", encoding: 'utf-8')
 
 compileTemplate = (name, context = {}) ->
   unless cache[name]
@@ -15,9 +15,9 @@ compileTemplate = (name, context = {}) ->
 
   cache[name](context)
 
-Handlebars.registerPartial('button', readTemplate('partials/button'))
-Handlebars.registerPartial('share', readTemplate('partials/share'))
-Handlebars.registerPartial('contact', readTemplate('partials/contact'))
+Handlebars.registerPartial('button', readTemplate('email/partials/button'))
+Handlebars.registerPartial('share', readTemplate('email/partials/share'))
+Handlebars.registerPartial('contact', readTemplate('email/partials/contact'))
 Handlebars.registerHelper('format_email', (email) ->
   email = email.replace(/\@/g, '<span>@</span>')
   email = email.replace(/\./g, '<span>.</span>')
@@ -25,17 +25,19 @@ Handlebars.registerHelper('format_email', (email) ->
 )
 
 module.exports.render = (template, context) ->
-  context.config = config
+  [type] = template.split('/') if template.indexOf('/') >= 0
 
+  context.config = config
   body = compileTemplate(template, context)
 
-  # get subject from template
-  rows = body.split('\n')
-  subject = rows[0].trim()
-  body = rows[1..].join('\n').trim()
+  if type is 'email'
+    # get subject from template
+    rows = body.split('\n')
+    subject = rows[0].trim()
+    body = rows[1..].join('\n').trim()
 
-  # render layout
-  body = compileTemplate('layout', body: body, config: config)
+    # render layout
+    body = compileTemplate('email/layout', body: body, config: config)
 
   # return
   body: body

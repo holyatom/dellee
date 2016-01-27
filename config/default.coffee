@@ -25,6 +25,13 @@ module.exports =
       key: 'key-e9651b7f70bf011ab5d000e5a01ab8b7'
       domain: 'sandbox60c1d1eb15aa486c999a81aa410ef821.mailgun.org'
 
+  sms:
+    default_from: 'Dellee'
+    nexmo:
+      key: '01943c03'
+      secret: '9c73f5ef'
+      cost: '0.0297'
+
   queue:
     chunk_size: 2 # Number of tasks from queue to be processed per iteration.
     timeout: 1000 # Timeout after each iteration in milliseconds.
