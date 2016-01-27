@@ -40,18 +40,31 @@ class CompanyApplicationsController extends AdminController
 
   mapDoc: (req, res, next) ->
     if not req.oldDoc and req.method is 'POST'
-      data =
-        to: req.modelDoc.contacts.email
-        template: 'welcome_company'
-        context:
-          company: req.modelDoc.toJSON()
-
-      tasks.sendEmail(data, (err) => @log(err, 'red bold') if err)
+      @sendWelcomeEmail(req)
+      @sendWelcomeSms(req) if req.modelDoc.contacts.phonenumber
 
     if req.method is 'POST'
       res.json(success: true)
     else
       super
+
+  sendWelcomeEmail: (req) ->
+    data =
+      to: req.modelDoc.contacts.email
+      template: 'email/welcome_company'
+      context:
+        company: req.modelDoc.toJSON()
+
+    tasks.sendEmail(data, (err) => @log(err, 'red bold') if err)
+
+  sendWelcomeSms: (req) ->
+    data =
+      to: req.modelDoc.contacts.phonenumber
+      template: 'sms/welcome_company'
+      context:
+        company: req.modelDoc.toJSON()
+
+    tasks.sendSms(data, (err) => @log(err, 'red bold') if err)
 
 
 module.exports = new CompanyApplicationsController()

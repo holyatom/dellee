@@ -29,7 +29,7 @@ class CustomersController extends PublicController
 
         data =
           to: req.modelDoc.email
-          template: 'email_verification'
+          template: 'email/email_verification'
           context:
             verificationId: doc._id
             email: req.modelDoc.email
