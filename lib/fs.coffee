@@ -26,6 +26,7 @@ loadDir = (dirname, opts = {}) ->
     {name, extname} = parsePath(file)
     return if name[0] is '_'
 
+    origName = name
     name = _.camelCase(name) if opts.camelCase
     fullpath = path.join(dirname, file)
 
@@ -36,7 +37,7 @@ loadDir = (dirname, opts = {}) ->
       else
         res[name] = loadDir(fullpath, opts)
 
-    return if (opts.onlyExt and extname isnt opts.onlyExt) or name in opts.excludes
+    return if (opts.onlyExt and extname isnt opts.onlyExt) or origName in opts.excludes
 
     if opts.flat
       res.push(require(fullpath))

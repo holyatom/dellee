@@ -5,7 +5,6 @@ class SubscribersController extends AdminController
   logPrefix: '[subscribers controller]'
   urlPrefix: '/subscribers'
 
-  auth: true
   roles: ['admin']
 
   DEFAULT_ORDER: '-created'

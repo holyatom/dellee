@@ -7,7 +7,6 @@ class CustomersController extends AdminController
 
   Model: require('server/models/customer')
 
-  auth: true
   roles: ['admin']
 
   actions: ['list', 'get', 'update', 'delete', 'create']

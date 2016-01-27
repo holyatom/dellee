@@ -1,2 +1,2 @@
 require('coffee-script/register');
-require('server/tasks');
+require('server/tasks/dispatch_queue');

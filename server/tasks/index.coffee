@@ -1,4 +1,2 @@
-database = require('lib/database')
-dispatchQueue = require('./dispatch_queue')
-
-database -> dispatchQueue.run()
+module.exports =
+  sendEmail: require('./send_email').task

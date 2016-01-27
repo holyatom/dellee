@@ -22,6 +22,12 @@ module.exports = class CompanyApplicationView extends ModelForm
       <header className="page-header">
         <div className="row">
           <h3 className="col-xs-6 col-md-8">{@title()}</h3>
+          {
+            if @state.model._id
+              <div className="col-xs-6 col-md-4 text-right">
+                <button onClick={@handleDelete} className="btn btn-danger">Удалить</button>
+              </div>
+          }
         </div>
       </header>
       <form className="c-model_form form-horizontal" onSubmit={@handleSubmit}>

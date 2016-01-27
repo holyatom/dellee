@@ -3,6 +3,7 @@ config = require('config')
 async = require('async')
 log = require('lib/logger').bind(logPrefix: '[dispatch queue]')
 Queue = require('../models/queue')
+database = require('lib/database')
 
 
 failTask = (err, task, callback) ->
@@ -42,4 +43,4 @@ run = ->
     config.queue.timeout
   )
 
-module.exports = { run }
+database -> run()

@@ -11,20 +11,19 @@ transport = nodemailer.createTransport(mg(
     domain: config.mail.mailgun.domain
 ))
 
-module.exports =
-  run: (data, callback) ->
-    renderData = templates.render(data.template, data.context)
+module.exports.run = (data, callback) ->
+  renderData = templates.render(data.template, data.context)
 
-    transport.sendMail(
-      from: data.from or config.mail.default_from
-      to: data.to
-      subject: data.subject or renderData.subject
-      html: renderData.body
-      callback
-    )
+  transport.sendMail(
+    from: data.from or config.mail.default_from
+    to: data.to
+    subject: data.subject or renderData.subject
+    html: renderData.body
+    callback
+  )
 
-  task: (data, callback) ->
-    unless data.template and data.to
-      throw new Error('Required "to" and "template"')
+module.exports.task = (data, callback) ->
+  unless data.template and data.to
+    throw new Error('Required "to" and "template"')
 
-    Queue.enqueue('send_email', data, callback)
+  Queue.enqueue('send_email', data, callback)

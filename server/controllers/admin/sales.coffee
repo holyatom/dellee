@@ -3,14 +3,13 @@ async = require('async')
 AdminController = require('server/base/admin_controller')
 Customer = require('server/models/customer')
 Subscription = require('server/models/subscription')
-sendEmail = require('server/tasks/send_email')
+tasks = require('server/tasks')
 
 
 class SalesController extends AdminController
   logPrefix: '[admin sales controller]'
   urlPrefix: '/sales'
 
-  auth: true
   roles: ['admin', 'company_user', 'moderator']
 
   DEFAULT_ORDER: '-created'
@@ -104,7 +103,7 @@ class SalesController extends AdminController
 
   createSendEmailTask: (sale, customer) ->
     ->
-      sendEmail.task(
+      tasks.sendEmail(
         to: customer.email
         subject: sale.title
         template: 'sale'

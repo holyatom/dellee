@@ -1,5 +1,5 @@
 AdminController = require('server/base/admin_controller')
-sendEmail = require('server/tasks/send_email')
+tasks = require('server/tasks')
 
 
 class CompanyApplicationsController extends AdminController
@@ -10,10 +10,27 @@ class CompanyApplicationsController extends AdminController
 
   Model: require('server/models/company_application')
 
-  actions: ['create', 'list', 'get', 'update']
+  actions: ['create', 'list', 'get', 'update', 'delete']
 
   listFields: ['_id', 'company_name', 'is_replied', 'status', 'created']
   updateFields: ['is_replied', 'notes']
+
+  get: -> super
+  CompanyApplicationsController::get.url = '/:id'
+  CompanyApplicationsController::get.roles = ['admin', 'moderator']
+
+  update: -> super
+  CompanyApplicationsController::update.type = 'put'
+  CompanyApplicationsController::update.url = '/:id'
+  CompanyApplicationsController::update.roles = ['admin', 'moderator']
+
+  delete: -> super
+  CompanyApplicationsController::delete.type = 'delete'
+  CompanyApplicationsController::delete.url = '/:id'
+  CompanyApplicationsController::delete.roles = ['admin']
+
+  list: -> super
+  CompanyApplicationsController::list.roles = ['admin', 'moderator']
 
   create: (req, res, next) ->
     req.body.status = 'new'
@@ -29,9 +46,12 @@ class CompanyApplicationsController extends AdminController
         context:
           company: req.modelDoc.toJSON()
 
-      sendEmail.task data, (err) => @log(err, 'red bold') if err
+      tasks.sendEmail(data, (err) => @log(err, 'red bold') if err)
 
-    super
+    if req.method is 'POST'
+      res.json(success: true)
+    else
+      super
 
 
 module.exports = new CompanyApplicationsController()

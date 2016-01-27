@@ -1,6 +1,6 @@
 PublicController = require('server/base/public_controller')
 Verification = require('server/models/verification')
-sendEmail = require('server/tasks/send_email')
+tasks = require('server/tasks')
 
 
 class CustomersController extends PublicController
@@ -34,7 +34,7 @@ class CustomersController extends PublicController
             verificationId: doc._id
             email: req.modelDoc.email
 
-        sendEmail.task data, (err) => @log(err, 'red bold') if err
+        tasks.sendEmail(data, (err) => @log(err, 'red bold') if err)
 
     super
 

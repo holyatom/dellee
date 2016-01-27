@@ -1,5 +1,5 @@
 PublicController = require('server/base/public_controller')
-sendEmail = require('server/tasks/send_email')
+tasks = require('server/tasks')
 
 
 class SubscribersController extends PublicController
@@ -18,7 +18,7 @@ class SubscribersController extends PublicController
         context:
           email: req.modelDoc.email
 
-      sendEmail.task data, (err) => @log(err, 'red bold') if err
+      tasks.sendEmail(data, (err) => @log(err, 'red bold') if err)
 
     res.json(success: true)
 
