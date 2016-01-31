@@ -14,6 +14,7 @@ parsePath = require('parse-filepath')
 loadDir = (dirname, opts = {}) ->
   defaults =
     excludes: ['index']
+    pathExcludes: []
     onlyExt: '.coffee'
     flat: false
     camelCase: false
@@ -37,7 +38,11 @@ loadDir = (dirname, opts = {}) ->
       else
         res[name] = loadDir(fullpath, opts)
 
-    return if (opts.onlyExt and extname isnt opts.onlyExt) or origName in opts.excludes
+    isNeededExt = if opts.onlyExt then extname is opts.onlyExt else true
+    excluded = origName in opts.excludes or fullpath in opts.pathExcludes
+
+    if not isNeededExt or excluded
+      return
 
     if opts.flat
       res.push(require(fullpath))

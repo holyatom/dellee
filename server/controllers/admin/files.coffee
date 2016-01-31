@@ -12,6 +12,7 @@ class FilesController extends AdminController
   Model: File
 
   actions: ['create']
+  auth: true
 
   allowedTypes: File.schema.path('file_type').enumValues
   mimeTypes: File.schema.path('mime_type').enumValues

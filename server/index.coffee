@@ -106,10 +106,7 @@ class Server
 
     @preRouteMiddleware()
 
-    unless config.env is 'production'
-      controller.use(@app) for controller in require('./controllers')
-    else
-      @app.get('*', (req, res, next) -> res.render('layout_locked', layout: false))
+    controller.use(@app) for controller in require('./controllers')
 
     @postRouteMiddleware()
 
