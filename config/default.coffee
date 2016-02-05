@@ -40,11 +40,6 @@ module.exports =
   cdn:
     storage: "#{__dirname}/../cdn"
 
-  meta:
-    title: 'Dellee • Личный Менеджер Подписок'
-    description: 'Dellee - лучший и удобный способ следить за новостями и акциями любимых заведений'
-    keywords: 'dellee.me, менеджер подписок, астана, акции, новости'
-
   # Client
   contacts:
     email: 'info@dellee.me'

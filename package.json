@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "description": "subscriptions manager",
   "main": "index.js",
+  "engines": {
+    "node": "4.x.x"
+  },
   "scripts": {
     "postinstall": "gulp symlink"
   },
