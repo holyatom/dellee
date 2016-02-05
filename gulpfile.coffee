@@ -11,10 +11,12 @@ stylus = require('gulp-stylus')
 nib = require('nib')
 
 cssnano = require('gulp-cssnano')
+cssurlify = require('gulp-css-decache')
 uglify = require('gulp-uglify')
 
 gzip = require('gulp-gzip')
 del = require('del')
+rev = require('gulp-rev')
 
 streamify = require('gulp-streamify')
 source = require('vinyl-source-stream')
@@ -28,6 +30,8 @@ watch = require('gulp-watch')
 
 log = require('./lib/logger').bind(logPrefix: '[gulp]')
 
+
+MINIFIED_NAME = suffix: '.min'
 
 PUBLIC_DIR = './public'
 PUBLIC_ASSETS = "#{PUBLIC_DIR}/assets"
@@ -276,19 +280,16 @@ gulp.task 'server:staging', ->
 gulp.task 'minify:css', ->
   gulp
     .src("#{PUBLIC_ASSETS}/*.css")
+    .pipe(cssurlify(base: './public', md5: true))
     .pipe(cssnano())
-    .pipe(rename (path) ->
-      path.basename += '.min'
-    )
+    .pipe(rename(MINIFIED_NAME))
     .pipe(gulp.dest(PUBLIC_ASSETS))
 
 gulp.task 'minify:js', ->
   gulp
     .src("#{PUBLIC_ASSETS}/*.js")
     .pipe(uglify())
-    .pipe(rename (path) ->
-      path.basename += '.min'
-    )
+    .pipe(rename(MINIFIED_NAME))
     .pipe(gulp.dest(PUBLIC_ASSETS))
 
 gulp.task 'compress', ->
@@ -297,6 +298,13 @@ gulp.task 'compress', ->
     .pipe(gzip())
     .pipe(gulp.dest(PUBLIC_ASSETS))
 
+gulp.task 'hashify', ->
+  gulp
+    .src("#{PUBLIC_ASSETS}/*.min.*")
+    .pipe(rev())
+    .pipe(gulp.dest(PUBLIC_ASSETS))
+    .pipe(rev.manifest('hashmap.json'))
+    .pipe(gulp.dest(PUBLIC_ASSETS))
 
 gulp.task('build', gulpSequence(
   'clean'
@@ -308,10 +316,11 @@ gulp.task('build', gulpSequence(
     'minify:js'
     'minify:css'
   ]
+  'hashify'
   'compress'
 ))
 
-gulp.task('staging', ['server:staging', 'build'])
+gulp.task('staging', gulpSequence('build', 'server:staging'))
 
 # ===============================================================
 # PRODUCTION
@@ -323,4 +332,4 @@ gulp.task 'worker:prod', ->
 gulp.task 'server:prod', ->
   runNodeJs(envVariables: { NODE_ENV: 'production' }, skipWatch: true)
 
-gulp.task('prod', ['server:prod', 'build'])
+gulp.task('prod', gulpSequence('build', 'server:prod'))
