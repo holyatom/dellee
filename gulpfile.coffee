@@ -10,7 +10,7 @@ aliasify = require('aliasify')
 stylus = require('gulp-stylus')
 nib = require('nib')
 
-minifyCSS = require('gulp-minify-css')
+cssnano = require('gulp-cssnano')
 uglify = require('gulp-uglify')
 
 gzip = require('gulp-gzip')
@@ -96,7 +96,6 @@ compileJsPackets = (opts) ->
   opts = _.extend(
     packets: []
     output: ''
-    minify: false
   , opts)
 
   bundle = browserify()
@@ -110,13 +109,10 @@ compileJsPackets = (opts) ->
       @emit('end')
     )
     .pipe(source(opts.output))
-
-  bundle = bundle.pipe(streamify(uglify())) if opts.minify
-  bundle.pipe(gulp.dest(PUBLIC_ASSETS))
+    .pipe(gulp.dest(PUBLIC_ASSETS))
 
 compileJsBundle = (opts) ->
   opts = _.extend(
-    minify: false
     input: ''
     output: ''
     exclude: []
@@ -137,13 +133,10 @@ compileJsBundle = (opts) ->
       @emit('end')
     )
     .pipe(source(opts.output))
-
-  bundle = bundle.pipe(streamify(uglify())) if opts.minify
-  bundle.pipe(gulp.dest(PUBLIC_ASSETS))
+    .pipe(gulp.dest(PUBLIC_ASSETS))
 
 compileCss = (opts) ->
   opts = _.extend(
-    minify: false
     input: ''
     output: ''
     paths: []
@@ -165,9 +158,7 @@ compileCss = (opts) ->
       @emit('end')
     )
     .pipe(rename(opts.output))
-
-  task = task.pipe(minifyCSS()) if opts.minify
-  task = task.pipe(gulp.dest(PUBLIC_ASSETS))
+    .pipe(gulp.dest(PUBLIC_ASSETS))
 
 runNodeJs = (opts) ->
   opts = _.extend(
@@ -282,40 +273,23 @@ gulp.task 'worker:staging', ->
 gulp.task 'server:staging', ->
   runNodeJs(envVariables: { NODE_ENV: 'staging' }, skipWatch: true)
 
+gulp.task 'minify:css', ->
+  gulp
+    .src("#{PUBLIC_ASSETS}/*.css")
+    .pipe(cssnano())
+    .pipe(rename (path) ->
+      path.basename += '.min'
+    )
+    .pipe(gulp.dest(PUBLIC_ASSETS))
 
-gulp.task 'js:app:min', ->
-  compileJsBundle(input: "#{APP_LOCATION}/scripts/index.coffee", output: 'app.min.js', exclude: APP_VENDOR, minify: true)
-
-gulp.task 'js:app_vendor:min', ->
-  compileJsPackets(packets: APP_VENDOR, output: 'app_vendor.min.js', minify: true)
-
-gulp.task 'js:admin:min', ->
-  compileJsBundle(input: "#{ADMIN_LOCATION}/scripts/index.coffee", output: 'admin.min.js', exclude: ADMIN_VENDOR, minify: true)
-
-gulp.task 'js:admin_vendor:min', ->
-  compileJsPackets(packets: ADMIN_VENDOR, output: 'admin_vendor.min.js', minify: true)
-
-gulp.task('js:min', ['js:app:min', 'js:app_vendor:min', 'js:admin:min', 'js:admin_vendor:min'])
-
-
-gulp.task 'css:app:min', ->
-  compileCss(
-    input: "#{APP_LOCATION}/stylesheets/index.styl"
-    output: 'app.min.css'
-    paths: ["#{APP_LOCATION}/scripts"]
-    minify: true
-  )
-
-gulp.task 'css:admin:min', ->
-  compileCss(
-    input: "#{ADMIN_LOCATION}/stylesheets/index.styl"
-    output: 'admin.min.css'
-    paths: ["#{ADMIN_LOCATION}/scripts"]
-    minify: true
-  )
-
-gulp.task('css:min', ['css:app:min', 'css:admin:min'])
-
+gulp.task 'minify:js', ->
+  gulp
+    .src("#{PUBLIC_ASSETS}/*.js")
+    .pipe(uglify())
+    .pipe(rename (path) ->
+      path.basename += '.min'
+    )
+    .pipe(gulp.dest(PUBLIC_ASSETS))
 
 gulp.task 'compress', ->
   gulp
@@ -327,8 +301,12 @@ gulp.task 'compress', ->
 gulp.task('build', gulpSequence(
   'clean'
   [
-    'js:min'
-    'css:min'
+    'js'
+    'css'
+  ]
+  [
+    'minify:js'
+    'minify:css'
   ]
   'compress'
 ))
