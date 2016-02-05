@@ -1,6 +1,7 @@
 _ = require('lodash')
 pkg = require('./package.json')
 
+fs = require('fs')
 gulp = require('gulp')
 gulpSequence = require('gulp-sequence')
 
@@ -306,6 +307,18 @@ gulp.task 'hashify', ->
     .pipe(rev.manifest('hashmap.json'))
     .pipe(gulp.dest(PUBLIC_ASSETS))
 
+gulp.task 'waste', (done) ->
+  files = ["#{PUBLIC_ASSETS}/*", "!#{PUBLIC_ASSETS}/hashmap.json"]
+
+  hashmap = fs.readFileSync("#{PUBLIC_ASSETS}/hashmap.json", 'utf8')
+  hashmap = JSON.parse(hashmap)
+
+  for key, file of hashmap
+    files.push("!#{PUBLIC_ASSETS}/#{file}")
+    files.push("!#{PUBLIC_ASSETS}/#{file}.gz")
+
+  del(files, done)
+
 gulp.task('build', gulpSequence(
   'clean'
   [
@@ -318,6 +331,7 @@ gulp.task('build', gulpSequence(
   ]
   'hashify'
   'compress'
+  'waste'
 ))
 
 gulp.task('staging', gulpSequence('build', 'server:staging'))
