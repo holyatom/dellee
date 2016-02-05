@@ -53,7 +53,8 @@ module.exports = class HomeView extends Form
         </section>
         <section className="p-h-benefits">
           <div className="container">
-            <h2>Преимущества Dellee</h2>
+            <h2>Что такое Dellee</h2>
+            <h3>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal</h3>
             <ul className="p-h-benefits_list">
               <li>
                 <figure><i className="icon-data_storage"></i></figure>
