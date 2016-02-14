@@ -31,7 +31,6 @@ module.exports = class HomeView extends Form
 
   render: ->
     <div className="layout p-home">
-      <Header />
       <div className="l-wrapper">
         <section className="p-h-top">
           <div className="container">
