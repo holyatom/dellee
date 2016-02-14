@@ -17,6 +17,12 @@ module.exports = class Header extends Component
     if show then vent.trigger('scroll:lock') else vent.trigger('scroll:unlock')
     @setState({ show })
 
+  navifateToEarlyAccess: =>
+    if location.pathname is '/'
+      vent.trigger('scroll', target: '#early-access')
+    else
+      vent.trigger('navigate', '/#early-access')
+
   handleMisclick: =>
     @toggleMenu() if @state.show
 
@@ -46,7 +52,7 @@ module.exports = class Header extends Component
           </nav>
         </div>
         <div className="c-h-actions">
-          <a className="ui-btn ui-btn_primary" href="/#early-access">ранний доступ</a>
+          <span className="ui-btn ui-btn_primary" onClick={@navifateToEarlyAccess}>ранний доступ</span>
         </div>
       </div>
     </div>

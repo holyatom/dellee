@@ -1,7 +1,7 @@
 $ = require('jquery')
 React = require('react')
 Form = require('app/base/form')
-{ Footer } = require('app/components')
+{ Footer, Header } = require('app/components')
 vent = require('app/modules/vent')
 
 
@@ -31,6 +31,7 @@ module.exports = class HomeView extends Form
 
   render: ->
     <div className="layout p-home">
+      <Header />
       <div className="l-wrapper">
         <section className="p-h-top">
           <div className="container">
