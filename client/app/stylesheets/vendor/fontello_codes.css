@@ -4,10 +4,12 @@
 .icon-lock:before { content: '\e802'; } /* '' */
 .icon-mail_phone:before { content: '\e803'; } /* '' */
 .icon-info:before { content: '\e804'; } /* '' */
-.icon-check:before { content: '\e805'; } /* '' */
 .icon-vk:before { content: '\e806'; } /* '' */
 .icon-twitter:before { content: '\e807'; } /* '' */
 .icon-menu:before { content: '\e808'; } /* '' */
 .icon-agreement:before { content: '\e809'; } /* '' */
 .icon-arrowdown:before { content: '\e80a'; } /* '' */
 .icon-facebook:before { content: '\e80b'; } /* '' */
+.icon-check:before { content: '\e80c'; } /* '' */
+.icon-emoji_smile:before { content: '\e80d'; } /* '' */
+.icon-emoji_sad:before { content: '\e80e'; } /* '' */

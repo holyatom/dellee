@@ -1,15 +1,133 @@
 .p-about
+  .p-a-head
+    position: relative
+    height: 261px
+    background: url('/images/head_cover.jpg') no-repeat bottom center
+    background-size: cover
 
-  header
-    text-align: center
+    .p-a-h-wrapper
+      absolute: top 42% left
+      transform: translateY(-50%)
+      width: 100%
+      text-align: center
+
+    .p-a-h-divider
+      margin: 10px auto
+      height: 2px
+      width: 57px
+      background: #e8e8e8
 
     h1
-      margin-bottom: 0
+      font-size: 25px
+      color: #8c8c8c
 
     h2
-      border-top: none
-      padding-top: 0
-      margin-top: 10px
+      font-size: 28px
+      color: #4d4d4d
+      text-transform: uppercase
 
-  h2
-    margin-top: 35px
+    h1,
+    h2
+      margin: 0
+
+  .p-a-problems
+    ul
+      list-style: none
+      padding: 20px 0
+      margin: 0
+      border-bottom: 1px solid #f6f6f6
+
+      &:last-child
+        border-bottom: 0
+
+      &:first-child
+        padding-top: 0
+
+    li
+      position: relative
+      padding: 7px 0
+      clearfix()
+
+      aside
+        float: left
+        width: 35px
+
+        text-align: center
+
+        &:before,
+        &:after
+          position: absolute
+          width: 1px
+          left: 17px
+          background: #e8e8e8
+
+      &:first-child aside:after
+        content: ''
+        top: 20px
+        bottom: 0
+
+      &:last-child aside:before
+        content: ''
+        top: 0
+        height: 6px
+
+
+      &:first-child
+        padding-top: 0
+
+        aside
+          color: #f14747
+
+      &:last-child
+        padding-bottom: 0
+
+        aside
+          color: #39a63e
+
+      main
+        margin-left: 45px
+
+  .p-a-companies
+    margin-top: 20px
+    background: linear-gradient(to bottom, #f5f8fa, #e9eff5)
+    border-top: 1px solid #e8e8e8
+    border-bottom: @border-top
+
+    ul
+      list-style: none
+      padding: 0
+      margin: 0 0 35px
+
+      li
+        position: relative
+        padding: 7px 0
+        clearfix()
+
+        aside
+          float: left
+          width: 35px
+          text-align: center
+          color: #55d118
+
+          &:before,
+          &:after
+            content: ''
+            position: absolute
+            width: 1px
+            left: 16px
+            background: #c5d0d7
+
+          &:after
+            top: 28px
+            bottom: 0
+
+          &:before
+            top: 0
+            height: 6px
+
+        &:first-child aside:before,
+        &:last-child aside:after
+          display: none
+
+        main
+          margin-left: 45px
