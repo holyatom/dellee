@@ -36,6 +36,7 @@ MINIFIED_NAME = suffix: '.min'
 
 PUBLIC_DIR = './public'
 PUBLIC_ASSETS = "#{PUBLIC_DIR}/assets"
+PUBLIC_ASSETS_TEMP = "#{PUBLIC_DIR}/assets_temp"
 FONTS_DIR = "#{PUBLIC_DIR}/fonts"
 
 SOURCE_FOLDER = './.source'
@@ -182,21 +183,6 @@ runNodeJs = (opts) ->
   runner = exec(command)
   proxy(runner)
 
-assetsExcludeList = ->
-  hashmapPath = "#{PUBLIC_ASSETS}/hashmap.json"
-  exclude = []
-
-  return exclude unless fs.existsSync(hashmapPath)
-
-  hashmap = fs.readFileSync(hashmapPath, 'utf8')
-  hashmap = JSON.parse(hashmap)
-
-  for key, file of hashmap
-    exclude.push("!#{PUBLIC_ASSETS}/#{file}")
-    exclude.push("!#{PUBLIC_ASSETS}/#{file}.gz")
-
-  exclude
-
 
 # ===============================================================
 # TASKS
@@ -215,6 +201,12 @@ gulp.task 'fontello', ->
 gulp.task 'mocha', (done) ->
   runner = exec('env NODE_ENV=test mocha', done)
   proxy(runner)
+
+gulp.task 'remove:assets_temp', (done) ->
+  del([PUBLIC_ASSETS_TEMP], done)
+
+gulp.task 'remove:assets', (done) ->
+  del([PUBLIC_ASSETS, PUBLIC_ASSETS_TEMP], done)
 
 
 # ===============================================================
@@ -273,8 +265,17 @@ gulp.task 'watch', ->
   watch(['./client/admin/stylesheets/**/*.styl', './client/admin/scripts/**/*.styl'], watchTask('css:admin'))
   watch('./client/admin/scripts/**/*.coffee',  watchTask('js:admin'))
 
-gulp.task('assets', ['js', 'css'])
-gulp.task('dev', ['server:dev', 'assets', 'watch'])
+gulp.task('dev', gulpSequence(
+  'remove:assets'
+  [
+    'js'
+    'css'
+  ]
+  [
+    'watch'
+    'server:dev'
+  ]
+))
 
 
 # ===============================================================
@@ -293,39 +294,57 @@ gulp.task 'minify:css', ->
     .pipe(cssurlify(base: './public', md5: true))
     .pipe(cssnano())
     .pipe(rename(MINIFIED_NAME))
-    .pipe(gulp.dest(PUBLIC_ASSETS))
+    .pipe(gulp.dest(PUBLIC_ASSETS_TEMP))
 
 gulp.task 'minify:js', ->
   gulp
     .src(["#{PUBLIC_ASSETS}/*.js", "!#{PUBLIC_ASSETS}/*.min.js"])
     .pipe(uglify())
     .pipe(rename(MINIFIED_NAME))
-    .pipe(gulp.dest(PUBLIC_ASSETS))
-
-gulp.task 'compress', ->
-  gulp
-    .src(["#{PUBLIC_ASSETS}/*.min.*"].concat(assetsExcludeList()))
-    .pipe(gzip())
-    .pipe(gulp.dest(PUBLIC_ASSETS))
+    .pipe(gulp.dest(PUBLIC_ASSETS_TEMP))
 
 gulp.task 'hashify', ->
   gulp
-    .src(["#{PUBLIC_ASSETS}/*.min.*"].concat(assetsExcludeList()))
+    .src(["#{PUBLIC_ASSETS_TEMP}/*.min.*"])
     .pipe(rev())
-    .pipe(gulp.dest(PUBLIC_ASSETS))
+    .pipe(gulp.dest(PUBLIC_ASSETS_TEMP))
     .pipe(rev.manifest('hashmap.json'))
+    .pipe(gulp.dest(PUBLIC_ASSETS_TEMP))
+
+gulp.task 'compress', ->
+  gulp
+    .src(["#{PUBLIC_ASSETS_TEMP}/*.min.*"])
+    .pipe(gzip())
+    .pipe(gulp.dest(PUBLIC_ASSETS_TEMP))
+
+gulp.task 'replace', ->
+  gulp
+    .src("#{PUBLIC_ASSETS_TEMP}/*")
     .pipe(gulp.dest(PUBLIC_ASSETS))
 
-gulp.task 'clean:assets', (done) ->
-  del([
-    PUBLIC_ASSETS
-  ], done)
+gulp.task 'clean', (done) ->
+  hashmapPath = "#{PUBLIC_ASSETS}/hashmap.json"
 
-gulp.task 'clean:waste', (done) ->
-  files = ["#{PUBLIC_ASSETS}/*", "!#{PUBLIC_ASSETS}/hashmap.json"].concat(assetsExcludeList())
+  files = [
+    PUBLIC_ASSETS_TEMP
+    "#{PUBLIC_ASSETS}/*"
+    "!#{hashmapPath}"
+  ]
+
+  if fs.existsSync(hashmapPath)
+    hashmap = fs.readFileSync(hashmapPath, 'utf8')
+    hashmap = JSON.parse(hashmap)
+
+    for key, file of hashmap
+      files = files.concat([
+        "!#{PUBLIC_ASSETS}/#{file}"
+        "!#{PUBLIC_ASSETS}/#{file}.gz"
+      ])
+
   del(files, done)
 
 gulp.task('build', gulpSequence(
+  'remove:assets_temp'
   [
     'js'
     'css'
@@ -336,7 +355,8 @@ gulp.task('build', gulpSequence(
   ]
   'hashify'
   'compress'
-  'clean:waste'
+  'replace'
+  'clean'
 ))
 
 gulp.task('staging', gulpSequence('build', 'server:staging'))

@@ -1,5 +1,6 @@
 # Generated static stuf
 /public/assets/*
+/public/assets_temp/*
 /public/static/*
 
 # Data
