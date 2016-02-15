@@ -41,11 +41,16 @@
     background: alpha(#000, .7)
     border-top: 1px solid #fbfbfb
 
-    display: table
+    display: flex
+    flex-direction: column
+    align-items: stretch
+    justify-content: center
 
-    .c-h-n-wrapper
-      display: table-cell
-      vertical-align: middle
+    &:before,
+    &:after
+      content: ''
+      display: block
+      flex: 1 0 40px
 
     nav
       position: relative
@@ -120,8 +125,9 @@
       &.show
         display: block
 
-      .c-h-n-wrapper
-        display: block
+      &:before,
+      &:after
+        display: none
 
       nav
         margin: 0

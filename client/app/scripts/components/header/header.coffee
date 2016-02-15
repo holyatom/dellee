@@ -38,7 +38,7 @@ module.exports = class Header extends Component
           </a>
         </div>
         <div className={@cx('c-h-navigation', show: @state.show)} onClick={@handleMisclick}>
-          <div className="c-h-n-wrapper">
+          <div>
             <nav>
               <a href="/">главная</a>
               <a href="/about">о проекте</a>

@@ -6,6 +6,9 @@ global.Backbone = require('backbone') # for backbone plugins to work
 global.Backbone.$ = global.$
 global.Backbone.LocalStorage = require('backbone.localstorage')
 
+fastclick = require('fastclick')
+fastclick(document.body)
+
 $.ajaxSetup(
   crossDomain: true
   dataType: 'json'
