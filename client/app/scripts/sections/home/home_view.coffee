@@ -37,7 +37,7 @@ module.exports = class HomeView extends Form
             <a href="/">
               <h1 className="ui-logo">Dellee<span className="ui-l-beta_label"></span></h1>
             </a>
-            <h2>Личный Менеджер Подписок</h2>
+            <h2>Dellee</h2>
             <h3>Будь в курсе акций и новостей любимых заведений твоего города</h3>
             <div className="p-h-t-divider"></div>
             <div className="p-h-t-link">

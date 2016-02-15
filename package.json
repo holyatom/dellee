@@ -78,7 +78,6 @@
     "errorhandler": "^1.4.2",
     "express": "^4.13.3",
     "express-handlebars": "^2.0.1",
-    "fastclick": "^1.0.6",
     "handlebars": "^4.0.5",
     "helmet": "^1.1.0",
     "install": "^0.4.1",
