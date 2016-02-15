@@ -1,7 +1,12 @@
 .p-home
+  background: url('/images/top_cover.png') no-repeat top center
+  background-size: 100% auto
+
+  @media $tablet
+    background-image: url('/images/top_cover_desktop.png')
 
   .p-h-top
-    padding: 40px 0 50px
+    padding: 70px 0 50px
 
     text-align: center
     border-bottom: 1px solid #e8e8e8
@@ -11,13 +16,13 @@
       height: @width
 
     h2
-      margin: 35px 0 0
+      margin: 25px 0 0
       color: #4d4d4d
-      font-size: 24px
-      line-height: 35px
+      font-size: 27px
+      font-weight: normal
 
     h3
-      margin: 16px 0 0
+      margin: 5px 0 0
       color: #8c8c8c
       font-size: 16px
       line-height: 30px
@@ -50,15 +55,14 @@
 
 
     @media $tablet
-      padding: 60px 0 45px
+      padding: 90px 0 45px
 
       .ui-logo
         width: 125px
         height: @width
 
       h2
-        margin: 45px 0 0
-        font-size: 30px
+        font-size: 36px
 
       h3
         font-size: 18px
