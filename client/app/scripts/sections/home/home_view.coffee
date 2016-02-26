@@ -37,8 +37,8 @@ module.exports = class HomeView extends Form
             <a href="/">
               <h1 className="ui-logo">Dellee<span className="ui-l-beta_label"></span></h1>
             </a>
-            <h2>Dellee</h2>
-            <h3>Будь в курсе акций и новостей любимых заведений твоего города</h3>
+            <h2>Первый новостной сервис</h2>
+            <h3>Будь в курсе новостей любимых заведений твоего города</h3>
             <div className="p-h-t-divider"></div>
             <div className="p-h-t-link">
               <span className="ui-btn ui-btn_default ui-btn_large" onClick={@scrollToSubscribeForm}>подпишись на запуск</span>
@@ -54,7 +54,7 @@ module.exports = class HomeView extends Form
         <section className="p-h-benefits">
           <div className="container">
             <h2>Что такое Dellee</h2>
-            <h3>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal</h3>
+            <h3>Dellee - это уникальный сервис, который позволяет тебе легко следить за всем новым и интересным в твоем городе</h3>
             <ul className="p-h-benefits_list">
               <li>
                 <figure><i className="icon-data_storage"></i></figure>
@@ -74,7 +74,7 @@ module.exports = class HomeView extends Form
                 <figure><i className="icon-mail_phone"></i></figure>
                 <h3>E-mail и SMS уведомления</h3>
                 <p>
-                  Выбирай удобный тебе способ оповещений
+                  Выбирай удобный тебе способ оповещений и узнавай новости первым
                 </p>
               </li>
               <li>
@@ -130,12 +130,12 @@ module.exports = class HomeView extends Form
               <i className="icon-agreement"></i>
             </figure>
             <h2>Бесплатная Регистрация Компаний</h2>
-            <h3>Мы предоставляем всем компаниям бесплатный аккаунт для оповещения пользователей о новостях и событиях</h3>
+            <h3>Хотите чтобы ваши клиенты вовремя узнавали о ваших новостях? Мы предоставляем всем компаниям бесплатный аккаунт для общения с ними</h3>
             <div className="p-h-rc-link">
               <a target="_self" href="/admin/register-company" className="ui-btn ui-btn_large">регистрация компании</a>
             </div>
             <div className="p-h-rc-help_message">
-              Хотите связаться с нами лично? Перейдите на <a href="/contacts">страницу контактов</a>
+              Чтобы связаться с нами перейдите на <a href="/contacts">страницу контактов</a>
             </div>
           </div>
           <Footer />
