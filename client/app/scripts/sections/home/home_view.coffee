@@ -104,7 +104,7 @@ module.exports = class HomeView extends Form
                 <div className="p-h-ea-success">
                   <span>
                     <i className="ui-iconbox-success"><span className="icon-check"></span></i>
-                    Вы успешно подписаны на запуск!
+                    Спасибо! Мы уведовим вас о запуске!
                   </span>
                 </div>
               </div>

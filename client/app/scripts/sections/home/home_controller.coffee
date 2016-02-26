@@ -27,7 +27,7 @@ module.exports = class HomeControlller extends Controller
       if error = xhr.responseJSON?.error
         if fields = error.fields
           message = fields.email.message
-          message = 'E-mail адрес уже был зарегестрирован' if fields.email.code is 'unique'
+          message = 'Введенный e-mail уже зарегистрирован' if fields.email.code is 'unique'
           message = 'Введите e-mail' if fields.email.code is 'required'
         else
           message = error.message
